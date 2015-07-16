@@ -16,13 +16,93 @@
 #pragma warning disable 1591
 #pragma warning disable 1998
 
-namespace Grains
+namespace Server
 {
-    using Orleans;
     using System;
-    using System.Runtime.InteropServices;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Runtime.Serialization;
+    using Orleans;
+    using System.Runtime.InteropServices;
     
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [SerializableAttribute()]
+    [global::Orleans.CodeGeneration.GrainStateAttribute("Server.AccountGrain")]
+    public class AccountGrainState : global::Orleans.GrainState, AccountData
+    {
+        
+
+            public String @password { get; set; }
+
+            public Single @test_float { get; set; }
+
+            public HashSet<UInt32> @completed_quests_example_test { get; set; }
+
+            public AccountFlags @flags { get; set; }
+
+            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
+            {   
+                object value;
+                if (values == null) { InitStateFields(); return; }
+                if (values.TryGetValue("password", out value)) @password = (String) value;
+                if (values.TryGetValue("test_float", out value)) @test_float = (Single) value;
+                if (values.TryGetValue("completed_quests_example_test", out value)) @completed_quests_example_test = (HashSet<UInt32>) value;
+                if (values.TryGetValue("flags", out value)) @flags = (AccountFlags) value;
+            }
+
+            public override System.String ToString()
+            {
+                return System.String.Format("AccountGrainState( password={0} test_float={1} completed_quests_example_test={2} flags={3} )", @password, @test_float, @completed_quests_example_test, @flags);
+            }
+        
+        public AccountGrainState() : 
+                base("Server.AccountGrain")
+        {
+            this.InitStateFields();
+        }
+        
+        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
+        {
+            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
+            result["password"] = this.password;
+            result["test_float"] = this.test_float;
+            result["completed_quests_example_test"] = this.completed_quests_example_test;
+            result["flags"] = this.flags;
+            return result;
+        }
+        
+        private void InitStateFields()
+        {
+            this.password = default(String);
+            this.test_float = default(Single);
+            this.completed_quests_example_test = new HashSet<UInt32>();
+            this.flags = default(AccountFlags);
+        }
+        
+        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+        public static object _Copier(object original)
+        {
+            AccountGrainState input = ((AccountGrainState)(original));
+            return input.DeepCopy();
+        }
+        
+        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            AccountGrainState input = ((AccountGrainState)(original));
+            input.SerializeTo(stream);
+        }
+        
+        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            AccountGrainState result = new AccountGrainState();
+            result.DeserializeFrom(stream);
+            return result;
+        }
+    }
 }
 #pragma warning restore 162
 #pragma warning restore 219

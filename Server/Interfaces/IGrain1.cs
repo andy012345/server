@@ -1,13 +1,29 @@
-using System.Threading.Tasks;
 using Orleans;
+using Orleans.Concurrency;
+using System.Threading.Tasks;
+using System;
+using Server;
 
-namespace Interfaces
+namespace Server
 {
-    /// <summary>
-    /// Grain interface IGrain1
-    /// </summary>
-    public interface IGrain1 : IGrain
+    public enum AccountAuthResponse
     {
+        AccountAuthOk = 0,
+        AccountAuthNotValid = 1,
+        AccountAuthNoMatch = 2,
+    }
 
+    public enum AccountCreateResponse
+    {
+        AccountCreateOk,
+        AccountCreateDataAlreadyExists,
+    }
+
+    public interface IAccountGrain : IGrainWithStringKey
+    {
+        Task Destroy();
+        Task<AccountAuthResponse> Authenticate(string password);
+        Task AddQuestComplete(UInt32 questid);
+        Task<bool> QuestCompleted(UInt32 questid);
     }
 }

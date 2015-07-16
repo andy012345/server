@@ -16,7 +16,7 @@
 #pragma warning disable 1591
 #pragma warning disable 1998
 
-namespace Interfaces
+namespace Server
 {
     using System;
     using System.Net;
@@ -31,60 +31,48 @@ namespace Interfaces
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    public class Grain1Factory
+    public class AccountGrainFactory
     {
         
 
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IGrain1> instead.")]
-                        public static IGrain1 GetGrain(long primaryKey)
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IAccountGrain> instead.")]
+                        public static IAccountGrain GetGrain(System.String primaryKey)
                         {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IGrain1), primaryKey));
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IAccountGrain), primaryKey));
                         }
 
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IGrain1> instead.")]
-                        public static IGrain1 GetGrain(long primaryKey, string grainClassNamePrefix)
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IAccountGrain> instead.")]
+                        public static IAccountGrain GetGrain(System.String primaryKey, string grainClassNamePrefix)
                         {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IGrain1), primaryKey, grainClassNamePrefix));
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IAccountGrain), primaryKey, grainClassNamePrefix));
                         }
 
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IGrain1> instead.")]
-                        public static IGrain1 GetGrain(System.Guid primaryKey)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IGrain1), primaryKey));
-                        }
-
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IGrain1> instead.")]
-                        public static IGrain1 GetGrain(System.Guid primaryKey, string grainClassNamePrefix)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IGrain1), primaryKey, grainClassNamePrefix));
-                        }
-
-            public static IGrain1 Cast(global::Orleans.Runtime.IAddressable grainRef)
+            public static IAccountGrain Cast(global::Orleans.Runtime.IAddressable grainRef)
             {
                 
-                return Grain1Reference.Cast(grainRef);
+                return AccountGrainReference.Cast(grainRef);
             }
         
         [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
         [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
         [System.SerializableAttribute()]
-        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Interfaces.IGrain1")]
-        internal class Grain1Reference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Interfaces.IGrain1
+        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IAccountGrain")]
+        internal class AccountGrainReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IAccountGrain
         {
             
 
-            public static IGrain1 Cast(global::Orleans.Runtime.IAddressable grainRef)
+            public static IAccountGrain Cast(global::Orleans.Runtime.IAddressable grainRef)
             {
                 
-                return (IGrain1) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IGrain1), (global::Orleans.Runtime.GrainReference gr) => { return new Grain1Reference(gr);}, grainRef, 1260564238);
+                return (IAccountGrain) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IAccountGrain), (global::Orleans.Runtime.GrainReference gr) => { return new AccountGrainReference(gr);}, grainRef, -774752436);
             }
             
-            protected internal Grain1Reference(global::Orleans.Runtime.GrainReference reference) : 
+            protected internal AccountGrainReference(global::Orleans.Runtime.GrainReference reference) : 
                     base(reference)
             {
             }
             
-            protected internal Grain1Reference(SerializationInfo info, StreamingContext context) : 
+            protected internal AccountGrainReference(SerializationInfo info, StreamingContext context) : 
                     base(info, context)
             {
             }
@@ -93,7 +81,7 @@ namespace Interfaces
             {
                 get
                 {
-                    return 1260564238;
+                    return -774752436;
                 }
             }
             
@@ -101,53 +89,78 @@ namespace Interfaces
             {
                 get
                 {
-                    return "Interfaces.IGrain1";
+                    return "Server.IAccountGrain";
                 }
             }
             
             [global::Orleans.CodeGeneration.CopierMethodAttribute()]
             public static object _Copier(object original)
             {
-                Grain1Reference input = ((Grain1Reference)(original));
-                return ((Grain1Reference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
+                AccountGrainReference input = ((AccountGrainReference)(original));
+                return ((AccountGrainReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
             }
             
             [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
             public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
             {
-                Grain1Reference input = ((Grain1Reference)(original));
+                AccountGrainReference input = ((AccountGrainReference)(original));
                 global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
             }
             
             [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
             public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
             {
-                return Grain1Reference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
+                return AccountGrainReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
             }
             
             public override bool IsCompatible(int interfaceId)
             {
-                return (interfaceId == this.InterfaceId);
+                return ((interfaceId == this.InterfaceId) 
+                            || (interfaceId == -1277021679));
             }
             
             protected override string GetMethodName(int interfaceId, int methodId)
             {
-                return Grain1MethodInvoker.GetMethodName(interfaceId, methodId);
+                return AccountGrainMethodInvoker.GetMethodName(interfaceId, methodId);
+            }
+            
+            System.Threading.Tasks.Task Server.IAccountGrain.Destroy()
+            {
+
+                return base.InvokeMethodAsync<object>(-1041284210, null );
+            }
+            
+            System.Threading.Tasks.Task<Server.AccountAuthResponse> Server.IAccountGrain.Authenticate(string @password)
+            {
+
+                return base.InvokeMethodAsync<Server.AccountAuthResponse>(1391356785, new object[] {@password} );
+            }
+            
+            System.Threading.Tasks.Task Server.IAccountGrain.AddQuestComplete(uint @questid)
+            {
+
+                return base.InvokeMethodAsync<object>(1181445371, new object[] {@questid} );
+            }
+            
+            System.Threading.Tasks.Task<bool> Server.IAccountGrain.QuestCompleted(uint @questid)
+            {
+
+                return base.InvokeMethodAsync<System.Boolean>(-1811403760, new object[] {@questid} );
             }
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Interfaces.IGrain1", 1260564238)]
-    internal class Grain1MethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
+    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IAccountGrain", -774752436)]
+    internal class AccountGrainMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
     {
         
         int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
         {
             get
             {
-                return 1260564238;
+                return -774752436;
             }
         }
         
@@ -158,7 +171,20 @@ namespace Interfaces
             {                    if (grain == null) throw new System.ArgumentNullException("grain");
                 switch (interfaceId)
                 {
-                    case 1260564238:  // IGrain1
+                    case -774752436:  // IAccountGrain
+                        switch (methodId)
+                        {
+                            case -1041284210: 
+                                return ((IAccountGrain)grain).Destroy().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1391356785: 
+                                return ((IAccountGrain)grain).Authenticate((String)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 1181445371: 
+                                return ((IAccountGrain)grain).AddQuestComplete((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1811403760: 
+                                return ((IAccountGrain)grain).QuestCompleted((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case -1277021679:  // IGrainWithStringKey
                         switch (methodId)
                         {
                             default: 
@@ -182,7 +208,22 @@ namespace Interfaces
             switch (interfaceId)
             {
                 
-                case 1260564238:  // IGrain1
+                case -774752436:  // IAccountGrain
+                    switch (methodId)
+                    {
+                        case -1041284210:
+                            return "Destroy";
+                    case 1391356785:
+                            return "Authenticate";
+                    case 1181445371:
+                            return "AddQuestComplete";
+                    case -1811403760:
+                            return "QuestCompleted";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case -1277021679:  // IGrainWithStringKey
                     switch (methodId)
                     {
                         
