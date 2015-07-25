@@ -23,14 +23,14 @@ namespace Server
     }
 
     [Reentrant]
-    [StorageProvider(ProviderName = "AccountStore")]
+    [StorageProvider(ProviderName = "AzureStore")]
     public class AccountGrain : Grain<AccountData>, IAccountGrain
     {
         public override async Task OnActivateAsync()
         {
             await base.OnActivateAsync();
 
-            if (State.password.Length == 0)
+            if (State.password == null || State.password.Length == 0)
                 State.flags |= AccountFlags.AccountNotValid;
         }
 
@@ -38,6 +38,14 @@ namespace Server
 
         public Task<AccountCreateResponse> CreateAccount(string password, float test_float)
         {
+            if ((State.flags & AccountFlags.AccountNotValid) != AccountFlags.AccountNotValid)
+                return Task.FromResult(AccountCreateResponse.AccountCreateDataAlreadyExists);
+
+            State.test_float = test_float;
+            State.password = password;
+
+            WriteStateAsync();
+
             return Task.FromResult(AccountCreateResponse.AccountCreateOk);
         }
 

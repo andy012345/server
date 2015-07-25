@@ -42,7 +42,7 @@ namespace TestHost
                 AppDomainInitializerArguments = args,
             });
 
-            Orleans.GrainClient.Initialize("DevTestClientConfiguration.xml");
+            //Orleans.GrainClient.Initialize("DevTestClientConfiguration.xml");
 
             // TODO: once the previous call returns, the silo is up and running.
             //       This is the place your custom logic, for example calling client logic

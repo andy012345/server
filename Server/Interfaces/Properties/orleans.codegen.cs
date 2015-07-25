@@ -136,6 +136,12 @@ namespace Server
                 return base.InvokeMethodAsync<Server.AccountAuthResponse>(1391356785, new object[] {@password} );
             }
             
+            System.Threading.Tasks.Task<Server.AccountCreateResponse> Server.IAccountGrain.CreateAccount(string @password, float @test_float)
+            {
+
+                return base.InvokeMethodAsync<Server.AccountCreateResponse>(-1771626063, new object[] {@password, @test_float} );
+            }
+            
             System.Threading.Tasks.Task Server.IAccountGrain.AddQuestComplete(uint @questid)
             {
 
@@ -178,6 +184,8 @@ namespace Server
                                 return ((IAccountGrain)grain).Destroy().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case 1391356785: 
                                 return ((IAccountGrain)grain).Authenticate((String)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1771626063: 
+                                return ((IAccountGrain)grain).CreateAccount((String)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 1181445371: 
                                 return ((IAccountGrain)grain).AddQuestComplete((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case -1811403760: 
@@ -215,6 +223,8 @@ namespace Server
                             return "Destroy";
                     case 1391356785:
                             return "Authenticate";
+                    case -1771626063:
+                            return "CreateAccount";
                     case 1181445371:
                             return "AddQuestComplete";
                     case -1811403760:
