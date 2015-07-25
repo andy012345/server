@@ -38,6 +38,12 @@ namespace Server
 
                 test.CreateAccount("test", 2).Wait();
 
+                Random rnd = new Random();
+
+                for (int i = 0; i < 15; ++i)
+                    test.AddQuestComplete((uint)rnd.Next(1, 1000));
+
+
                 Console.WriteLine("Test");
             }
 

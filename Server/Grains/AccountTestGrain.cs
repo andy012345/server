@@ -23,7 +23,7 @@ namespace Server
     }
 
     [Reentrant]
-    [StorageProvider(ProviderName = "AzureStore")]
+    [StorageProvider(ProviderName = "Default")]
     public class AccountGrain : Grain<AccountData>, IAccountGrain
     {
         public override async Task OnActivateAsync()

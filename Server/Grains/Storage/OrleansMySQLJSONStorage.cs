@@ -5,7 +5,7 @@ using System.Threading;
 using System;
 using System.Collections.Generic;
 
-namespace Orleans.StorageProvider.MySQLDB
+namespace Orleans.Storage.MySQLDB
 {
     using System.Configuration;
     using System.Data.Common;
@@ -21,7 +21,7 @@ namespace Orleans.StorageProvider.MySQLDB
     /// </summary>
     /// <remarks>
     /// The storage provider should be included in a deployment by adding this line to the Orleans server configuration file:
-    /// <Provider Type="Orleans.StorageProvider.MySQLDB.MySQLJSONDBStorageProvider" Name="MySQLJSONDBStore" ConnectionStringName="MySQLDB"/>and this line to any grain that uses it:
+    /// <Provider Type="Orleans.Storage.MySQLDB.MySQLJSONDBStorageProvider" Name="MySQLJSONDBStore" ConnectionStringName="MySQLDB"/>and this line to any grain that uses it:
     /// [StorageProvider(ProviderName = "MySQLJSONDBStore")]
     /// The name 'MySQLDBStore' is an arbitrary choice.
     /// If no connection string name is provided the provider will use MySQLDB InMemory storage.
@@ -37,7 +37,7 @@ namespace Orleans.StorageProvider.MySQLDB
         {
             Log = providerRuntime.GetLogger(this.GetType().FullName);
 
-            ConnectString = config.Properties["ConnectionStringName"];
+            ConnectString = config.Properties["DataConnectionString"];
 
             if (config.Properties.ContainsKey("Table"))
             {
@@ -75,7 +75,7 @@ namespace Orleans.StorageProvider.MySQLDB
             DatabaseConnection = new MySqlConnection(ConnectString);
             await DatabaseConnection.OpenAsync();
 
-            if (DatabaseConnection != null && DatabaseConnection.State == System.Data.ConnectionState.Open)
+            if (DatabaseConnection != null && DatabaseConnection.State != System.Data.ConnectionState.Open)
                 throw new Exception("MySQLStorage could not open a connection to the database");
         }
 
