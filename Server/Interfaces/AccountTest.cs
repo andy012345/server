@@ -25,6 +25,7 @@ namespace Server
         Task<AccountAuthResponse> Authenticate(string password);
         Task<AccountCreateResponse> CreateAccount(string password, float test_float);
         Task AddQuestComplete(UInt32 questid);
+
         Task<bool> QuestCompleted(UInt32 questid);
     }
 }
