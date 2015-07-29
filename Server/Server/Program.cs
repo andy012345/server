@@ -22,6 +22,8 @@ namespace Server
                 });
             }
 
+            WebService.Run();
+
             if (System.IO.File.Exists("Config-Client.xml"))
             {
                 Console.WriteLine("Starting orleans client...");
