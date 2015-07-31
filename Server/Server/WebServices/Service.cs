@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,23 +13,6 @@ using Orleans.Runtime;
 
 namespace Server
 {
-    class WebService
-    {
-        public static void Run()
-        {
-           // if (System.IO.File.Exists("Config-Web.xml"))
-            {
-                //start web server :)
-                WebServiceHost host = new WebServiceHost(typeof(Service), new Uri("http://localhost.com:9000/")); //todo: move to config
-
-                //create a service endpoint
-                ServiceEndpoint endpoint = host.AddServiceEndpoint(typeof(IService), new WebHttpBinding(), "service");
-
-                host.Open();
-            }
-        }
-    }
-
     [ServiceContract]
     public interface IService
     {
@@ -51,7 +34,7 @@ namespace Server
         public string TestGet(string s) { return "Hi"; }
         public string TestPost(string s) { return "Hi2"; }
         public System.ServiceModel.Channels.Message OrleanStats()
-        { 
+        {
             if (Orleans.GrainClient.IsInitialized == false)
                 return WebOperationContext.Current.CreateTextResponse("Error: Client not initialised", "text/plain", Encoding.UTF8);
 
@@ -80,9 +63,6 @@ namespace Server
                 writer.WriteValue(s.SiloAddress.ToString());
                 writer.WritePropertyName("type");
                 writer.WriteValue(s.GrainType);
-
-                writer.WritePropertyName("tostring");
-                writer.WriteValue(s.ToString());
                 writer.WriteEndObject();
 
             }
@@ -95,3 +75,4 @@ namespace Server
         }
     }
 }
+
