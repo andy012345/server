@@ -150,6 +150,7 @@
     <Compile Include="AuthServer\Main.cs" />
     <Compile Include="Networking\Packets\LogonPacket.cs" />
     <Compile Include="Networking\Packets\Packet.cs" />
+    <Compile Include="Networking\Reader\PacketReader.cs" />
     <Compile Include="Networking\Socket.cs" />
     <Compile Include="OrleansHostWrapper.cs" />
     <Compile Include="Main.cs" />

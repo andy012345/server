@@ -27,5 +27,6 @@ namespace Server
         Task AddQuestComplete(UInt32 questid);
 
         Task<bool> QuestCompleted(UInt32 questid);
+        Task SetPassword(string p);
     }
 }

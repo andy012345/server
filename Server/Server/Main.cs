@@ -40,8 +40,7 @@ namespace Server
 
                 Random rnd = new Random();
 
-                for (int i = 0; i < 15; ++i)
-                    test.AddQuestComplete((uint)rnd.Next(1, 1000));
+                test.SetPassword("Test");
 
 
                 Console.WriteLine("Test");

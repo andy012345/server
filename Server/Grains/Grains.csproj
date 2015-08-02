@@ -53,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountTestGrain.cs" />
+    <Compile Include="AccountGrain.cs" />
     <Compile Include="Properties\orleans.codegen.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="Storage\Helper\MySQLGenerator.cs" />

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Net;
 
 namespace Server.Networking
 {
@@ -33,42 +34,28 @@ namespace Server.Networking
 
         public override PacketProcessResult ProcessData()
         {
-            BinaryReader reader = new BinaryReader(packetData);
+            opcode = (AuthOPCodes)packetReader.ReadByte();
 
-            opcode = (AuthOPCodes)reader.ReadByte();
-            
-            if (LogonPacketHandler.LogonPacketHasData(opcode))
-            {
-                dataNeeded = 4;
-                if (packetData.Length < dataNeeded) return PacketProcessResult.PacketRequiresMoreData;
-
-                byte error = reader.ReadByte();
-                UInt16 dataSize = reader.ReadUInt16();
-
-                dataNeeded = 4 + dataSize;
-                if (packetData.Length < dataNeeded) return PacketProcessResult.PacketRequiresMoreData;
-            }
-
-            ProcessPacket();
-            return PacketProcessResult.PacketProcessed;
+            return ProcessPacket();
         }
 
-        void ProcessPacket()
+        PacketProcessResult ProcessPacket()
         {
             var handler = AuthServer.Main.LogonPacketHandler.GetHandler(opcode);
 
             if (handler == null)
             {
                 Console.WriteLine("Recieved packet {0} which has no handler", opcode);
+                return PacketProcessResult.Error;
             }
 
-            handler(this);
+            return handler(this);
         }
     }
 
     public class LogonPacketHandler
     {
-        Dictionary<UInt16, Action<PacketProcessor>> PacketHandlers = new Dictionary<UInt16, Action<PacketProcessor>>();
+        Dictionary<UInt16, Func<PacketProcessor, PacketProcessResult>> PacketHandlers = new Dictionary<UInt16, Func<PacketProcessor, PacketProcessResult>>();
 
         public void Init()
         {
@@ -83,7 +70,7 @@ namespace Server.Networking
                 if (attrib == null)
                     continue;
 
-                var handlerDelegate = (Action<PacketProcessor>)Delegate.CreateDelegate(typeof(Action<PacketProcessor>), method);
+                var handlerDelegate = (Func<PacketProcessor, PacketProcessResult>)Delegate.CreateDelegate(typeof(Func<PacketProcessor, PacketProcessResult>), method);
 
                 if (handlerDelegate == null)
                     continue;
@@ -92,23 +79,7 @@ namespace Server.Networking
             }
         }
 
-        public static bool LogonPacketHasData(AuthOPCodes op)
-        {
-            switch (op)
-            {
-                case AuthOPCodes.XFER_INITIATE:
-                case AuthOPCodes.XFER_DATA:
-                case AuthOPCodes.XFER_ACCEPT:
-                case AuthOPCodes.XFER_RESUME:
-                    {
-                        return false;
-                    }
-            }
-
-            return true;
-        }
-
-        public Action<PacketProcessor> GetHandler(AuthOPCodes opcode)
+        public Func<PacketProcessor, PacketProcessResult> GetHandler(AuthOPCodes opcode)
         {
             UInt16 opshort = (UInt16)opcode;
             if (!PacketHandlers.ContainsKey(opshort))
@@ -117,9 +88,37 @@ namespace Server.Networking
         }
 
         [PacketHandler(AuthOPCodes.AUTH_LOGON_CHALLENGE)]
-        public static void HandleLogonAuthChallenge(PacketProcessor p)
+        public static PacketProcessResult HandleLogonAuthChallenge(PacketProcessor p)
         {
-            Console.WriteLine("RECIEVED LOGON CHALLENGE BITCHES!");
+            if (p.packetData.Length < 4)
+            {
+                p.dataNeeded = 4; //1 opcode, 1 version, 2 data_size
+                return PacketProcessResult.RequiresData;
+            }
+
+            byte proto_version = p.packetReader.ReadByte();
+            UInt16 data_size = p.packetReader.ReadUInt16();
+
+            if (p.packetData.Length < 4 + data_size)
+            {
+                p.dataNeeded = 4 + data_size; //1 opcode, 1 version, 2 data_size, data_size data
+                return PacketProcessResult.RequiresData;
+            }
+
+            var client = p.packetReader.ReadFourCC();
+            var client_major = p.packetReader.ReadByte();
+            var client_minor = p.packetReader.ReadByte();
+            var client_revision = p.packetReader.ReadByte();
+            var client_build = p.packetReader.ReadUInt16();
+            var processor = p.packetReader.ReadFourCC();
+            var os = p.packetReader.ReadFourCC();
+            var locale = p.packetReader.ReadFourCC();
+            var timezone = p.packetReader.ReadInt32();
+            var ipaddr = new IPAddress(p.packetReader.ReadBytes(4));
+            var account = p.packetReader.ReadString();
+
+
+            return PacketProcessResult.Processed;
         }
     }
 
@@ -134,21 +133,17 @@ namespace Server.Networking
 
         public enum PacketFlags
         {
-            PacketFlagNone          =   0x0000,
-            PackeetFlagHasNoData    =   0x0001,
+            None          =   0x0000,
         }
 
         public PacketType Type;
         public UInt16 Id = 0;
-        public PacketFlags Flags = PacketFlags.PacketFlagNone;
+        public PacketFlags Flags = PacketFlags.None;
 
         public PacketHandlerAttribute(AuthOPCodes op)
         {
             Type = PacketType.AuthPacket;
             Id = (UInt16)op;
-
-            if (!LogonPacketHandler.LogonPacketHasData(op))
-                Flags |= PacketFlags.PackeetFlagHasNoData;
         }
     }
 }

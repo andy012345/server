@@ -5,15 +5,18 @@ using Orleans.Storage;
 using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Server
 {
     public interface AccountData : IGrainState
     {
-        string password { get; set; }
+        string Password { get; set; }
         float test_float { get; set; }
         HashSet<UInt32> completed_quests_example_test { get; set; }
-        AccountFlags flags { get; set; }
+        AccountFlags Flags { get; set; }
     }
 
     public enum AccountFlags
@@ -26,35 +29,55 @@ namespace Server
     [StorageProvider(ProviderName = "Default")]
     public class AccountGrain : Grain<AccountData>, IAccountGrain
     {
+        BigInteger EncryptedPassword;
+
         public override async Task OnActivateAsync()
         {
             await base.OnActivateAsync();
 
-            if (State.password == null || State.password.Length == 0)
-                State.flags |= AccountFlags.AccountNotValid;
+            if (State.Password == null || State.Password.Length == 0)
+                State.Flags |= AccountFlags.AccountNotValid;
+
+            
         }
 
         public Task Destroy() { DeactivateOnIdle(); return TaskDone.Done; }
 
         public Task<AccountCreateResponse> CreateAccount(string password, float test_float)
         {
-            if ((State.flags & AccountFlags.AccountNotValid) != AccountFlags.AccountNotValid)
+            if ((State.Flags & AccountFlags.AccountNotValid) != AccountFlags.AccountNotValid)
                 return Task.FromResult(AccountCreateResponse.AccountCreateDataAlreadyExists);
 
             State.test_float = test_float;
-            State.password = password;
+            State.Password = password;
 
             WriteStateAsync();
 
             return Task.FromResult(AccountCreateResponse.AccountCreateOk);
         }
 
+        public Task SetPassword(string p)
+        {
+            //encrypt wow style
+            string account = this.GetPrimaryKeyString();
+            string upper_account = account.ToUpper();
+            string upper_password = p.ToUpper();
+
+            string password_string = upper_account + ":" + upper_password;
+
+            SHA1Managed sh = new SHA1Managed();
+            var hash = sh.ComputeHash(Encoding.UTF8.GetBytes(password_string));
+            State.Password = BitConverter.ToString(hash);
+
+            return TaskDone.Done;
+        }
+
         public Task<AccountAuthResponse> Authenticate(string password)
         {
-            if ((State.flags & AccountFlags.AccountNotValid) != 0)
+            if ((State.Flags & AccountFlags.AccountNotValid) != 0)
                 return Task.FromResult(AccountAuthResponse.AccountAuthNotValid);
 
-            if (password != State.password)
+            if (password != State.Password)
                 return Task.FromResult(AccountAuthResponse.AccountAuthNoMatch);
 
             return Task.FromResult(AccountAuthResponse.AccountAuthOk);

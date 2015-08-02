@@ -9,14 +9,21 @@ namespace Server.Networking
 {
     public enum PacketProcessResult
     {
-        PacketProcessed,
-        PacketRequiresMoreData,
+        Processed,
+        RequiresData,
+        Error,
     }
 
     public class PacketProcessor
     {
         public MemoryStream packetData = new MemoryStream();
+        public Reader.PacketReader packetReader;
         public int dataNeeded = 0;
+
+        public PacketProcessor()
+        {
+            packetReader = new Reader.PacketReader(packetData);
+        }
 
         public void ReadHandler(byte[] data, int dataIndex, int dataSize)
         {
@@ -24,8 +31,11 @@ namespace Server.Networking
 
             var res = OnReceive(data, dataIndex, dataSize, out copyAmount);
 
-            if (res == PacketProcessResult.PacketProcessed)
+            if (res == PacketProcessResult.Processed)
+            {
                 packetData = new MemoryStream();
+                packetReader = new Reader.PacketReader(packetData);
+            }
             dataIndex += copyAmount;
 
             if (dataIndex < dataSize)
@@ -54,13 +64,13 @@ namespace Server.Networking
                     //copy what we can :(
                     packetData.Write(data, dataIndex, (dataSize - dataIndex));
                     copyAmount = (dataSize - dataIndex);
-                    return PacketProcessResult.PacketRequiresMoreData;
+                    return PacketProcessResult.RequiresData;
                 }
             }
             return HandleProcess();
         }
 
-        public virtual PacketProcessResult ProcessData() { return PacketProcessResult.PacketProcessed; }
+        public virtual PacketProcessResult ProcessData() { return PacketProcessResult.Processed; }
         PacketProcessResult HandleProcess()
         {
             var oldPosition = packetData.Position;

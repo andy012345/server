@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountTest.cs" />
+    <Compile Include="IAccount.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="Properties\orleans.codegen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -153,6 +153,12 @@ namespace Server
 
                 return base.InvokeMethodAsync<System.Boolean>(-1811403760, new object[] {@questid} );
             }
+            
+            System.Threading.Tasks.Task Server.IAccountGrain.SetPassword(string @p)
+            {
+
+                return base.InvokeMethodAsync<object>(-555567538, new object[] {@p} );
+            }
         }
     }
     
@@ -190,6 +196,8 @@ namespace Server
                                 return ((IAccountGrain)grain).AddQuestComplete((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case -1811403760: 
                                 return ((IAccountGrain)grain).QuestCompleted((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -555567538: 
+                                return ((IAccountGrain)grain).SetPassword((String)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                         }case -1277021679:  // IGrainWithStringKey
@@ -229,6 +237,8 @@ namespace Server
                             return "AddQuestComplete";
                     case -1811403760:
                             return "QuestCompleted";
+                    case -555567538:
+                            return "SetPassword";
                     
                         default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
