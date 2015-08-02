@@ -246,6 +246,161 @@ namespace Server
             }
         }
     }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    public class SessionFactory
+    {
+        
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<ISession> instead.")]
+                        public static ISession GetGrain(long primaryKey)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(ISession), primaryKey));
+                        }
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<ISession> instead.")]
+                        public static ISession GetGrain(long primaryKey, string grainClassNamePrefix)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(ISession), primaryKey, grainClassNamePrefix));
+                        }
+
+            public static ISession Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return SessionReference.Cast(grainRef);
+            }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+        [System.SerializableAttribute()]
+        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.ISession")]
+        internal class SessionReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.ISession
+        {
+            
+
+            public static ISession Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return (ISession) global::Orleans.Runtime.GrainReference.CastInternal(typeof(ISession), (global::Orleans.Runtime.GrainReference gr) => { return new SessionReference(gr);}, grainRef, 130958639);
+            }
+            
+            protected internal SessionReference(global::Orleans.Runtime.GrainReference reference) : 
+                    base(reference)
+            {
+            }
+            
+            protected internal SessionReference(SerializationInfo info, StreamingContext context) : 
+                    base(info, context)
+            {
+            }
+            
+            protected override int InterfaceId
+            {
+                get
+                {
+                    return 130958639;
+                }
+            }
+            
+            public override string InterfaceName
+            {
+                get
+                {
+                    return "Server.ISession";
+                }
+            }
+            
+            [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+            public static object _Copier(object original)
+            {
+                SessionReference input = ((SessionReference)(original));
+                return ((SessionReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
+            }
+            
+            [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+            public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+            {
+                SessionReference input = ((SessionReference)(original));
+                global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
+            }
+            
+            [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+            public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+            {
+                return SessionReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
+            }
+            
+            public override bool IsCompatible(int interfaceId)
+            {
+                return (interfaceId == this.InterfaceId);
+            }
+            
+            protected override string GetMethodName(int interfaceId, int methodId)
+            {
+                return SessionMethodInvoker.GetMethodName(interfaceId, methodId);
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.ISession", 130958639)]
+    internal class SessionMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
+    {
+        
+        int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
+        {
+            get
+            {
+                return 130958639;
+            }
+        }
+        
+        global::System.Threading.Tasks.Task<object> global::Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(global::Orleans.Runtime.IAddressable grain, int interfaceId, int methodId, object[] arguments)
+        {
+
+            try
+            {                    if (grain == null) throw new System.ArgumentNullException("grain");
+                switch (interfaceId)
+                {
+                    case 130958639:  // ISession
+                        switch (methodId)
+                        {
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }
+                    default:
+                        throw new System.InvalidCastException("interfaceId="+interfaceId);
+                }
+            }
+            catch(Exception ex)
+            {
+                var t = new System.Threading.Tasks.TaskCompletionSource<object>();
+                t.SetException(ex);
+                return t.Task;
+            }
+        }
+        
+        public static string GetMethodName(int interfaceId, int methodId)
+        {
+
+            switch (interfaceId)
+            {
+                
+                case 130958639:  // ISession
+                    switch (methodId)
+                    {
+                        
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+
+                default:
+                    throw new System.InvalidCastException("interfaceId="+interfaceId);
+            }
+        }
+    }
 }
 #pragma warning restore 162
 #pragma warning restore 219

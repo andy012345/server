@@ -24,6 +24,7 @@ namespace Server
     using System.Runtime.Serialization;
     using Orleans;
     using System.Runtime.InteropServices;
+    using Orleans.Runtime;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
@@ -99,6 +100,74 @@ namespace Server
         public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
         {
             AccountGrainState result = new AccountGrainState();
+            result.DeserializeFrom(stream);
+            return result;
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [SerializableAttribute()]
+    [global::Orleans.CodeGeneration.GrainStateAttribute("Server.Session")]
+    public class SessionState : global::Orleans.GrainState, SessionData
+    {
+        
+
+            public Byte[] @SessionKey { get; set; }
+
+            public IAccountGrain @Account { get; set; }
+
+            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
+            {   
+                object value;
+                if (values == null) { InitStateFields(); return; }
+                if (values.TryGetValue("SessionKey", out value)) @SessionKey = (Byte[]) value;
+                if (values.TryGetValue("Account", out value)) @Account = (IAccountGrain) value;
+            }
+
+            public override System.String ToString()
+            {
+                return System.String.Format("SessionState( SessionKey={0} Account={1} )", @SessionKey, @Account);
+            }
+        
+        public SessionState() : 
+                base("Server.Session")
+        {
+            this.InitStateFields();
+        }
+        
+        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
+        {
+            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
+            result["SessionKey"] = this.SessionKey;
+            result["Account"] = this.Account;
+            return result;
+        }
+        
+        private void InitStateFields()
+        {
+            this.SessionKey = default(Byte[]);
+            this.Account = default(IAccountGrain);
+        }
+        
+        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+        public static object _Copier(object original)
+        {
+            SessionState input = ((SessionState)(original));
+            return input.DeepCopy();
+        }
+        
+        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            SessionState input = ((SessionState)(original));
+            input.SerializeTo(stream);
+        }
+        
+        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            SessionState result = new SessionState();
             result.DeserializeFrom(stream);
             return result;
         }

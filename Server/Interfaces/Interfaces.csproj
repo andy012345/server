@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountTest.cs" />
+    <Compile Include="Session.cs" />
     <Compile Include="Properties\orleans.codegen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
