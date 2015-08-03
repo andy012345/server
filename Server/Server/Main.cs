@@ -34,9 +34,9 @@ namespace Server
 
 
                 //woo test code
-                IAccountGrain test = factory.GetGrain<IAccountGrain>("Bob");
+                IAccountGrain test = factory.GetGrain<IAccountGrain>("TESTACCOUNT");
 
-                test.CreateAccount("test", 2).Wait();
+                test.CreateAccount("test").Wait();
 
                 Random rnd = new Random();
 

@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 
 namespace Server.Networking
 {
-    class ServerSocket : IDisposable
+    public class ServerSocket : IDisposable
     {
         Socket sock = null;
         SocketPermission permissions = null;
         bool disposed = false;
 
         PacketProcessor processor = null;
+        public ISession session = null;
 
         public ServerSocket(AddressFamily addressFamily, SocketType sockType, ProtocolType protoType)
         {
@@ -28,10 +29,17 @@ namespace Server.Networking
 
             */
             sock = new Socket(addressFamily, sockType, protoType);
+
+            session = Orleans.GrainClient.GrainFactory.GetGrain<ISession>(Guid.NewGuid()); //create a unique session for this socket
         }
 
-        public ServerSocket(Socket s) { sock = s; }
+        public ServerSocket(Socket s)
+        {
+            sock = s;
+            session = Orleans.GrainClient.GrainFactory.GetGrain<ISession>(Guid.NewGuid()); //create a unique session for this socket
+        }
 
+        public void Send(byte[] buffer) { Send(buffer, buffer.Length); }
         public void Send(byte[] buffer, int bufferSize)
         {
             SocketAsyncEventArgs ev = new SocketAsyncEventArgs();
@@ -46,14 +54,15 @@ namespace Server.Networking
         {
             OnSend(e);
         }
-        
+
         void OnSend(SocketAsyncEventArgs e)
         {
-
+            if (e.SocketError != SocketError.Success)
+                Console.WriteLine("Socket Error {0}", e.SocketError.ToString());
         }
 
         public void Read(int bufferSize = 8192, byte[] reusebuffer = null)
-        {    
+        {
             SocketAsyncEventArgs ev = new SocketAsyncEventArgs();
             byte[] buf = reusebuffer;
             if (buf == null)
@@ -131,6 +140,7 @@ namespace Server.Networking
                 ServerSocket sck = new ServerSocket(newsocket);
                 //inherit my packet processor
                 sck.SetProcessor(processor);
+                sck.processor.sock = sck;
                 sck.Read();
             }
 

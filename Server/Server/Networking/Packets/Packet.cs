@@ -19,9 +19,11 @@ namespace Server.Networking
         public MemoryStream packetData = new MemoryStream();
         public Reader.PacketReader packetReader;
         public int dataNeeded = 0;
+        public ServerSocket sock = null;
 
-        public PacketProcessor()
+        public PacketProcessor(ServerSocket s)
         {
+            sock = s;
             packetReader = new Reader.PacketReader(packetData);
         }
 

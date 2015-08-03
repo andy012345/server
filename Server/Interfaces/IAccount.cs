@@ -23,10 +23,12 @@ namespace Server
     {
         Task Destroy();
         Task<AccountAuthResponse> Authenticate(string password);
-        Task<AccountCreateResponse> CreateAccount(string password, float test_float);
+        Task<AccountCreateResponse> CreateAccount(string password);
         Task AddQuestComplete(UInt32 questid);
 
         Task<bool> QuestCompleted(UInt32 questid);
-        Task SetPassword(string p);
+        Task SetPassword(string password);
+        Task<String> GetPassword();
+        Task<bool> IsValid();
     }
 }

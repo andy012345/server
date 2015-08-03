@@ -37,47 +37,74 @@ namespace Server
 
             if (State.Password == null || State.Password.Length == 0)
                 State.Flags |= AccountFlags.AccountNotValid;
+        }
 
-            
+        void SaveAccount()
+        {
+            if ((State.Flags & AccountFlags.AccountNotValid) == AccountFlags.AccountNotValid)
+                return;
+            WriteStateAsync();
+        }
+
+        bool IntIsValid()
+        {
+            if ((State.Flags & AccountFlags.AccountNotValid) == AccountFlags.AccountNotValid)
+                return false;
+            return true;
+        }
+
+        public async Task<bool> IsValid()
+        {
+            if ((State.Flags & AccountFlags.AccountNotValid) == AccountFlags.AccountNotValid)
+                return false;
+            return true;
         }
 
         public Task Destroy() { DeactivateOnIdle(); return TaskDone.Done; }
 
-        public Task<AccountCreateResponse> CreateAccount(string password, float test_float)
+        public Task<AccountCreateResponse> CreateAccount(string password)
         {
             if ((State.Flags & AccountFlags.AccountNotValid) != AccountFlags.AccountNotValid)
                 return Task.FromResult(AccountCreateResponse.AccountCreateDataAlreadyExists);
 
-            State.test_float = test_float;
-            State.Password = password;
-
-            WriteStateAsync();
+            State.Flags &= ~AccountFlags.AccountNotValid;
+            SetPassword(password);
 
             return Task.FromResult(AccountCreateResponse.AccountCreateOk);
         }
 
-        public Task SetPassword(string p)
+        public Task SetPassword(string password)
         {
             //encrypt wow style
             string account = this.GetPrimaryKeyString();
             string upper_account = account.ToUpper();
-            string upper_password = p.ToUpper();
+            string upper_password = password.ToUpper();
 
             string password_string = upper_account + ":" + upper_password;
 
-            SHA1Managed sh = new SHA1Managed();
-            var hash = sh.ComputeHash(Encoding.UTF8.GetBytes(password_string));
-            State.Password = BitConverter.ToString(hash);
+            State.Password = Shared.SHA.HashString(password_string);
+
+            SaveAccount();
 
             return TaskDone.Done;
         }
+
+        public Task<string> GetPassword() { return Task.FromResult(State.Password); }
 
         public Task<AccountAuthResponse> Authenticate(string password)
         {
             if ((State.Flags & AccountFlags.AccountNotValid) != 0)
                 return Task.FromResult(AccountAuthResponse.AccountAuthNotValid);
 
-            if (password != State.Password)
+            string account = this.GetPrimaryKeyString();
+            string upper_account = account.ToUpper();
+            string upper_password = password.ToUpper();
+
+            string password_string = upper_account + ":" + upper_password;
+
+            string password_hash = Shared.SHA.HashString(password_string);
+
+            if (password_hash != State.Password)
                 return Task.FromResult(AccountAuthResponse.AccountAuthNoMatch);
 
             return Task.FromResult(AccountAuthResponse.AccountAuthOk);

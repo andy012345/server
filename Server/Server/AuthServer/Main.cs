@@ -20,7 +20,7 @@ namespace Server.AuthServer
             LogonPacketHandler.Init();
 
             Networking.ServerSocket sock = new Networking.ServerSocket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            sock.SetProcessor(new Networking.LogonPacketProcessor());
+            sock.SetProcessor(new Networking.LogonPacketProcessor(sock));
             sock.Bind(9001);
             sock.Listen(50);
             sock.Accept();

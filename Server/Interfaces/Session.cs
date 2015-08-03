@@ -9,8 +9,8 @@ using Server;
 
 namespace Server
 {
-    public interface ISession : IGrainWithIntegerKey
+    public interface ISession : IGrainWithGuidKey
     {
-
+        Task<Shared.Packet> OnLogonChallenge(string AccountName);
     }
 }

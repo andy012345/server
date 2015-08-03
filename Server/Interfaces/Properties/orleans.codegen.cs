@@ -27,6 +27,8 @@ namespace Server
     using Orleans;
     using Orleans.Runtime;
     using Orleans.Core;
+    using System.Collections;
+    using Shared;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
@@ -136,10 +138,10 @@ namespace Server
                 return base.InvokeMethodAsync<Server.AccountAuthResponse>(1391356785, new object[] {@password} );
             }
             
-            System.Threading.Tasks.Task<Server.AccountCreateResponse> Server.IAccountGrain.CreateAccount(string @password, float @test_float)
+            System.Threading.Tasks.Task<Server.AccountCreateResponse> Server.IAccountGrain.CreateAccount(string @password)
             {
 
-                return base.InvokeMethodAsync<Server.AccountCreateResponse>(-1771626063, new object[] {@password, @test_float} );
+                return base.InvokeMethodAsync<Server.AccountCreateResponse>(-2074345984, new object[] {@password} );
             }
             
             System.Threading.Tasks.Task Server.IAccountGrain.AddQuestComplete(uint @questid)
@@ -154,10 +156,22 @@ namespace Server
                 return base.InvokeMethodAsync<System.Boolean>(-1811403760, new object[] {@questid} );
             }
             
-            System.Threading.Tasks.Task Server.IAccountGrain.SetPassword(string @p)
+            System.Threading.Tasks.Task Server.IAccountGrain.SetPassword(string @password)
             {
 
-                return base.InvokeMethodAsync<object>(-555567538, new object[] {@p} );
+                return base.InvokeMethodAsync<object>(-555567538, new object[] {@password} );
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IAccountGrain.GetPassword()
+            {
+
+                return base.InvokeMethodAsync<System.String>(-1288502433, null );
+            }
+            
+            System.Threading.Tasks.Task<bool> Server.IAccountGrain.IsValid()
+            {
+
+                return base.InvokeMethodAsync<System.Boolean>(-663875885, null );
             }
         }
     }
@@ -190,14 +204,18 @@ namespace Server
                                 return ((IAccountGrain)grain).Destroy().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case 1391356785: 
                                 return ((IAccountGrain)grain).Authenticate((String)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -1771626063: 
-                                return ((IAccountGrain)grain).CreateAccount((String)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -2074345984: 
+                                return ((IAccountGrain)grain).CreateAccount((String)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 1181445371: 
                                 return ((IAccountGrain)grain).AddQuestComplete((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case -1811403760: 
                                 return ((IAccountGrain)grain).QuestCompleted((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -555567538: 
                                 return ((IAccountGrain)grain).SetPassword((String)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1288502433: 
+                                return ((IAccountGrain)grain).GetPassword().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -663875885: 
+                                return ((IAccountGrain)grain).IsValid().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                         }case -1277021679:  // IGrainWithStringKey
@@ -231,7 +249,7 @@ namespace Server
                             return "Destroy";
                     case 1391356785:
                             return "Authenticate";
-                    case -1771626063:
+                    case -2074345984:
                             return "CreateAccount";
                     case 1181445371:
                             return "AddQuestComplete";
@@ -239,6 +257,10 @@ namespace Server
                             return "QuestCompleted";
                     case -555567538:
                             return "SetPassword";
+                    case -1288502433:
+                            return "GetPassword";
+                    case -663875885:
+                            return "IsValid";
                     
                         default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
@@ -264,13 +286,13 @@ namespace Server
         
 
                         [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<ISession> instead.")]
-                        public static ISession GetGrain(long primaryKey)
+                        public static ISession GetGrain(System.Guid primaryKey)
                         {
                             return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(ISession), primaryKey));
                         }
 
                         [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<ISession> instead.")]
-                        public static ISession GetGrain(long primaryKey, string grainClassNamePrefix)
+                        public static ISession GetGrain(System.Guid primaryKey, string grainClassNamePrefix)
                         {
                             return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(ISession), primaryKey, grainClassNamePrefix));
                         }
@@ -350,6 +372,12 @@ namespace Server
             {
                 return SessionMethodInvoker.GetMethodName(interfaceId, methodId);
             }
+            
+            System.Threading.Tasks.Task<Shared.Packet> Server.ISession.OnLogonChallenge(string @AccountName)
+            {
+
+                return base.InvokeMethodAsync<Shared.Packet>(636239742, new object[] {@AccountName} );
+            }
         }
     }
     
@@ -377,6 +405,8 @@ namespace Server
                     case 130958639:  // ISession
                         switch (methodId)
                         {
+                            case 636239742: 
+                                return ((ISession)grain).OnLogonChallenge((String)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                         }
@@ -401,7 +431,9 @@ namespace Server
                 case 130958639:  // ISession
                     switch (methodId)
                     {
-                        
+                        case 636239742:
+                            return "OnLogonChallenge";
+                    
                         default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                     }
@@ -409,6 +441,173 @@ namespace Server
                 default:
                     throw new System.InvalidCastException("interfaceId="+interfaceId);
             }
+        }
+    }
+}
+namespace InterfacesSerializers
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using Orleans.Serialization;
+    using Shared;
+    using System.IO;
+    using System.Text;
+    using System.Collections;
+    using System.Runtime.InteropServices;
+    using System.Numerics;
+    using System.Runtime.Serialization;
+    
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Shared_PacketSerialization
+    {
+        
+        static Shared_PacketSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Shared.Packet input = ((Shared.Packet)(original));
+            Shared.Packet result = new Shared.Packet();
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            result.strm = ((System.IO.MemoryStream)(Orleans.Serialization.SerializationManager.DeepCopyInner(input.strm)));
+            result.w = ((Shared.PacketWriter)(Orleans.Serialization.SerializationManager.DeepCopyInner(input.w)));
+            return result;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Shared.Packet input = ((Shared.Packet)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.strm, stream, typeof(System.IO.MemoryStream));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.w, stream, typeof(Shared.PacketWriter));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Shared.Packet result = new Shared.Packet();
+            result.strm = ((System.IO.MemoryStream)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(System.IO.MemoryStream), stream)));
+            result.w = ((Shared.PacketWriter)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(Shared.PacketWriter), stream)));
+            return result;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.Packet), DeepCopier, Serializer, Deserializer);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Shared_PacketWriterSerialization
+    {
+        
+        private static System.Reflection.FieldInfo fieldInfo1;
+        
+        private static System.Reflection.FieldInfo fieldInfo2;
+        
+        private static System.Reflection.FieldInfo fieldInfo3;
+        
+        private static System.Reflection.FieldInfo fieldInfo4;
+        
+        private static System.Reflection.FieldInfo fieldInfo5;
+        
+        private static System.Reflection.FieldInfo fieldInfo6;
+        
+        private static System.Reflection.FieldInfo fieldInfo7;
+        
+        private static System.Reflection.FieldInfo fieldInfo8;
+        
+        static Shared_PacketWriterSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Shared.PacketWriter input = ((Shared.PacketWriter)(original));
+            Shared.PacketWriter result = ((Shared.PacketWriter)(System.Runtime.Serialization.FormatterServices.GetUninitializedObject(typeof(Shared.PacketWriter))));
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            object objResult = ((object)(result));
+            object temp1 = ((System.IO.Stream)(Orleans.Serialization.SerializationManager.DeepCopyInner(fieldInfo1.GetValue(input))));
+            fieldInfo1.SetValue(objResult, temp1);
+            object temp2 = ((byte[])(Orleans.Serialization.SerializationManager.DeepCopyInner(fieldInfo2.GetValue(input))));
+            fieldInfo2.SetValue(objResult, temp2);
+            object temp3 = ((System.Text.Encoder)(Orleans.Serialization.SerializationManager.DeepCopyInner(fieldInfo3.GetValue(input))));
+            fieldInfo3.SetValue(objResult, temp3);
+            object temp4 = ((System.Text.Encoding)(Orleans.Serialization.SerializationManager.DeepCopyInner(fieldInfo4.GetValue(input))));
+            fieldInfo4.SetValue(objResult, temp4);
+            object temp5 = ((byte[])(Orleans.Serialization.SerializationManager.DeepCopyInner(fieldInfo5.GetValue(input))));
+            fieldInfo5.SetValue(objResult, temp5);
+            object temp6 = fieldInfo6.GetValue(input);
+            fieldInfo6.SetValue(objResult, temp6);
+            object temp7 = fieldInfo7.GetValue(input);
+            fieldInfo7.SetValue(objResult, temp7);
+            object temp8 = ((char[])(Orleans.Serialization.SerializationManager.DeepCopyInner(fieldInfo8.GetValue(input))));
+            fieldInfo8.SetValue(objResult, temp8);
+            return objResult;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Shared.PacketWriter input = ((Shared.PacketWriter)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo1.GetValue(input), stream, typeof(System.IO.Stream));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo2.GetValue(input), stream, typeof(byte[]));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo3.GetValue(input), stream, typeof(System.Text.Encoder));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo4.GetValue(input), stream, typeof(System.Text.Encoding));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo5.GetValue(input), stream, typeof(byte[]));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo6.GetValue(input), stream, typeof(bool));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo7.GetValue(input), stream, typeof(int));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo8.GetValue(input), stream, typeof(char[]));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Shared.PacketWriter result = ((Shared.PacketWriter)(System.Runtime.Serialization.FormatterServices.GetUninitializedObject(typeof(Shared.PacketWriter))));
+            object objResult = ((object)(result));
+            object temp1 = ((System.IO.Stream)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(System.IO.Stream), stream)));
+            fieldInfo1.SetValue(objResult, temp1);
+            object temp2 = ((byte[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte[]), stream)));
+            fieldInfo2.SetValue(objResult, temp2);
+            object temp3 = ((System.Text.Encoder)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(System.Text.Encoder), stream)));
+            fieldInfo3.SetValue(objResult, temp3);
+            object temp4 = ((System.Text.Encoding)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(System.Text.Encoding), stream)));
+            fieldInfo4.SetValue(objResult, temp4);
+            object temp5 = ((byte[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte[]), stream)));
+            fieldInfo5.SetValue(objResult, temp5);
+            object temp6 = ((bool)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(bool), stream)));
+            fieldInfo6.SetValue(objResult, temp6);
+            object temp7 = ((int)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(int), stream)));
+            fieldInfo7.SetValue(objResult, temp7);
+            object temp8 = ((char[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(char[]), stream)));
+            fieldInfo8.SetValue(objResult, temp8);
+            return objResult;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.PacketWriter), DeepCopier, Serializer, Deserializer);
+            fieldInfo1 = typeof(Shared.PacketWriter).GetField("OutStream", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo2 = typeof(System.IO.BinaryWriter).GetField("_buffer", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo3 = typeof(System.IO.BinaryWriter).GetField("_encoder", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo4 = typeof(System.IO.BinaryWriter).GetField("_encoding", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo5 = typeof(System.IO.BinaryWriter).GetField("_largeByteBuffer", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo6 = typeof(System.IO.BinaryWriter).GetField("_leaveOpen", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo7 = typeof(System.IO.BinaryWriter).GetField("_maxChars", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo8 = typeof(System.IO.BinaryWriter).GetField("_tmpOneCharBuffer", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
         }
     }
 }

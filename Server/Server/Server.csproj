@@ -183,6 +183,10 @@
       <Project>{6381ed6b-b6c1-4aee-a9be-37335169df58}</Project>
       <Name>Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{5ae2a41f-879d-4412-b7ed-27d04c33a21f}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

@@ -28,7 +28,7 @@ namespace Server.Networking
 
     class LogonPacketProcessor : PacketProcessor
     {
-        public LogonPacketProcessor() { dataNeeded = 1; } //opcode
+        public LogonPacketProcessor(ServerSocket s) : base(s) { dataNeeded = 1; } //opcode
 
         AuthOPCodes opcode;
 
@@ -87,6 +87,13 @@ namespace Server.Networking
             return PacketHandlers[opshort];
         }
 
+        [PacketHandler(AuthOPCodes.AUTH_LOGON_PROOF)]
+        public static PacketProcessResult HandleLogonAuthProof(PacketProcessor p)
+        {
+            Console.WriteLine("RECIEVED PROOF");
+            return PacketProcessResult.Processed;
+        }
+
         [PacketHandler(AuthOPCodes.AUTH_LOGON_CHALLENGE)]
         public static PacketProcessResult HandleLogonAuthChallenge(PacketProcessor p)
         {
@@ -117,6 +124,12 @@ namespace Server.Networking
             var ipaddr = new IPAddress(p.packetReader.ReadBytes(4));
             var account = p.packetReader.ReadString();
 
+            //todo: implement async callback and remove this
+            if (p.sock != null && p.sock.session != null)
+            {
+                var pkt = p.sock.session.OnLogonChallenge(account).Result;
+                p.sock.Send(pkt.strm.ToArray());
+            }
 
             return PacketProcessResult.Processed;
         }

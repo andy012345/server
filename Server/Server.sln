@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grains", "Grains\Grains.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{6381ED6B-B6C1-4AEE-A9BE-37335169DF58}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{5AE2A41F-879D-4412-B7ED-27D04C33A21F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6381ED6B-B6C1-4AEE-A9BE-37335169DF58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6381ED6B-B6C1-4AEE-A9BE-37335169DF58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6381ED6B-B6C1-4AEE-A9BE-37335169DF58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AE2A41F-879D-4412-B7ED-27D04C33A21F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AE2A41F-879D-4412-B7ED-27D04C33A21F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AE2A41F-879D-4412-B7ED-27D04C33A21F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AE2A41F-879D-4412-B7ED-27D04C33A21F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

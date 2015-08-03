@@ -133,9 +133,11 @@ namespace Orleans.Storage.MySQLDB
             string keyAsString = null;
             string keyExt = null;
 
-            bool success = true;
+            bool success = false;
 
-            try { keyAsString = grainReference.GetPrimaryKeyLong().ToString(); }
+            try { keyAsString = grainReference.GetPrimaryKeyLong().ToString(); success = true; }
+            catch (Exception e) { success = false; }
+            try { keyAsString = grainReference.GetPrimaryKey().ToString(); success = true; }
             catch (Exception e) { success = false; }
             if (!success)
             {
