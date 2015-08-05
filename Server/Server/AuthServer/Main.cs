@@ -12,7 +12,7 @@ namespace Server.AuthServer
 {
     public class Main
     {
-        public static Networking.LogonPacketHandler LogonPacketHandler = new Networking.LogonPacketHandler();
+        public static LogonPacketHandler LogonPacketHandler = new LogonPacketHandler();
 
         public static void Run()
         {
@@ -47,7 +47,7 @@ namespace Server.AuthServer
             LogonPacketHandler.Init();
 
             Networking.ServerSocket sock = new Networking.ServerSocket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            sock.SetProcessor(new Networking.LogonPacketProcessor());
+            sock.SetProcessor(new LogonPacketProcessor());
             sock.Bind(ushort.Parse(port));
             sock.Listen(listenbacklog == null ? 50 : int.Parse(listenbacklog));
             sock.Accept();

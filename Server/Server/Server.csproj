@@ -148,6 +148,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthServer\Main.cs" />
+    <Compile Include="AuthServer\PacketHandlers\AuthChallenge.cs" />
+    <Compile Include="AuthServer\PacketHandlers\RealmList.cs" />
+    <Compile Include="AuthServer\PacketHandlers\AuthProof.cs" />
     <Compile Include="AuthServer\Packet\LogonPacket.cs" />
     <Compile Include="Networking\Packets\Packet.cs" />
     <Compile Include="Networking\Reader\PacketReader.cs" />

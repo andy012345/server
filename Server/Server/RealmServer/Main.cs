@@ -46,7 +46,7 @@ namespace Server.RealmServer
                 if (realmname == null)
                     throw new Exception("Config-Realm.xml includes a Realm entry that does not specify Name");
 
-                RealmPacketHandler 
+                //RealmPacketHandler 
             }
         }
     }

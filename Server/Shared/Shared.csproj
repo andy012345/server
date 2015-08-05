@@ -47,6 +47,7 @@
     <Compile Include="Enums\AuthServerEnums.cs" />
     <Compile Include="Enums\Session.cs" />
     <Compile Include="Enums\SocketCommand.cs" />
+    <Compile Include="PacketHandlerAttrib.cs" />
     <Compile Include="PacketWriter.cs" />
     <Compile Include="SHA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
