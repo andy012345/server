@@ -31,7 +31,7 @@ namespace Server
     [StorageProvider(ProviderName = "Default")]
     public class AccountGrain : Grain<AccountData>, IAccountGrain
     {
-        List<ISession> ActiveSessions;
+        List<ISession> ActiveSessions = new List<ISession>();
         ISession AuthSession;
         ISession RealmSession;
 

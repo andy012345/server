@@ -18,6 +18,5 @@ namespace Server.AuthServer
                 p.sock.session.OnRealmList();
             return PacketProcessResult.Processed;
         }
-
     }
 }

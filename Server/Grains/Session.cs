@@ -68,9 +68,9 @@ namespace Server
             return TaskDone.Done;
         }
         
-        public async Task OnLogonChallenge(string AccountName)
+        public async Task OnLogonChallenge(AuthLogonChallenge challenge)
         {
-            Account = GrainFactory.GetGrain<IAccountGrain>(AccountName);
+            Account = GrainFactory.GetGrain<IAccountGrain>(challenge.account);
 
             if (!(await Account.IsValid()))
             {
@@ -86,7 +86,7 @@ namespace Server
             //test
 
             string passwordPlain = await Account.GetPasswordPlain();
-            string SRPHash = AccountName.ToUpper() + ":" + passwordPlain.ToUpper();
+            string SRPHash = challenge.account.ToUpper() + ":" + passwordPlain.ToUpper();
             var SRPHashBytes = Encoding.UTF8.GetBytes(SRPHash);
             var SRPCreds = BigInt.Hash(SRPHashBytes); //The bytes were g
 

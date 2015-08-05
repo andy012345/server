@@ -46,6 +46,7 @@ namespace Server.AuthServer
             //just some test setup for now
             LogonPacketHandler.Init();
 
+
             Networking.ServerSocket sock = new Networking.ServerSocket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             sock.SetProcessor(new LogonPacketProcessor());
             sock.Bind(ushort.Parse(port));

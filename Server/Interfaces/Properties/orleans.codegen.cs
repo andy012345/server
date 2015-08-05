@@ -403,10 +403,10 @@ namespace Server
                 return SessionMethodInvoker.GetMethodName(interfaceId, methodId);
             }
             
-            System.Threading.Tasks.Task Server.ISession.OnLogonChallenge(string @AccountName)
+            System.Threading.Tasks.Task Server.ISession.OnLogonChallenge(Shared.AuthLogonChallenge @challenge)
             {
 
-                return base.InvokeMethodAsync<object>(636239742, new object[] {@AccountName} );
+                return base.InvokeMethodAsync<object>(715203915, new object[] {@challenge} );
             }
             
             System.Threading.Tasks.Task Server.ISession.OnLogonProof(Shared.AuthLogonProof @proof)
@@ -465,8 +465,8 @@ namespace Server
                     case 130958639:  // ISession
                         switch (methodId)
                         {
-                            case 636239742: 
-                                return ((ISession)grain).OnLogonChallenge((String)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 715203915: 
+                                return ((ISession)grain).OnLogonChallenge((Shared.AuthLogonChallenge)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case -174724446: 
                                 return ((ISession)grain).OnLogonProof((Shared.AuthLogonProof)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case 105167316: 
@@ -501,7 +501,7 @@ namespace Server
                 case 130958639:  // ISession
                     switch (methodId)
                     {
-                        case 636239742:
+                        case 715203915:
                             return "OnLogonChallenge";
                     case -174724446:
                             return "OnLogonProof";
@@ -531,9 +531,79 @@ namespace InterfacesSerializers
     using System.Reflection;
     using Orleans.Serialization;
     using Shared;
+    using System.Net;
     using System.Collections;
     using System.Runtime.InteropServices;
     
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Shared_AuthLogonChallengeSerialization
+    {
+        
+        static Shared_AuthLogonChallengeSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Shared.AuthLogonChallenge input = ((Shared.AuthLogonChallenge)(original));
+            Shared.AuthLogonChallenge result = default(Shared.AuthLogonChallenge);
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            result.account = input.account;
+            result.category = input.category;
+            result.client = input.client;
+            result.client_build = input.client_build;
+            result.client_major = input.client_major;
+            result.client_minor = input.client_minor;
+            result.client_revision = input.client_revision;
+            result.ipaddr = ((System.Net.IPAddress)(Orleans.Serialization.SerializationManager.DeepCopyInner(input.ipaddr)));
+            result.locale = input.locale;
+            result.os = input.os;
+            result.processor = input.processor;
+            return result;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Shared.AuthLogonChallenge input = ((Shared.AuthLogonChallenge)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.account, stream, typeof(string));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.category, stream, typeof(int));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.client, stream, typeof(string));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.client_build, stream, typeof(ushort));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.client_major, stream, typeof(byte));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.client_minor, stream, typeof(byte));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.client_revision, stream, typeof(byte));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.ipaddr, stream, typeof(System.Net.IPAddress));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.locale, stream, typeof(string));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.os, stream, typeof(string));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.processor, stream, typeof(string));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Shared.AuthLogonChallenge result = default(Shared.AuthLogonChallenge);
+            result.account = ((string)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string), stream)));
+            result.category = ((int)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(int), stream)));
+            result.client = ((string)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string), stream)));
+            result.client_build = ((ushort)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(ushort), stream)));
+            result.client_major = ((byte)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte), stream)));
+            result.client_minor = ((byte)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte), stream)));
+            result.client_revision = ((byte)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte), stream)));
+            result.ipaddr = ((System.Net.IPAddress)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(System.Net.IPAddress), stream)));
+            result.locale = ((string)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string), stream)));
+            result.os = ((string)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string), stream)));
+            result.processor = ((string)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string), stream)));
+            return result;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.AuthLogonChallenge), DeepCopier, Serializer, Deserializer);
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]

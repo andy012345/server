@@ -12,7 +12,7 @@ namespace Server
 {
     public interface ISession : IGrainWithGuidKey
     {
-        Task OnLogonChallenge(string AccountName);
+        Task OnLogonChallenge(AuthLogonChallenge challenge);
         Task OnLogonProof(AuthLogonProof proof);
         Task OnRealmList();
         Task SetSessionType(SessionType type);

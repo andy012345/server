@@ -29,20 +29,22 @@ namespace Server.AuthServer
                 return PacketProcessResult.RequiresData;
             }
 
-            var client = p.packetReader.ReadFourCC();
-            var client_major = p.packetReader.ReadByte();
-            var client_minor = p.packetReader.ReadByte();
-            var client_revision = p.packetReader.ReadByte();
-            var client_build = p.packetReader.ReadUInt16();
-            var processor = p.packetReader.ReadFourCC();
-            var os = p.packetReader.ReadFourCC();
-            var locale = p.packetReader.ReadFourCC();
-            var timezone = p.packetReader.ReadInt32();
-            var ipaddr = new IPAddress(p.packetReader.ReadBytes(4));
-            var account = p.packetReader.ReadString();
+            AuthLogonChallenge challenge = new AuthLogonChallenge();
+
+            challenge.client = p.packetReader.ReadFourCC();
+            challenge.client_major = p.packetReader.ReadByte();
+            challenge.client_minor = p.packetReader.ReadByte();
+            challenge.client_revision = p.packetReader.ReadByte();
+            challenge.client_build = p.packetReader.ReadUInt16();
+            challenge.processor = p.packetReader.ReadFourCC();
+            challenge.os = p.packetReader.ReadFourCC();
+            challenge.locale = p.packetReader.ReadFourCC();
+            challenge.category = p.packetReader.ReadInt32();
+            challenge.ipaddr = new IPAddress(p.packetReader.ReadBytes(4));
+            challenge.account = p.packetReader.ReadString();
 
             if (p.sock != null && p.sock.session != null)
-                p.sock.session.OnLogonChallenge(account);
+                p.sock.session.OnLogonChallenge(challenge);
 
             return PacketProcessResult.Processed;
         }

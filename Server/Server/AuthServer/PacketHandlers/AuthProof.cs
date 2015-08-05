@@ -29,6 +29,5 @@ namespace Server.AuthServer
 
             return PacketProcessResult.Processed;
         }
-
     }
 }
