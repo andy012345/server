@@ -8,12 +8,14 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
+using Shared;
 
 namespace Server
 {
     public interface AccountData : IGrainState
     {
         string Password { get; set; }
+        string PasswordPlain { get; set; }
         float test_float { get; set; }
         HashSet<UInt32> completed_quests_example_test { get; set; }
         AccountFlags Flags { get; set; }
@@ -29,7 +31,9 @@ namespace Server
     [StorageProvider(ProviderName = "Default")]
     public class AccountGrain : Grain<AccountData>, IAccountGrain
     {
-        BigInteger EncryptedPassword;
+        List<ISession> ActiveSessions;
+        ISession AuthSession;
+        ISession RealmSession;
 
         public override async Task OnActivateAsync()
         {
@@ -53,11 +57,9 @@ namespace Server
             return true;
         }
 
-        public async Task<bool> IsValid()
+        public Task<bool> IsValid()
         {
-            if ((State.Flags & AccountFlags.AccountNotValid) == AccountFlags.AccountNotValid)
-                return false;
-            return true;
+            return Task.FromResult(IntIsValid());
         }
 
         public Task Destroy() { DeactivateOnIdle(); return TaskDone.Done; }
@@ -83,6 +85,8 @@ namespace Server
             string password_string = upper_account + ":" + upper_password;
 
             State.Password = Shared.SHA.HashString(password_string);
+            State.PasswordPlain = password;
+
 
             SaveAccount();
 
@@ -90,6 +94,7 @@ namespace Server
         }
 
         public Task<string> GetPassword() { return Task.FromResult(State.Password); }
+        public Task<string> GetPasswordPlain() { return Task.FromResult(State.PasswordPlain); }
 
         public Task<AccountAuthResponse> Authenticate(string password)
         {
@@ -122,5 +127,55 @@ namespace Server
             return Task.FromResult(State.completed_quests_example_test.Contains(questid));
         }
 
+        public async Task AddSession(ISession s)
+        {
+            var type = await s.GetSessionType();
+
+            switch (type)
+            {
+                case SessionType.AuthSession:
+                    {
+                        if (AuthSession != s)
+                        {
+                            if (AuthSession != null)
+                                await AuthSession.Disconnect();
+                            if (RealmSession != null)
+                                await RealmSession.Disconnect();
+                        }
+                        AuthSession = s;
+                    } break;
+                case SessionType.RealmSession:
+                    {
+                        if (RealmSession != null && s != RealmSession)
+                            await RealmSession.Disconnect(); //disconnect old session
+                        RealmSession = s;
+                    } break;
+            }
+
+            ActiveSessions.Add(s);
+        }
+
+        public async Task RemoveSession(ISession s, bool disconnect = false)
+        {
+            var type = await s.GetSessionType();
+            switch (type)
+            {
+                case SessionType.AuthSession:
+                    {
+                        AuthSession = null;
+                    }
+                    break;
+                case SessionType.RealmSession:
+                    {
+                        RealmSession = null;
+                    }
+                    break;
+            }
+
+            ActiveSessions.Remove(s);
+
+            if (disconnect)
+                await s.Disconnect();
+        }
     }
 }

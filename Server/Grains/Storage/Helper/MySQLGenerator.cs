@@ -69,13 +69,11 @@ namespace Server
 
             foreach (var tmp in dict)
             {
-                try
-                {
-                    var propinfo = type.GetField(tmp.Key, BindingFlags.Instance | BindingFlags.Public);
+                var propinfo = type.GetField(tmp.Key, BindingFlags.Instance | BindingFlags.Public);
+
+                if (propinfo != null)
                     propinfo.SetValue(obj, tmp.Value);
-                }
-                catch (Exception e)
-                { }
+
             }
 
             return (T)obj;

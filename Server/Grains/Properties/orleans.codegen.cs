@@ -37,6 +37,8 @@ namespace Server
 
             public String @Password { get; set; }
 
+            public String @PasswordPlain { get; set; }
+
             public Single @test_float { get; set; }
 
             public HashSet<UInt32> @completed_quests_example_test { get; set; }
@@ -48,6 +50,7 @@ namespace Server
                 object value;
                 if (values == null) { InitStateFields(); return; }
                 if (values.TryGetValue("Password", out value)) @Password = (String) value;
+                if (values.TryGetValue("PasswordPlain", out value)) @PasswordPlain = (String) value;
                 if (values.TryGetValue("test_float", out value)) @test_float = (Single) value;
                 if (values.TryGetValue("completed_quests_example_test", out value)) @completed_quests_example_test = (HashSet<UInt32>) value;
                 if (values.TryGetValue("Flags", out value)) @Flags = (AccountFlags) value;
@@ -55,7 +58,7 @@ namespace Server
 
             public override System.String ToString()
             {
-                return System.String.Format("AccountGrainState( Password={0} test_float={1} completed_quests_example_test={2} Flags={3} )", @Password, @test_float, @completed_quests_example_test, @Flags);
+                return System.String.Format("AccountGrainState( Password={0} PasswordPlain={1} test_float={2} completed_quests_example_test={3} Flags={4} )", @Password, @PasswordPlain, @test_float, @completed_quests_example_test, @Flags);
             }
         
         public AccountGrainState() : 
@@ -68,6 +71,7 @@ namespace Server
         {
             System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
             result["Password"] = this.Password;
+            result["PasswordPlain"] = this.PasswordPlain;
             result["test_float"] = this.test_float;
             result["completed_quests_example_test"] = this.completed_quests_example_test;
             result["Flags"] = this.Flags;
@@ -77,6 +81,7 @@ namespace Server
         private void InitStateFields()
         {
             this.Password = default(String);
+            this.PasswordPlain = default(String);
             this.test_float = default(Single);
             this.completed_quests_example_test = new HashSet<UInt32>();
             this.Flags = default(AccountFlags);

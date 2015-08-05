@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- 
+	Just a few options to get running, for more advanced, see database Server.RealmEntry with the GUID of RealmID
+-->
+
+<RealmServer Port="9002" ListenBacklog="50" RealmID="1" Name="Test Realm" />
+
+<!-- 
+  We can run multiple realms on a single instance, but it is not recommended. Useful to keep realms in the event of a hardware failure.
+-->
+
+<!-- <RealmServer Port="9003" ListenBacklog="50" RealmID="2" Name="Second Realm" -->

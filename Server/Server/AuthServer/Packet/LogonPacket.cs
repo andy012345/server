@@ -6,35 +6,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Net;
+using Shared;
 
 namespace Server.Networking
 {
-    public enum AuthOPCodes : byte
-    {
-        AUTH_LOGON_CHALLENGE = 0x00,
-        AUTH_LOGON_PROOF = 0x01,
-        AUTH_RECONNECT_CHALLENGE = 0x02,
-        AUTH_RECONNECT_PROOF = 0x03,
-        REALM_LIST = 0x10,
-        XFER_INITIATE = 0x30,
-        XFER_DATA = 0x31,
-        XFER_ACCEPT = 0x32,
-        XFER_RESUME = 0x33,
-        XFER_CANCEL = 0x34,
-        Maximum = 100,
-
-        Unknown = byte.MaxValue,
-    }
-
     class LogonPacketProcessor : PacketProcessor
     {
-        public LogonPacketProcessor(ServerSocket s) : base(s) { dataNeeded = 1; } //opcode
+        public LogonPacketProcessor() : base() { dataNeeded = DefaultDataNeeded(); } //opcode
 
-        AuthOPCodes opcode;
+        AuthOp opcode;
+
+        public override int DefaultDataNeeded() { return 1; }
 
         public override PacketProcessResult ProcessData()
         {
-            opcode = (AuthOPCodes)packetReader.ReadByte();
+            opcode = (AuthOp)packetReader.ReadByte();
 
             return ProcessPacket();
         }
@@ -79,7 +65,7 @@ namespace Server.Networking
             }
         }
 
-        public Func<PacketProcessor, PacketProcessResult> GetHandler(AuthOPCodes opcode)
+        public Func<PacketProcessor, PacketProcessResult> GetHandler(AuthOp opcode)
         {
             UInt16 opshort = (UInt16)opcode;
             if (!PacketHandlers.ContainsKey(opshort))
@@ -87,14 +73,27 @@ namespace Server.Networking
             return PacketHandlers[opshort];
         }
 
-        [PacketHandler(AuthOPCodes.AUTH_LOGON_PROOF)]
+        [PacketHandler(AuthOp.AUTH_LOGON_PROOF)]
         public static PacketProcessResult HandleLogonAuthProof(PacketProcessor p)
         {
-            Console.WriteLine("RECIEVED PROOF");
+            p.dataNeeded = 75; //1 op, 32 A, 20 M1, 20 crc_hash, 1 number_of_keys, 1 unk
+            if (p.packetData.Length < p.dataNeeded) return PacketProcessResult.RequiresData;
+
+            AuthLogonProof proof = new AuthLogonProof();
+
+            proof.A = p.packetReader.ReadBytes(32);
+            proof.M1 = p.packetReader.ReadBytes(20);
+            proof.crchash = p.packetReader.ReadBytes(20);
+            proof.number_of_keys = p.packetReader.ReadByte();
+            proof.unk = p.packetReader.ReadByte();
+
+            if (p.sock != null && p.sock.session != null)
+                p.sock.session.OnLogonProof(proof);           
+
             return PacketProcessResult.Processed;
         }
 
-        [PacketHandler(AuthOPCodes.AUTH_LOGON_CHALLENGE)]
+        [PacketHandler(AuthOp.AUTH_LOGON_CHALLENGE)]
         public static PacketProcessResult HandleLogonAuthChallenge(PacketProcessor p)
         {
             if (p.packetData.Length < 4)
@@ -124,13 +123,18 @@ namespace Server.Networking
             var ipaddr = new IPAddress(p.packetReader.ReadBytes(4));
             var account = p.packetReader.ReadString();
 
-            //todo: implement async callback and remove this
             if (p.sock != null && p.sock.session != null)
-            {
-                var pkt = p.sock.session.OnLogonChallenge(account).Result;
-                p.sock.Send(pkt.strm.ToArray());
-            }
+                p.sock.session.OnLogonChallenge(account);
 
+            return PacketProcessResult.Processed;
+        }
+
+        [PacketHandler(AuthOp.REALM_LIST)]
+        public static PacketProcessResult HandleRealmList(PacketProcessor p)
+        {
+            p.dataNeeded = 5; if (p.packetData.Length < p.dataNeeded) return PacketProcessResult.RequiresData;
+            if (p.sock != null && p.sock.session != null)
+                p.sock.session.OnRealmList();
             return PacketProcessResult.Processed;
         }
     }
@@ -153,7 +157,7 @@ namespace Server.Networking
         public UInt16 Id = 0;
         public PacketFlags Flags = PacketFlags.None;
 
-        public PacketHandlerAttribute(AuthOPCodes op)
+        public PacketHandlerAttribute(AuthOp op)
         {
             Type = PacketType.AuthPacket;
             Id = (UInt16)op;

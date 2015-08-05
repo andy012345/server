@@ -8,6 +8,10 @@
       <!--<Provider Type="Orleans.Storage.AzureTableStorage" Name="AzureStore" DataConnectionString="DefaultEndpointsProtocol=https;AccountName=MYACCOUNTNAME;AccountKey=MYACCOUNTKEY" />-->
       <Provider Type="Orleans.Storage.MySQLDB.MySQLJSONDBStorageProvider" Name="Default" DataConnectionString="server=127.0.0.1;userid=USER;password=PASSWORD;database=DATABASE;" />
     </StorageProviders>
+    <StreamProviders>
+      <Provider Type="Orleans.Providers.Streams.SimpleMessageStream.SimpleMessageStreamProvider" Name="PacketStream" FireAndForgetDelivery="false"/>
+      <!--<Provider Type="Orleans.Providers.Streams.AzureQueue.AzureQueueStreamProvider" Name="AzureQueueProvider"/>-->
+    </StreamProviders>
     <SeedNode Address="localhost" Port="11111" />
   </Globals>
   <Defaults>

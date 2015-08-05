@@ -16,16 +16,18 @@ namespace Server.Networking
 
     public class PacketProcessor
     {
-        public MemoryStream packetData = new MemoryStream();
+        public MemoryStream packetData;
         public Reader.PacketReader packetReader;
         public int dataNeeded = 0;
         public ServerSocket sock = null;
 
-        public PacketProcessor(ServerSocket s)
-        {
-            sock = s;
-            packetReader = new Reader.PacketReader(packetData);
-        }
+        public PacketProcessor() { Reset(); }
+
+        void Reset() { packetData = new MemoryStream(); packetReader = new Reader.PacketReader(packetData); dataNeeded = DefaultDataNeeded(); }
+
+        public virtual int DefaultDataNeeded() { return 0; }
+
+        public void SetSocket(ServerSocket s) { sock = s; }
 
         public void ReadHandler(byte[] data, int dataIndex, int dataSize)
         {
@@ -37,6 +39,7 @@ namespace Server.Networking
             {
                 packetData = new MemoryStream();
                 packetReader = new Reader.PacketReader(packetData);
+                dataNeeded = DefaultDataNeeded();
             }
             dataIndex += copyAmount;
 

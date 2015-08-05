@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 using Orleans;
 using Orleans.Concurrency;
 using Server;
+using Shared;
 
 namespace Server
 {
     public interface ISession : IGrainWithGuidKey
     {
-        Task<Shared.Packet> OnLogonChallenge(string AccountName);
+        Task OnLogonChallenge(string AccountName);
+        Task OnLogonProof(AuthLogonProof proof);
+        Task OnRealmList();
+        Task SetSessionType(SessionType type);
+        Task<SessionType> GetSessionType();
+        Task Disconnect();
     }
 }

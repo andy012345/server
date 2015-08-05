@@ -6,10 +6,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Orleans.Streams;
+using Shared;
+using System.Collections;
 
 namespace Server
 {
@@ -23,70 +25,255 @@ namespace Server
     [StorageProvider(ProviderName = "Default")]
     class Session : Grain<SessionData>, ISession
     {
-        BigInteger N;
-        BigInteger g;
-        BigInteger s;
-        BigInteger v;
-        BigInteger b;
-        BigInteger B;
-        BigInteger rs;
+        Shared.BigInteger N;
+        Shared.BigInteger g;
+        Shared.BigInteger s;
+        Shared.BigInteger v;
+        Shared.BigInteger b;
+        Shared.BigInteger B;
+        Shared.BigInteger rs;
 
-        BigInteger sessionKey;
-
+        Shared.BigInteger SessionKey;
+        bool Authed = false;
+        
         IAccountGrain Account = null;
+        IAsyncStream<byte[]> packetStream = null;
+        IAsyncStream<SocketCommand> commandStream = null;
 
-        public override async Task OnActivateAsync()
+        SessionType SessionType = SessionType.Unknown;
+
+        public object Assert { get; private set; }
+
+        public override Task OnActivateAsync()
         {
-            N = BigInteger.Parse("894B645E89E1535BBDAD5B8B290650530801B18EBFBF5E8FAB3C82872A3E9BB7", NumberStyles.HexNumber);
-            g = new BigInteger(7);
-            s = Shared.BigInt.FromRand(32);
+            N = new Shared.BigInteger("B79B3E2A87823CAB8F5EBFBF8EB10108535006298B5BADBD5B53E1895E644B89", 16);
+            g = new Shared.BigInteger(7);
+            s = new Shared.BigInteger(new Random(), 256);
+
+            var streamProvider = base.GetStreamProvider("PacketStream");
+
+            if (streamProvider == null)
+                throw new Exception("Session failed to initialise stream: GetStreamProvider failed");
+
+            packetStream = streamProvider.GetStream<byte[]>(this.GetPrimaryKey(), "SessionPacketStream");
+            commandStream = streamProvider.GetStream<SocketCommand>(this.GetPrimaryKey(), "SessionCommandStream");
+
+            if (packetStream == null)
+                throw new Exception("Session failed to initialise stream: GetStream failed");
+            if (commandStream == null)
+                throw new Exception("Session failed to initialise stream: GetStream failed");
+
+            DelayDeactivation(TimeSpan.FromDays(1)); //don't automatically gobble me up please!
+
+            return TaskDone.Done;
         }
-
-        public async Task<Shared.Packet> OnLogonChallenge(string AccountName)
+        
+        public async Task OnLogonChallenge(string AccountName)
         {
-            IAccountGrain act = AccountGrainFactory.GetGrain(AccountName);
+            Account = GrainFactory.GetGrain<IAccountGrain>(AccountName);
 
-            //if (!(await act.IsValid()))
-           //     return; //todo: add errors?
-            
-            SHA1Managed sh = new SHA1Managed();
-            MemoryStream strm = new MemoryStream();
+            if (!(await Account.IsValid()))
+            {
+                await SendAuthError(AuthError.NoAccount);
+                return;
+            }
 
-            byte[] sbytes = s.ToByteArray();
+        
+            string password = await Account.GetPassword();
+                       
+            Shared.BigInteger pass = new Shared.BigInteger(password, 16);
 
-            await strm.WriteAsync(sbytes, 0, sbytes.Length);
+            //test
 
-            string password = await act.GetPassword();
-            BigInteger pass = BigInteger.Parse(password, NumberStyles.HexNumber);
-            byte[] pbytes = pass.ToByteArray();
+            string passwordPlain = await Account.GetPasswordPlain();
+            string SRPHash = AccountName.ToUpper() + ":" + passwordPlain.ToUpper();
+            var SRPHashBytes = Encoding.UTF8.GetBytes(SRPHash);
+            var SRPCreds = BigInt.Hash(SRPHashBytes); //The bytes were g
 
-            await strm.WriteAsync(pbytes, 0, pbytes.Length);
+            BigInteger x = BigInt.Hash(s, SRPCreds);
 
-            var xbytes = sh.ComputeHash(strm.GetBuffer());
+            v = g.ModPow(x, N);
 
+            b = new Shared.BigInteger(new Random(), 160);
 
-            BigInteger x = Shared.BigInt.FromBytesUnsigned(xbytes);
-            v = BigInteger.ModPow(g, x, N);
+            Shared.BigInteger gmod = g.ModPow(b, N);
 
-            b = Shared.BigInt.FromRand(20);
+            if (gmod < 0)
+                gmod += N;
 
-            BigInteger gmod = BigInteger.ModPow(g, b, N);
             B = ((v * 3) + gmod) % N;
 
-            BigInteger unk = Shared.BigInt.FromRand(16); //I'm sure this is used for matrix proofing (2 factor auth)
+            if (B < 0)
+                B += N;
 
-            Shared.Packet rtn = new Shared.Packet();
-            rtn.w.Write((byte)0); //AUTH_LOGON_CHALLENGE
-            rtn.w.Write((byte)0); //success
-            rtn.w.Write((byte)0); //unknown
-            rtn.w.WriteBigInt(B, 32);
-            rtn.w.WriteBigIntLength(g, 1);
-            rtn.w.WriteBigIntLength(N, 32);
-            rtn.w.WriteBigInt(s, 32);
-            rtn.w.WriteBigInt(unk, 16);
-            rtn.w.Write((byte)0); //security flag
+            Shared.BigInteger unk = new Shared.BigInteger(new Random(), 128); //I'm sure this is used for matrix proofing (2 factor auth)
 
-            return rtn;
+            Packet rtn = new Packet(AuthOp.AUTH_LOGON_CHALLENGE);
+            rtn.Write((byte)AuthError.Success);
+            rtn.Write((byte)0); //unknown
+            rtn.WriteBigInt(B, 32);
+            rtn.WriteBigIntLength(g, 1);
+            rtn.WriteBigIntLength(N, 32);
+            rtn.WriteBigInt(s, 32);
+            rtn.WriteBigInt(unk, 16);
+            rtn.Write((byte)0); //security flag
+            await SendPacket(rtn); //test
+        }
+
+        public async Task OnLogonProof(AuthLogonProof proof)
+        {
+            BigInteger A = new BigInteger(proof.A);
+            BigInteger M1 = new BigInteger(proof.M1);
+
+            if (A == 0 || M1 == 0) //possible hack attempt
+            {
+                await SendAuthError(AuthError.NoAccount);
+                return;
+            }
+
+            BigInteger u = BigInt.Hash(A, B);
+
+            BigInteger tmp = v.ModPow(u, N);
+            if (tmp < 0)
+                tmp += N;
+            BigInteger S = A * tmp;
+            S = S.ModPow(b, N);
+            if (S < 0)
+                S += N;
+
+            byte[] t = S.GetBytes();
+
+            //byte[] t = new byte[32];
+            byte[] t1 = new byte[16];
+            byte[] t2 = new byte[16];
+            byte[] vK = new byte[40];
+
+            for (int i = 0; i < 16; ++i)
+            {
+                t1[i] = t[i * 2];
+                t2[i] = t[(i * 2) + 1];
+            }
+
+            var t1sha = BigInt.Hash(t1);
+            var t2sha = BigInt.Hash(t2);
+
+            var t1shabytes = t1sha.GetBytes(20);
+            var t2shabytes = t2sha.GetBytes(20);
+
+            for (int i = 0; i < 20; ++i)
+            {
+                vK[i * 2] = t1shabytes[i];
+                vK[(i * 2) + 1] = t2shabytes[i];
+            }
+
+            var t3 = BigInt.Hash(N) ^ BigInt.Hash(g);
+          
+            var AccountName = Account.GetPrimaryKeyString().ToUpper();
+
+            var t4bytes = Encoding.UTF8.GetBytes(AccountName);
+            var t4 = BigInt.Hash(t4bytes);
+            t4bytes = t4.GetBytes();
+
+            SessionKey = new BigInteger(vK);
+
+            var M = BigInt.Hash(t3, t4, s, A, B, SessionKey);
+
+            //do we match the M sent by the client?
+            if (M == M1)
+            {
+                Authed = true;
+
+                // The account code will disconnect any other attached auth or realm sessions when we add an auth session to it
+                await Account.AddSession(this);
+
+                BigInteger M2 = BigInt.Hash(A, M, SessionKey);
+
+                Packet p = new Packet(AuthOp.AUTH_LOGON_PROOF);
+                p.Write((byte)AuthError.Success);
+                p.WriteBigInt(M2, 20);
+                p.Write((int)0);
+                p.Write((int)0);
+                p.Write((short)0);
+
+                await SendPacket(p);
+            }
+            else
+            {
+               await SendAuthError(AuthError.NoAccount);
+            }
+        }
+
+        public async Task OnRealmList()
+        {
+            Packet p = new Packet(AuthOp.REALM_LIST);
+            p.Write((UInt16)0); //size
+
+            p.Write((int)0);
+
+            //lets write a test realm!
+            p.Write((UInt16)1); //realmCount
+
+            //this should be a loop based on realmcount in future
+            p.Write((byte)0); //type
+            p.Write((byte)0); //status
+            p.Write((byte)0); //flags
+            p.WriteCString("Test Realm");
+            p.WriteCString("127.0.0.1:9002");
+            p.Write((float)1.0f);
+            p.Write((byte)0); //characterCount
+            p.Write((byte)1); //realmCategory
+            p.Write((byte)0); //unknown
+
+            //end loop
+
+            p.Write((byte)0x10);
+            p.Write((byte)0);
+
+            //rewrite size
+            p.strm.Position = 1;
+            p.Write((UInt16)(p.strm.Length - 3));
+            p.strm.Position = p.strm.Length;
+
+            await SendPacket(p);
+        }
+
+        void OnSocketDisconnect()
+        {
+            DeactivateOnIdle();
+        }
+
+        Task SendAuthError(AuthError error)
+        {
+            Packet p = new Packet();
+            p.w.Write((byte)AuthOp.AUTH_LOGON_CHALLENGE);
+            p.w.Write((byte)0);
+            p.w.Write((byte)error);
+            SendPacket(p);
+            return TaskDone.Done;
+        }
+
+        public async Task SendPacketAsync(Packet p)
+        {
+            await packetStream.OnNextAsync(p.strm.ToArray());
+        }
+        public Task SendPacket(Packet p)
+        {
+            packetStream.OnNextAsync(p.strm.ToArray());
+            return TaskDone.Done;
+        }
+
+        public Task SetSessionType(SessionType type) { SessionType = type; return TaskDone.Done; }
+        public Task<SessionType> GetSessionType() { return Task.FromResult(SessionType); }
+
+        public Task Disconnect()
+        {
+            DeactivateOnIdle();
+
+            //and lets disconnect anyone on the other end!
+            if (commandStream != null)
+                commandStream.OnNextAsync(SocketCommand.DisconnectClient);
+
+            return TaskDone.Done;
         }
     }
 }

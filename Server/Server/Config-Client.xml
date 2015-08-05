@@ -6,4 +6,9 @@
   <GatewayProvider ProviderType="Config"/>
   <Gateway Address="localhost" Port="30000"/>
   <Statistics MetricsTableWriteInterval="30s" PerfCounterWriteInterval="30s" LogWriteInterval="300s" WriteLogStatisticsToTable="true" StatisticsCollectionLevel="Info"/>
+
+  <StreamProviders>
+    <Provider Type="Orleans.Providers.Streams.SimpleMessageStream.SimpleMessageStreamProvider" Name="PacketStream" FireAndForgetDelivery="false"/>
+    <!--<Provider Type="Orleans.Providers.Streams.AzureQueue.AzureQueueStreamProvider" Name="AzureQueueProvider"/>-->
+  </StreamProviders>
 </ClientConfiguration>

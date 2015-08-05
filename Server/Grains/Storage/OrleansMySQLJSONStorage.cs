@@ -111,7 +111,7 @@ namespace Orleans.Storage.MySQLDB
                         object data = Newtonsoft.Json.JsonConvert.DeserializeObject(dict["data"].ToString(), grainState.GetType());
                         grainState.SetAll(((IGrainState)data).AsDictionary());
                     }
-                    catch (Exception e) { grainState.SetAll(null); /* corruption? */ }
+                    catch { grainState.SetAll(null); /* corruption? */ }
                 }
                 else
                     grainState.SetAll(null);
@@ -136,9 +136,9 @@ namespace Orleans.Storage.MySQLDB
             bool success = false;
 
             try { keyAsString = grainReference.GetPrimaryKeyLong().ToString(); success = true; }
-            catch (Exception e) { success = false; }
+            catch { success = false; }
             try { keyAsString = grainReference.GetPrimaryKey().ToString(); success = true; }
-            catch (Exception e) { success = false; }
+            catch { success = false; }
             if (!success)
             {
                 keyAsString = grainReference.GetPrimaryKey(out keyExt).ToString();

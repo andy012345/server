@@ -29,6 +29,10 @@ namespace Server
         Task<bool> QuestCompleted(UInt32 questid);
         Task SetPassword(string password);
         Task<String> GetPassword();
+        Task<String> GetPasswordPlain();
         Task<bool> IsValid();
+
+        Task AddSession(ISession s);
+        Task RemoveSession(ISession s, bool disconnect = false);
     }
 }
