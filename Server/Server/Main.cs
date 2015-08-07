@@ -44,6 +44,27 @@ namespace Server
 
 
                 Console.WriteLine("Test");
+
+                IPlayerTest test1 = factory.GetGrain<IPlayerTestImpl>(0);
+                IUnitTest test2 = factory.GetGrain<IUnitTestImpl>(0);
+                IObjectTest test3 = factory.GetGrain<IObjectTestImpl>(0);
+
+                test1.GetPrimaryKeyLong();
+
+                List<string> testres = new List<string>();
+
+                testres.Add(test1.VirtualCall().Result);
+                testres.Add(test2.VirtualCall().Result);
+                testres.Add(test3.VirtualCall().Result);
+                testres.Add(test1.PlayerCall().Result);
+                testres.Add(test1.UnitCall().Result);
+                testres.Add(test1.ObjectCall().Result);
+                testres.Add(test2.UnitCall().Result);
+                testres.Add(test2.ObjectCall().Result);
+                testres.Add(test3.ObjectCall().Result);
+
+                foreach (var line in testres)
+                    Console.WriteLine("{0}", line);
             }
 
             WebService.Run();

@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountGrain.cs" />
+    <Compile Include="Realms\RealmManager.cs" />
+    <Compile Include="UnitTests\InheritenceTest.cs" />
     <Compile Include="Properties\orleans.codegen.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="Storage\Helper\MySQLGenerator.cs" />

@@ -23,7 +23,7 @@ namespace Server
 
     [Reentrant]
     [StorageProvider(ProviderName = "Default")]
-    class Session : Grain<SessionData>, ISession
+    public class Session : Grain<SessionData>, ISession
     {
         Shared.BigInteger N;
         Shared.BigInteger g;

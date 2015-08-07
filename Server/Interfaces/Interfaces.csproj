@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Realms\RealmManager.cs" />
+    <Compile Include="UnitTest\IInheritenaceTest.cs" />
     <Compile Include="IAccount.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="Properties\orleans.codegen.cs" />
