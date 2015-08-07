@@ -205,25 +205,36 @@ namespace Server
 
         public async Task OnRealmList()
         {
+            var realm_manager = GrainFactory.GetGrain<IRealmManager>(0);
+
+            if (realm_manager == null) //something seriously went wrong!
+                return;
+
+            var realms = await realm_manager.GetRealms();
+
             Packet p = new Packet(AuthOp.REALM_LIST);
             p.Write((UInt16)0); //size
 
             p.Write((int)0);
 
             //lets write a test realm!
-            p.Write((UInt16)1); //realmCount
+            p.Write((UInt16)realms.Length); //realmCount
+
+
+            foreach (var r in realms)
+            {
+                p.Write((byte)0); //type
+                p.Write((byte)0); //status
+                p.Write((byte)0); //flags
+                p.WriteCString(r.RealmSettings.Name);
+                p.WriteCString(r.RealmSettings.Address);
+                p.Write(r.GetPopulationStatus());
+                p.Write((byte)1); //character count, TODO
+                p.Write((byte)r.RealmSettings.Cat);
+                p.Write((byte)0); //unknown
+            }
 
             //this should be a loop based on realmcount in future
-            p.Write((byte)0); //type
-            p.Write((byte)0); //status
-            p.Write((byte)0); //flags
-            p.WriteCString("Test Realm");
-            p.WriteCString("127.0.0.1:9002");
-            p.Write((float)1.0f);
-            p.Write((byte)0); //characterCount
-            p.Write((byte)1); //realmCategory
-            p.Write((byte)0); //unknown
-
             //end loop
 
             p.Write((byte)0x10);

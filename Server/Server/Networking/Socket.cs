@@ -60,7 +60,6 @@ namespace Server.Networking
     {
         Socket sock = null;
         SocketPermission permissions = null;
-        bool disposed = false;
 
         PacketProcessor processor = null;
         public ISession session = null;
@@ -171,19 +170,23 @@ namespace Server.Networking
 
         public void Dispose()
         {
-            if (disposed)
-                return;
+            Dispose(true);
+        }
 
-            disposed = true;
-            sock.Dispose();
-            sock = null;
-            processor = null;
-            session = null;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                sock.Dispose();
+                sock = null;
+                processor = null;
+                session = null;
 
-            if (packetObserverHandle != null)
-                packetObserverHandle.UnsubscribeAsync().Wait();
-            if (commandObserverHandle != null)
-                commandObserverHandle.UnsubscribeAsync().Wait();
+                if (packetObserverHandle != null)
+                    packetObserverHandle.UnsubscribeAsync().Wait();
+                if (commandObserverHandle != null)
+                    commandObserverHandle.UnsubscribeAsync().Wait();
+            }
         }
 
         public void Bind(UInt16 port)

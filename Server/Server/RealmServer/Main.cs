@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,9 +9,9 @@ using System.Xml;
 
 namespace Server.RealmServer
 {
-    class Main
+    public class Main
     {
-        public void Run()
+        public static void Run()
         {
             if (System.IO.File.Exists("Config-Realm.xml") == false)
                 return;
@@ -45,6 +46,27 @@ namespace Server.RealmServer
 
                 if (realmname == null)
                     throw new Exception("Config-Realm.xml includes a Realm entry that does not specify Name");
+                
+                string realmaddress = el.GetAttribute("Address");
+
+                if (realmaddress == null)
+                    throw new Exception("Config-Realm.xml includes a Realm entry that does not specify Address");
+
+                RealmSettings settings = new RealmSettings();
+                settings.ID = int.Parse(realmid);
+                settings.RealmID = settings.ID;
+                settings.Name = realmname;
+                settings.Address = realmaddress;
+                settings.Port = UInt16.Parse(port);
+
+                string attrib;
+                attrib = el.GetAttribute("MaxPlayers"); if (attrib != null && attrib.Length > 0) settings.MaxPlayers = int.Parse(attrib);
+                attrib = el.GetAttribute("RealID"); if (attrib != null && attrib.Length > 0) settings.RealmID = int.Parse(attrib);
+                attrib = el.GetAttribute("RequiredAccountLevel"); if (attrib != null && attrib.Length > 0) settings.RequiredAccountLevel = int.Parse(attrib);
+                attrib = el.GetAttribute("Category"); if (attrib != null && attrib.Length > 0) settings.Cat = int.Parse(attrib);
+
+                testRealmClient client = new RealmClient(settings);
+                client.Run();
 
                 //RealmPacketHandler 
             }

@@ -24,6 +24,7 @@ namespace Server
     using System.Runtime.Serialization;
     using Orleans;
     using System.Runtime.InteropServices;
+    using Shared;
     using Orleans.Runtime;
     
     

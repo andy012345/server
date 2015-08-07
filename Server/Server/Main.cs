@@ -69,6 +69,7 @@ namespace Server
 
             WebService.Run();
             AuthServer.Main.Run();
+            RealmServer.Main.Run();
 
             Console.ReadLine();
         }

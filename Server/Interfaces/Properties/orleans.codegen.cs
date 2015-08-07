@@ -27,8 +27,8 @@ namespace Server
     using Orleans;
     using Orleans.Runtime;
     using Orleans.Core;
-    using System.Collections;
     using Shared;
+    using System.Collections;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
@@ -38,13 +38,13 @@ namespace Server
         
 
                         [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IRealmManager> instead.")]
-                        public static IRealmManager GetGrain(System.Guid primaryKey)
+                        public static IRealmManager GetGrain(long primaryKey)
                         {
                             return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IRealmManager), primaryKey));
                         }
 
                         [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IRealmManager> instead.")]
-                        public static IRealmManager GetGrain(System.Guid primaryKey, string grainClassNamePrefix)
+                        public static IRealmManager GetGrain(long primaryKey, string grainClassNamePrefix)
                         {
                             return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IRealmManager), primaryKey, grainClassNamePrefix));
                         }
@@ -124,6 +124,36 @@ namespace Server
             {
                 return RealmManagerMethodInvoker.GetMethodName(interfaceId, methodId);
             }
+            
+            System.Threading.Tasks.Task<Shared.Realm> Server.IRealmManager.GetRealm(int @id)
+            {
+
+                return base.InvokeMethodAsync<Shared.Realm>(-637421897, new object[] {@id} );
+            }
+            
+            System.Threading.Tasks.Task Server.IRealmManager.RemoveRealm(int @id)
+            {
+
+                return base.InvokeMethodAsync<object>(-1749235508, new object[] {@id} );
+            }
+            
+            System.Threading.Tasks.Task Server.IRealmManager.AddRealm(Shared.RealmSettings @r)
+            {
+
+                return base.InvokeMethodAsync<object>(-130435026, new object[] {@r} );
+            }
+            
+            System.Threading.Tasks.Task<Shared.Realm[]> Server.IRealmManager.GetRealms(int @AccountLevel)
+            {
+
+                return base.InvokeMethodAsync<Shared.Realm[]>(170842919, new object[] {@AccountLevel} );
+            }
+            
+            System.Threading.Tasks.Task Server.IRealmManager.PingRealm(int @id)
+            {
+
+                return base.InvokeMethodAsync<object>(574707288, new object[] {@id} );
+            }
         }
     }
     
@@ -151,6 +181,16 @@ namespace Server
                     case 742203874:  // IRealmManager
                         switch (methodId)
                         {
+                            case -637421897: 
+                                return ((IRealmManager)grain).GetRealm((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1749235508: 
+                                return ((IRealmManager)grain).RemoveRealm((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -130435026: 
+                                return ((IRealmManager)grain).AddRealm((Shared.RealmSettings)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 170842919: 
+                                return ((IRealmManager)grain).GetRealms((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 574707288: 
+                                return ((IRealmManager)grain).PingRealm((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                         }
@@ -175,7 +215,17 @@ namespace Server
                 case 742203874:  // IRealmManager
                     switch (methodId)
                     {
-                        
+                        case -637421897:
+                            return "GetRealm";
+                    case -1749235508:
+                            return "RemoveRealm";
+                    case -130435026:
+                            return "AddRealm";
+                    case 170842919:
+                            return "GetRealms";
+                    case 574707288:
+                            return "PingRealm";
+                    
                         default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                     }
@@ -1940,13 +1990,13 @@ namespace Server
                         switch (methodId)
                         {
                             case 715203915: 
-                                return ((ISession)grain).OnLogonChallenge((Shared.AuthLogonChallenge)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                                return ((ISession)grain).OnLogonChallenge((AuthLogonChallenge)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case -174724446: 
-                                return ((ISession)grain).OnLogonProof((Shared.AuthLogonProof)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                                return ((ISession)grain).OnLogonProof((AuthLogonProof)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case 105167316: 
                                 return ((ISession)grain).OnRealmList().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case 1161933625: 
-                                return ((ISession)grain).SetSessionType((Shared.SessionType)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                                return ((ISession)grain).SetSessionType((SessionType)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case 343949440: 
                                 return ((ISession)grain).GetSessionType().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1836674149: 
@@ -2009,6 +2059,161 @@ namespace InterfacesSerializers
     using System.Collections;
     using System.Runtime.InteropServices;
     
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Shared_RealmSerialization
+    {
+        
+        static Shared_RealmSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Shared.Realm input = ((Shared.Realm)(original));
+            Shared.Realm result = new Shared.Realm();
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            result.RealmSettings = ((Shared.RealmSettings)(Orleans.Serialization.SerializationManager.DeepCopyInner(input.RealmSettings)));
+            result.RealmStatus = ((Shared.RealmStatus)(Orleans.Serialization.SerializationManager.DeepCopyInner(input.RealmStatus)));
+            return result;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Shared.Realm input = ((Shared.Realm)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.RealmSettings, stream, typeof(Shared.RealmSettings));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.RealmStatus, stream, typeof(Shared.RealmStatus));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Shared.Realm result = new Shared.Realm();
+            result.RealmSettings = ((Shared.RealmSettings)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(Shared.RealmSettings), stream)));
+            result.RealmStatus = ((Shared.RealmStatus)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(Shared.RealmStatus), stream)));
+            return result;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.Realm), DeepCopier, Serializer, Deserializer);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Shared_RealmStatusSerialization
+    {
+        
+        private static System.Reflection.FieldInfo fieldInfo2;
+        
+        static Shared_RealmStatusSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Shared.RealmStatus input = ((Shared.RealmStatus)(original));
+            Shared.RealmStatus result = new Shared.RealmStatus();
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            result.CurrentPlayers = input.CurrentPlayers;
+            object objResult = ((object)(result));
+            object temp2 = fieldInfo2.GetValue(input);
+            fieldInfo2.SetValue(objResult, temp2);
+            return objResult;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Shared.RealmStatus input = ((Shared.RealmStatus)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.CurrentPlayers, stream, typeof(int));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo2.GetValue(input), stream, typeof(System.DateTime));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Shared.RealmStatus result = new Shared.RealmStatus();
+            result.CurrentPlayers = ((int)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(int), stream)));
+            object objResult = ((object)(result));
+            object temp2 = ((System.DateTime)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(System.DateTime), stream)));
+            fieldInfo2.SetValue(objResult, temp2);
+            return objResult;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.RealmStatus), DeepCopier, Serializer, Deserializer);
+            fieldInfo2 = typeof(Shared.RealmStatus).GetField("LastPing", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Shared_RealmSettingsSerialization
+    {
+        
+        static Shared_RealmSettingsSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Shared.RealmSettings input = ((Shared.RealmSettings)(original));
+            Shared.RealmSettings result = new Shared.RealmSettings();
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            result.Address = input.Address;
+            result.Cat = input.Cat;
+            result.ID = input.ID;
+            result.Lol = input.Lol;
+            result.MaxPlayers = input.MaxPlayers;
+            result.Name = input.Name;
+            result.Port = input.Port;
+            result.RealmID = input.RealmID;
+            result.RequiredAccountLevel = input.RequiredAccountLevel;
+            return result;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Shared.RealmSettings input = ((Shared.RealmSettings)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Address, stream, typeof(string));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Cat, stream, typeof(int));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.ID, stream, typeof(int));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Lol, stream, typeof(string));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.MaxPlayers, stream, typeof(int));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Name, stream, typeof(string));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Port, stream, typeof(ushort));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.RealmID, stream, typeof(int));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.RequiredAccountLevel, stream, typeof(int));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Shared.RealmSettings result = new Shared.RealmSettings();
+            result.Address = ((string)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string), stream)));
+            result.Cat = ((int)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(int), stream)));
+            result.ID = ((int)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(int), stream)));
+            result.Lol = ((string)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string), stream)));
+            result.MaxPlayers = ((int)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(int), stream)));
+            result.Name = ((string)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string), stream)));
+            result.Port = ((ushort)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(ushort), stream)));
+            result.RealmID = ((int)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(int), stream)));
+            result.RequiredAccountLevel = ((int)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(int), stream)));
+            return result;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.RealmSettings), DeepCopier, Serializer, Deserializer);
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
