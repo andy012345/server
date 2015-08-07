@@ -38,18 +38,6 @@ namespace Server
         
 
                         [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IRealmManager> instead.")]
-                        public static IRealmManager GetGrain(long primaryKey)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IRealmManager), primaryKey));
-                        }
-
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IRealmManager> instead.")]
-                        public static IRealmManager GetGrain(long primaryKey, string grainClassNamePrefix)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IRealmManager), primaryKey, grainClassNamePrefix));
-                        }
-
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IRealmManager> instead.")]
                         public static IRealmManager GetGrain(System.Guid primaryKey)
                         {
                             return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IRealmManager), primaryKey));

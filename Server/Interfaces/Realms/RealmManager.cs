@@ -6,7 +6,7 @@ using Server;
 
 namespace Server
 {
-    public interface IRealmManager : IGrain
+    public interface IRealmManager : IGrainWithGuidKey
     {
     }
 }

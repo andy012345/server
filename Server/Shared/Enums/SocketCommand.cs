@@ -9,6 +9,7 @@ namespace Shared
     public enum SocketCommand : byte
     {
         DisconnectClient,
+        ClientHasDisconnected,
         Unknown
     }
 }

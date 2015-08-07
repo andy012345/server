@@ -70,6 +70,7 @@ namespace Server.Networking
         SocketCommandObserver commandObserver = null;
         StreamSubscriptionHandle<SocketCommand> commandObserverHandle = null;
 
+        public ServerSocket() { }
         public ServerSocket(AddressFamily addressFamily, SocketType sockType, ProtocolType protoType)
         {
             /*
@@ -81,18 +82,13 @@ namespace Server.Networking
 
             */
             sock = new Socket(addressFamily, sockType, protoType);
-
-            CreateOrleansSession();
         }
 
         public ServerSocket(Socket s)
         {
             sock = s;
-            CreateOrleansSession();
         }
-
-
-        private void CreateOrleansSession()
+        public void CreateSession()
         {
             session = Orleans.GrainClient.GrainFactory.GetGrain<ISession>(Guid.NewGuid()); //create a unique session for this socket
 
@@ -228,6 +224,7 @@ namespace Server.Networking
                 //inherit my packet processor
                 sck.SetProcessor((PacketProcessor)Activator.CreateInstance(processor.GetType()));
                 sck.processor.sock = sck;
+                sck.CreateSession();
                 sck.Read();
             }
 
