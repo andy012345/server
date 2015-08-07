@@ -65,7 +65,7 @@ namespace Server.RealmServer
                 attrib = el.GetAttribute("RequiredAccountLevel"); if (attrib != null && attrib.Length > 0) settings.RequiredAccountLevel = int.Parse(attrib);
                 attrib = el.GetAttribute("Category"); if (attrib != null && attrib.Length > 0) settings.Cat = int.Parse(attrib);
 
-                testRealmClient client = new RealmClient(settings);
+                RealmClient client = new RealmClient(settings);
                 client.Run();
 
                 //RealmPacketHandler 
