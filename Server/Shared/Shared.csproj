@@ -44,15 +44,24 @@
   <ItemGroup>
     <Compile Include="Array.cs" />
     <Compile Include="BigInteger.cs" />
+    <Compile Include="Enums\RealmServerEnums.cs" />
     <Compile Include="Enums\AuthServerEnums.cs" />
     <Compile Include="Enums\Session.cs" />
     <Compile Include="Enums\SocketCommand.cs" />
+    <Compile Include="Memorystream.cs" />
+    <Compile Include="ObjectGUID.cs" />
     <Compile Include="PacketHandlerAttrib.cs" />
     <Compile Include="PacketWriter.cs" />
+    <Compile Include="RC4.cs" />
     <Compile Include="SHA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Structs\AuthResponse.cs" />
     <Compile Include="Structs\RealmManager.cs" />
     <Compile Include="Structs\AuthServerStructs.cs" />
+    <Compile Include="Structs\RealmPackets\AuthSession.cs" />
+    <Compile Include="Time.cs" />
+    <Compile Include="Types.cs" />
+    <Compile Include="ZLib.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

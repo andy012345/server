@@ -2,20 +2,85 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Shared
 {
+    public enum PacketType
+    {
+        AuthPacket,
+        RealmPacket,
+        Unknown
+    }
+
     public class Packet
     {
-        public MemoryStream strm = new MemoryStream();
-        public BinaryWriter w;
+        [NonSerialized]
+        BinaryWriter _w = null;
+        MemoryStream _strm = null;
 
-        public Packet() { w = new BinaryWriter(strm); }
-        public Packet(AuthOp op)  { w = new BinaryWriter(strm); Write((byte)op); }
-        
+        PacketType type = PacketType.Unknown;
+
+        public BinaryWriter w
+        {
+            get
+            {
+                if (_w == null)
+                    _w = new BinaryWriter(strm);
+                return _w;
+            }
+        }
+
+        public MemoryStream strm
+        {
+            get
+            {
+                if (_strm == null)
+                {
+                    _strm = new MemoryStream();
+                    _w = null;
+                }
+                return _strm;
+            }
+            set
+            {
+                _strm = value;
+                _w = null;
+            }
+        }
+
+
+        public Packet() { }
+        public Packet(AuthOp op) { Write((byte)op); type = PacketType.AuthPacket; }
+        public Packet(RealmOp op)
+        {
+            type = PacketType.RealmPacket;
+
+            Write((UInt16)0); //size
+            Write((UInt16)op); //op
+        }
+
+        public void Finalise()
+        {
+            if (type == PacketType.RealmPacket)
+            {
+                strm.Position = 0; //size
+                //Int16 szhs = IPAddress.HostToNetworkOrder((Int16)(strm.Length - 2));
+                WriteBE((UInt16)(strm.Length - 2)); //don't include the opcode in the size
+                strm.Position = strm.Length;
+            }
+        }
+
+        public void WriteBE(ushort val)
+        {
+            Int16 sval = (Int16)val;
+            sval = IPAddress.NetworkToHostOrder(sval);
+            Write((UInt16)sval);
+        }
+
         public void Write(ushort value) { w.Write(value);  }
         public void Write(uint value) { w.Write(value); }
         public void Write(ulong value) { w.Write(value);  }

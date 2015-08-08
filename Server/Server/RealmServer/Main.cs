@@ -11,10 +11,14 @@ namespace Server.RealmServer
 {
     public class Main
     {
+        public static RealmPacketHandler PacketHandler = new RealmPacketHandler();
+
         public static void Run()
         {
             if (System.IO.File.Exists("Config-Realm.xml") == false)
                 return;
+
+            PacketHandler.Init();
 
             TextReader configReader = File.OpenText("Config-Realm.xml");
 

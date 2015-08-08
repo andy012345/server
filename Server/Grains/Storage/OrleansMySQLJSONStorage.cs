@@ -15,6 +15,8 @@ namespace Orleans.Storage.MySQLDB
     using Providers;
     using Storage;
     using MySql.Data.MySqlClient;
+    using Newtonsoft.Json.Converters;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// A MySQLDB storage provider.

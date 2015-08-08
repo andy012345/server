@@ -3,6 +3,7 @@ using Orleans.Concurrency;
 using System.Threading.Tasks;
 using System;
 using Server;
+using Shared;
 
 namespace Server
 {
@@ -24,9 +25,6 @@ namespace Server
         Task Destroy();
         Task<AccountAuthResponse> Authenticate(string password);
         Task<AccountCreateResponse> CreateAccount(string password);
-        Task AddQuestComplete(UInt32 questid);
-
-        Task<bool> QuestCompleted(UInt32 questid);
         Task SetPassword(string password);
         Task<String> GetPassword();
         Task<String> GetPasswordPlain();
@@ -34,5 +32,17 @@ namespace Server
 
         Task AddSession(ISession s);
         Task RemoveSession(ISession s, bool disconnect = false);
+        Task<ISession> GetAuthSession();
+        Task<ISession> GetRealmSession();
+
+
+        Task SendPacketRealm(Packet p);
+        Task SendPacketAuth(Packet p);
+
+        Task SendAccountDataTimes(UInt32 mask);
+        Task UpdateAccountData(UInt32 id, UInt32 time, UInt32 size, byte[] data);
+        Task SendAccountData(UInt32 id);
+
+        Task SendCharEnum();
     }
 }

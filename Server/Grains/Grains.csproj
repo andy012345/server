@@ -54,10 +54,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountGrain.cs" />
+    <Compile Include="orleans.codegen.cs" />
     <Compile Include="Realms\RealmManager.cs" />
+    <Compile Include="Session\Handlers\CharacterHandlers.cs" />
+    <Compile Include="Session\Handlers\AccountDataHandlers.cs" />
+    <Compile Include="Session\Handlers\AuthServerHandlers.cs" />
     <Compile Include="UnitTests\InheritenceTest.cs" />
     <Compile Include="Properties\orleans.codegen.cs" />
-    <Compile Include="Session.cs" />
+    <Compile Include="Session\Session.cs" />
     <Compile Include="Storage\Helper\MySQLGenerator.cs" />
     <Compile Include="Storage\OrleansMySQLJSONStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,6 +82,7 @@
       <Name>Shared</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)packages\Microsoft.Orleans.Templates.Grains.1.0.9\build\Microsoft.Orleans.Templates.Grains.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Orleans.Templates.Grains.1.0.9\build\Microsoft.Orleans.Templates.Grains.targets')" />
 </Project>

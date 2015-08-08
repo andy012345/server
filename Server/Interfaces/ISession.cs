@@ -18,5 +18,16 @@ namespace Server
         Task SetSessionType(SessionType type);
         Task<SessionType> GetSessionType();
         Task Disconnect();
+        Task<BigInteger> GetSessionKey();
+        Task HandleAuthSession(CMSG_AUTH_SESSION auth, UInt32 ServerSeed);
+        Task OnSocketDisconnect();
+        Task GetSessionKeyFromAuthAccount(string AccountName);
+        Task SendPacket(Packet p);
+
+        Task HandleReadyForAccountDataTimes();
+        Task HandleUpdateAccountData(UInt32 type, UInt32 time, UInt32 size, byte[] data);
+        Task HandleRequestAccountData(UInt32 type);
+
+        Task HandleCharEnum();
     }
 }

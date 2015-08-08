@@ -15,59 +15,8 @@ using System.Collections;
 
 namespace Server
 {
-    public interface SessionData : IGrainState
+    public partial class Session
     {
-        byte[] SessionKey { get; set; }
-        IAccountGrain Account { get; set; } //can we reference interfaces to actors? the codegen seems fine, to test
-    }
-
-    [Reentrant]
-    [StorageProvider(ProviderName = "Default")]
-    public class Session : Grain<SessionData>, ISession
-    {
-        Shared.BigInteger N;
-        Shared.BigInteger g;
-        Shared.BigInteger s;
-        Shared.BigInteger v;
-        Shared.BigInteger b;
-        Shared.BigInteger B;
-        Shared.BigInteger rs;
-
-        Shared.BigInteger SessionKey;
-        bool Authed = false;
-        
-        IAccountGrain Account = null;
-        IAsyncStream<byte[]> packetStream = null;
-        IAsyncStream<SocketCommand> commandStream = null;
-
-        SessionType SessionType = SessionType.Unknown;
-
-        public object Assert { get; private set; }
-
-        public override Task OnActivateAsync()
-        {
-            N = new Shared.BigInteger("B79B3E2A87823CAB8F5EBFBF8EB10108535006298B5BADBD5B53E1895E644B89", 16);
-            g = new Shared.BigInteger(7);
-            s = new Shared.BigInteger(new Random(), 256);
-
-            var streamProvider = base.GetStreamProvider("PacketStream");
-
-            if (streamProvider == null)
-                throw new Exception("Session failed to initialise stream: GetStreamProvider failed");
-
-            packetStream = streamProvider.GetStream<byte[]>(this.GetPrimaryKey(), "SessionPacketStream");
-            commandStream = streamProvider.GetStream<SocketCommand>(this.GetPrimaryKey(), "SessionCommandStream");
-
-            if (packetStream == null)
-                throw new Exception("Session failed to initialise stream: GetStream failed");
-            if (commandStream == null)
-                throw new Exception("Session failed to initialise stream: GetStream failed");
-
-            DelayDeactivation(TimeSpan.FromDays(1)); //don't automatically gobble me up please!
-
-            return TaskDone.Done;
-        }
-        
         public async Task OnLogonChallenge(AuthLogonChallenge challenge)
         {
             Account = GrainFactory.GetGrain<IAccountGrain>(challenge.account);
@@ -78,9 +27,9 @@ namespace Server
                 return;
             }
 
-        
+
             string password = await Account.GetPassword();
-                       
+
             Shared.BigInteger pass = new Shared.BigInteger(password, 16);
 
             //test
@@ -167,7 +116,7 @@ namespace Server
             }
 
             var t3 = BigInt.Hash(N) ^ BigInt.Hash(g);
-          
+
             var AccountName = Account.GetPrimaryKeyString().ToUpper();
 
             var t4bytes = Encoding.UTF8.GetBytes(AccountName);
@@ -199,12 +148,15 @@ namespace Server
             }
             else
             {
-               await SendAuthError(AuthError.NoAccount);
+                await SendAuthError(AuthError.NoAccount);
             }
         }
 
         public async Task OnRealmList()
         {
+            if (!Authed)
+                return;
+
             var realm_manager = GrainFactory.GetGrain<IRealmManager>(0);
 
             if (realm_manager == null) //something seriously went wrong!
@@ -248,11 +200,6 @@ namespace Server
             await SendPacket(p);
         }
 
-        void OnSocketDisconnect()
-        {
-            DeactivateOnIdle();
-        }
-
         Task SendAuthError(AuthError error)
         {
             Packet p = new Packet();
@@ -263,28 +210,5 @@ namespace Server
             return TaskDone.Done;
         }
 
-        public async Task SendPacketAsync(Packet p)
-        {
-            await packetStream.OnNextAsync(p.strm.ToArray());
-        }
-        public Task SendPacket(Packet p)
-        {
-            packetStream.OnNextAsync(p.strm.ToArray());
-            return TaskDone.Done;
-        }
-
-        public Task SetSessionType(SessionType type) { SessionType = type; return TaskDone.Done; }
-        public Task<SessionType> GetSessionType() { return Task.FromResult(SessionType); }
-
-        public Task Disconnect()
-        {
-            DeactivateOnIdle();
-
-            //and lets disconnect anyone on the other end!
-            if (commandStream != null)
-                commandStream.OnNextAsync(SocketCommand.DisconnectClient);
-
-            return TaskDone.Done;
-        }
     }
 }

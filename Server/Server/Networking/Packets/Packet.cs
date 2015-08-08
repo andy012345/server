@@ -35,6 +35,12 @@ namespace Server.Networking
 
             var res = OnReceive(data, dataIndex, dataSize, out copyAmount);
 
+            if (res == PacketProcessResult.Error) //Unknown data on a stream that doesn't have a reported size
+            {
+                sock.Dispose();
+                return;
+            }
+
             if (res == PacketProcessResult.Processed)
             {
                 packetData = new MemoryStream();
@@ -76,6 +82,8 @@ namespace Server.Networking
         }
 
         public virtual PacketProcessResult ProcessData() { return PacketProcessResult.Processed; }
+        public virtual void OnConnect() { }
+
         PacketProcessResult HandleProcess()
         {
             var oldPosition = packetData.Position;

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Orleans;
 using Orleans.Streams;
 using Shared;
+using Server.AuthServer;
+using Server.RealmServer;
 
 namespace Server.Networking
 {
@@ -19,17 +21,18 @@ namespace Server.Networking
 
         public Task OnCompletedAsync()
         {
-            throw new NotImplementedException();
+            return TaskDone.Done;
         }
 
         public Task OnErrorAsync(Exception ex)
         {
-            throw new NotImplementedException();
+            return TaskDone.Done;
         }
 
         public Task OnNextAsync(byte[] item, StreamSequenceToken token)
         {
-            sock.Send(item);
+            if (sock != null)
+                sock.Send(item);
             return TaskDone.Done;
         }
     }
@@ -69,6 +72,9 @@ namespace Server.Networking
         SocketCommandObserver commandObserver = null;
         StreamSubscriptionHandle<SocketCommand> commandObserverHandle = null;
 
+        public ARC4 Decrypt = null;
+        public ARC4 Encrypt = null;
+
         public ServerSocket() { }
         public ServerSocket(AddressFamily addressFamily, SocketType sockType, ProtocolType protoType)
         {
@@ -94,6 +100,14 @@ namespace Server.Networking
             if (session == null)
                 throw new Exception("Socket failed to create orleans session");
 
+            if (processor != null)
+            {
+                if (processor is LogonPacketProcessor)
+                    session.SetSessionType(SessionType.AuthSession);
+                if (processor is RealmPacketProcessor)
+                    session.SetSessionType(SessionType.RealmSession);
+            }
+
             var provider = Orleans.GrainClient.GetStreamProvider("PacketStream");
 
             if (provider == null)
@@ -117,6 +131,10 @@ namespace Server.Networking
         public void Send(byte[] buffer) { Send(buffer, buffer.Length); }
         public void Send(byte[] buffer, int bufferSize)
         {
+            //TODO: Move so not generic code but realm only code
+            if (Encrypt != null && bufferSize >= 4)
+                Encrypt.Process(buffer, 0, 4);
+
             SocketAsyncEventArgs ev = new SocketAsyncEventArgs();
             ev.SetBuffer(buffer, 0, bufferSize);
             ev.Completed += AsyncSendEvent;
@@ -180,6 +198,7 @@ namespace Server.Networking
                 sock.Dispose();
                 sock = null;
                 processor = null;
+                session.OnSocketDisconnect();
                 session = null;
 
                 if (packetObserverHandle != null)
@@ -228,6 +247,8 @@ namespace Server.Networking
                 sck.SetProcessor((PacketProcessor)Activator.CreateInstance(processor.GetType()));
                 sck.processor.sock = sck;
                 sck.CreateSession();
+
+                sck.OnConnect();
                 sck.Read();
             }
 
@@ -241,5 +262,11 @@ namespace Server.Networking
         }
 
         public void SetProcessor(PacketProcessor p) { processor = p; p.SetSocket(this); }
+
+        void OnConnect()
+        {
+            if (processor != null)
+                processor.OnConnect();
+        }
     }
 }

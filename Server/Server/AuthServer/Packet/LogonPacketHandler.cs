@@ -42,7 +42,7 @@ namespace Server.AuthServer
 
     public partial class LogonPacketHandler
     {
-        Dictionary<UInt16, Func<PacketProcessor, PacketProcessResult>> PacketHandlers = new Dictionary<UInt16, Func<PacketProcessor, PacketProcessResult>>();
+        Dictionary<UInt32, Func<PacketProcessor, PacketProcessResult>> PacketHandlers = new Dictionary<UInt32, Func<PacketProcessor, PacketProcessResult>>();
 
         public void Init()
         {
@@ -68,10 +68,11 @@ namespace Server.AuthServer
 
         public Func<PacketProcessor, PacketProcessResult> GetHandler(AuthOp opcode)
         {
-            UInt16 opshort = (UInt16)opcode;
-            if (!PacketHandlers.ContainsKey(opshort))
-                return null;
-            return PacketHandlers[opshort];
+            UInt32 op = (UInt32)opcode;
+
+            Func<PacketProcessor, PacketProcessResult> retval = null;
+            PacketHandlers.TryGetValue(op, out retval);
+            return retval;
         }
 
     }

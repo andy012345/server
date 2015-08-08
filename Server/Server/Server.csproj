@@ -151,7 +151,7 @@
     <Compile Include="AuthServer\PacketHandlers\AuthChallenge.cs" />
     <Compile Include="AuthServer\PacketHandlers\RealmList.cs" />
     <Compile Include="AuthServer\PacketHandlers\AuthProof.cs" />
-    <Compile Include="AuthServer\Packet\LogonPacket.cs" />
+    <Compile Include="AuthServer\Packet\LogonPacketHandler.cs" />
     <Compile Include="Networking\Packets\Packet.cs" />
     <Compile Include="Networking\Reader\PacketReader.cs" />
     <Compile Include="Networking\Socket.cs" />
@@ -159,6 +159,10 @@
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\orleans.codegen.cs" />
+    <Compile Include="RealmServer\PacketHandlers\Character.cs" />
+    <Compile Include="RealmServer\PacketHandlers\AccountData.cs" />
+    <Compile Include="RealmServer\PacketHandlers\AuthSession.cs" />
+    <Compile Include="RealmServer\RealmPacketHandler.cs" />
     <Compile Include="RealmServer\RealmClientSocket.cs" />
     <Compile Include="RealmServer\RealmClient.cs" />
     <Compile Include="RealmServer\Main.cs" />
@@ -180,6 +184,7 @@
     </Content>
     <Content Include="Config-Client.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Config-Server.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -212,6 +217,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

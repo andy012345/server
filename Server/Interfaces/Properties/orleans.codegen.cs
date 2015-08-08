@@ -1668,18 +1668,6 @@ namespace Server
                 return base.InvokeMethodAsync<Server.AccountCreateResponse>(-2074345984, new object[] {@password} );
             }
             
-            System.Threading.Tasks.Task Server.IAccountGrain.AddQuestComplete(uint @questid)
-            {
-
-                return base.InvokeMethodAsync<object>(1181445371, new object[] {@questid} );
-            }
-            
-            System.Threading.Tasks.Task<bool> Server.IAccountGrain.QuestCompleted(uint @questid)
-            {
-
-                return base.InvokeMethodAsync<System.Boolean>(-1811403760, new object[] {@questid} );
-            }
-            
             System.Threading.Tasks.Task Server.IAccountGrain.SetPassword(string @password)
             {
 
@@ -1715,6 +1703,54 @@ namespace Server
 
                 return base.InvokeMethodAsync<object>(-1423570004, new object[] {@s is global::Orleans.Grain ? @s.AsReference<Server.ISession>() : @s, @disconnect} );
             }
+            
+            System.Threading.Tasks.Task<Server.ISession> Server.IAccountGrain.GetAuthSession()
+            {
+
+                return base.InvokeMethodAsync<Server.ISession>(1371286109, null );
+            }
+            
+            System.Threading.Tasks.Task<Server.ISession> Server.IAccountGrain.GetRealmSession()
+            {
+
+                return base.InvokeMethodAsync<Server.ISession>(-1106931492, null );
+            }
+            
+            System.Threading.Tasks.Task Server.IAccountGrain.SendPacketRealm(Shared.Packet @p)
+            {
+
+                return base.InvokeMethodAsync<object>(-439758238, new object[] {@p} );
+            }
+            
+            System.Threading.Tasks.Task Server.IAccountGrain.SendPacketAuth(Shared.Packet @p)
+            {
+
+                return base.InvokeMethodAsync<object>(663614913, new object[] {@p} );
+            }
+            
+            System.Threading.Tasks.Task Server.IAccountGrain.SendAccountDataTimes(uint @mask)
+            {
+
+                return base.InvokeMethodAsync<object>(12719627, new object[] {@mask} );
+            }
+            
+            System.Threading.Tasks.Task Server.IAccountGrain.UpdateAccountData(uint @id, uint @time, uint @size, byte[] @data)
+            {
+
+                return base.InvokeMethodAsync<object>(2060811694, new object[] {@id, @time, @size, @data} );
+            }
+            
+            System.Threading.Tasks.Task Server.IAccountGrain.SendAccountData(uint @id)
+            {
+
+                return base.InvokeMethodAsync<object>(833613103, new object[] {@id} );
+            }
+            
+            System.Threading.Tasks.Task Server.IAccountGrain.SendCharEnum()
+            {
+
+                return base.InvokeMethodAsync<object>(-1317948138, null );
+            }
         }
     }
     
@@ -1748,10 +1784,6 @@ namespace Server
                                 return ((IAccountGrain)grain).Authenticate((String)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -2074345984: 
                                 return ((IAccountGrain)grain).CreateAccount((String)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 1181445371: 
-                                return ((IAccountGrain)grain).AddQuestComplete((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
-                            case -1811403760: 
-                                return ((IAccountGrain)grain).QuestCompleted((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -555567538: 
                                 return ((IAccountGrain)grain).SetPassword((String)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case -1288502433: 
@@ -1764,6 +1796,22 @@ namespace Server
                                 return ((IAccountGrain)grain).AddSession((ISession)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case -1423570004: 
                                 return ((IAccountGrain)grain).RemoveSession((ISession)arguments[0], (Boolean)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1371286109: 
+                                return ((IAccountGrain)grain).GetAuthSession().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1106931492: 
+                                return ((IAccountGrain)grain).GetRealmSession().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -439758238: 
+                                return ((IAccountGrain)grain).SendPacketRealm((Packet)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 663614913: 
+                                return ((IAccountGrain)grain).SendPacketAuth((Packet)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 12719627: 
+                                return ((IAccountGrain)grain).SendAccountDataTimes((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 2060811694: 
+                                return ((IAccountGrain)grain).UpdateAccountData((UInt32)arguments[0], (UInt32)arguments[1], (UInt32)arguments[2], (Byte[])arguments[3]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 833613103: 
+                                return ((IAccountGrain)grain).SendAccountData((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1317948138: 
+                                return ((IAccountGrain)grain).SendCharEnum().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                         }case -1277021679:  // IGrainWithStringKey
@@ -1799,10 +1847,6 @@ namespace Server
                             return "Authenticate";
                     case -2074345984:
                             return "CreateAccount";
-                    case 1181445371:
-                            return "AddQuestComplete";
-                    case -1811403760:
-                            return "QuestCompleted";
                     case -555567538:
                             return "SetPassword";
                     case -1288502433:
@@ -1815,6 +1859,22 @@ namespace Server
                             return "AddSession";
                     case -1423570004:
                             return "RemoveSession";
+                    case 1371286109:
+                            return "GetAuthSession";
+                    case -1106931492:
+                            return "GetRealmSession";
+                    case -439758238:
+                            return "SendPacketRealm";
+                    case 663614913:
+                            return "SendPacketAuth";
+                    case 12719627:
+                            return "SendAccountDataTimes";
+                    case 2060811694:
+                            return "UpdateAccountData";
+                    case 833613103:
+                            return "SendAccountData";
+                    case -1317948138:
+                            return "SendCharEnum";
                     
                         default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
@@ -1962,6 +2022,60 @@ namespace Server
 
                 return base.InvokeMethodAsync<object>(-1836674149, null );
             }
+            
+            System.Threading.Tasks.Task<Shared.BigInteger> Server.ISession.GetSessionKey()
+            {
+
+                return base.InvokeMethodAsync<Shared.BigInteger>(1465496855, null );
+            }
+            
+            System.Threading.Tasks.Task Server.ISession.HandleAuthSession(Shared.CMSG_AUTH_SESSION @auth, uint @ServerSeed)
+            {
+
+                return base.InvokeMethodAsync<object>(522799231, new object[] {@auth, @ServerSeed} );
+            }
+            
+            System.Threading.Tasks.Task Server.ISession.OnSocketDisconnect()
+            {
+
+                return base.InvokeMethodAsync<object>(-963939677, null );
+            }
+            
+            System.Threading.Tasks.Task Server.ISession.GetSessionKeyFromAuthAccount(string @AccountName)
+            {
+
+                return base.InvokeMethodAsync<object>(-1036537128, new object[] {@AccountName} );
+            }
+            
+            System.Threading.Tasks.Task Server.ISession.SendPacket(Shared.Packet @p)
+            {
+
+                return base.InvokeMethodAsync<object>(1045195182, new object[] {@p} );
+            }
+            
+            System.Threading.Tasks.Task Server.ISession.HandleReadyForAccountDataTimes()
+            {
+
+                return base.InvokeMethodAsync<object>(1136236795, null );
+            }
+            
+            System.Threading.Tasks.Task Server.ISession.HandleUpdateAccountData(uint @type, uint @time, uint @size, byte[] @data)
+            {
+
+                return base.InvokeMethodAsync<object>(857067198, new object[] {@type, @time, @size, @data} );
+            }
+            
+            System.Threading.Tasks.Task Server.ISession.HandleRequestAccountData(uint @type)
+            {
+
+                return base.InvokeMethodAsync<object>(-1656015275, new object[] {@type} );
+            }
+            
+            System.Threading.Tasks.Task Server.ISession.HandleCharEnum()
+            {
+
+                return base.InvokeMethodAsync<object>(-1842798826, null );
+            }
         }
     }
     
@@ -2001,6 +2115,24 @@ namespace Server
                                 return ((ISession)grain).GetSessionType().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1836674149: 
                                 return ((ISession)grain).Disconnect().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1465496855: 
+                                return ((ISession)grain).GetSessionKey().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 522799231: 
+                                return ((ISession)grain).HandleAuthSession((CMSG_AUTH_SESSION)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -963939677: 
+                                return ((ISession)grain).OnSocketDisconnect().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1036537128: 
+                                return ((ISession)grain).GetSessionKeyFromAuthAccount((String)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1045195182: 
+                                return ((ISession)grain).SendPacket((Packet)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1136236795: 
+                                return ((ISession)grain).HandleReadyForAccountDataTimes().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 857067198: 
+                                return ((ISession)grain).HandleUpdateAccountData((UInt32)arguments[0], (UInt32)arguments[1], (UInt32)arguments[2], (Byte[])arguments[3]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1656015275: 
+                                return ((ISession)grain).HandleRequestAccountData((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1842798826: 
+                                return ((ISession)grain).HandleCharEnum().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                         }
@@ -2037,6 +2169,24 @@ namespace Server
                             return "GetSessionType";
                     case -1836674149:
                             return "Disconnect";
+                    case 1465496855:
+                            return "GetSessionKey";
+                    case 522799231:
+                            return "HandleAuthSession";
+                    case -963939677:
+                            return "OnSocketDisconnect";
+                    case -1036537128:
+                            return "GetSessionKeyFromAuthAccount";
+                    case 1045195182:
+                            return "SendPacket";
+                    case 1136236795:
+                            return "HandleReadyForAccountDataTimes";
+                    case 857067198:
+                            return "HandleUpdateAccountData";
+                    case -1656015275:
+                            return "HandleRequestAccountData";
+                    case -1842798826:
+                            return "HandleCharEnum";
                     
                         default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
@@ -2055,7 +2205,9 @@ namespace InterfacesSerializers
     using System.Reflection;
     using Orleans.Serialization;
     using Shared;
+    using System.IO;
     using System.Net;
+    using System.Runtime.Serialization;
     using System.Collections;
     using System.Runtime.InteropServices;
     
@@ -2218,6 +2370,62 @@ namespace InterfacesSerializers
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
     [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Shared_PacketSerialization
+    {
+        
+        private static System.Reflection.FieldInfo fieldInfo1;
+        
+        private static System.Reflection.FieldInfo fieldInfo2;
+        
+        static Shared_PacketSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Shared.Packet input = ((Shared.Packet)(original));
+            Shared.Packet result = new Shared.Packet();
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            object objResult = ((object)(result));
+            object temp1 = ((System.IO.MemoryStream)(Orleans.Serialization.SerializationManager.DeepCopyInner(fieldInfo1.GetValue(input))));
+            fieldInfo1.SetValue(objResult, temp1);
+            object temp2 = fieldInfo2.GetValue(input);
+            fieldInfo2.SetValue(objResult, temp2);
+            return objResult;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Shared.Packet input = ((Shared.Packet)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo1.GetValue(input), stream, typeof(System.IO.MemoryStream));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo2.GetValue(input), stream, typeof(Shared.PacketType));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Shared.Packet result = new Shared.Packet();
+            object objResult = ((object)(result));
+            object temp1 = ((System.IO.MemoryStream)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(System.IO.MemoryStream), stream)));
+            fieldInfo1.SetValue(objResult, temp1);
+            object temp2 = ((Shared.PacketType)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(Shared.PacketType), stream)));
+            fieldInfo2.SetValue(objResult, temp2);
+            return objResult;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.Packet), DeepCopier, Serializer, Deserializer);
+            fieldInfo1 = typeof(Shared.Packet).GetField("_strm", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo2 = typeof(Shared.Packet).GetField("type", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
     internal class Shared_AuthLogonChallengeSerialization
     {
         
@@ -2332,6 +2540,122 @@ namespace InterfacesSerializers
         public static void Register()
         {
             global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.AuthLogonProof), DeepCopier, Serializer, Deserializer);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Shared_BigIntegerSerialization
+    {
+        
+        private static System.Reflection.FieldInfo fieldInfo1;
+        
+        private static System.Reflection.FieldInfo fieldInfo2;
+        
+        private static System.Reflection.FieldInfo fieldInfo3;
+        
+        static Shared_BigIntegerSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Shared.BigInteger input = ((Shared.BigInteger)(original));
+            Shared.BigInteger result = new Shared.BigInteger();
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            object objResult = ((object)(result));
+            object temp1 = ((uint[])(Orleans.Serialization.SerializationManager.DeepCopyInner(fieldInfo1.GetValue(input))));
+            fieldInfo1.SetValue(objResult, temp1);
+            object temp2 = input.dataLength;
+            fieldInfo2.SetValue(objResult, temp2);
+            object temp3 = ((System.Runtime.Serialization.SerializationInfo)(Orleans.Serialization.SerializationManager.DeepCopyInner(fieldInfo3.GetValue(input))));
+            fieldInfo3.SetValue(objResult, temp3);
+            return objResult;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Shared.BigInteger input = ((Shared.BigInteger)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo1.GetValue(input), stream, typeof(uint[]));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.dataLength, stream, typeof(int));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo3.GetValue(input), stream, typeof(System.Runtime.Serialization.SerializationInfo));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Shared.BigInteger result = new Shared.BigInteger();
+            object objResult = ((object)(result));
+            object temp1 = ((uint[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint[]), stream)));
+            fieldInfo1.SetValue(objResult, temp1);
+            object temp2 = ((int)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(int), stream)));
+            fieldInfo2.SetValue(objResult, temp2);
+            object temp3 = ((System.Runtime.Serialization.SerializationInfo)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(System.Runtime.Serialization.SerializationInfo), stream)));
+            fieldInfo3.SetValue(objResult, temp3);
+            return objResult;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.BigInteger), DeepCopier, Serializer, Deserializer);
+            fieldInfo1 = typeof(Shared.BigInteger).GetField("data", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo2 = typeof(Shared.BigInteger).GetField("dataLength", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo3 = typeof(Shared.BigInteger).GetField("info", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Shared_CMSG_AUTH_SESSIONSerialization
+    {
+        
+        static Shared_CMSG_AUTH_SESSIONSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Shared.CMSG_AUTH_SESSION input = ((Shared.CMSG_AUTH_SESSION)(original));
+            Shared.CMSG_AUTH_SESSION result = default(Shared.CMSG_AUTH_SESSION);
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            result.Account = input.Account;
+            result.AddonData = ((byte[])(Orleans.Serialization.SerializationManager.DeepCopyInner(input.AddonData)));
+            result.Build = input.Build;
+            result.Digest = ((Shared.BigInteger)(Orleans.Serialization.SerializationManager.DeepCopyInner(input.Digest)));
+            result.Seed = input.Seed;
+            return result;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Shared.CMSG_AUTH_SESSION input = ((Shared.CMSG_AUTH_SESSION)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Account, stream, typeof(string));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.AddonData, stream, typeof(byte[]));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Build, stream, typeof(uint));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Digest, stream, typeof(Shared.BigInteger));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Seed, stream, typeof(uint));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Shared.CMSG_AUTH_SESSION result = default(Shared.CMSG_AUTH_SESSION);
+            result.Account = ((string)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string), stream)));
+            result.AddonData = ((byte[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte[]), stream)));
+            result.Build = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            result.Digest = ((Shared.BigInteger)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(Shared.BigInteger), stream)));
+            result.Seed = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            return result;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.CMSG_AUTH_SESSION), DeepCopier, Serializer, Deserializer);
         }
     }
 }

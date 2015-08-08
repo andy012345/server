@@ -74,6 +74,7 @@ namespace Server
                 return;
 
             realm.PingStatus();
+            await WriteStateAsync();
         }
     }
 }

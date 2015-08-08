@@ -27,6 +27,7 @@ namespace Server.RealmServer
 
             sock = new RealmClientSocket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             sock.SetRealmSettings(settings);
+            sock.SetProcessor(new RealmPacketProcessor());
 
             sock.Bind(settings.Port);
             sock.Listen(50);

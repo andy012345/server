@@ -22,13 +22,20 @@ namespace Shared
         }
 
         public PacketType Type;
-        public UInt16 Id = 0;
+        public UInt32 Id = 0;
         public PacketFlags Flags = PacketFlags.None;
 
         public PacketHandlerAttribute(AuthOp op)
         {
             Type = PacketType.AuthPacket;
-            Id = (UInt16)op;
+            Id = (UInt32)op;
+        }
+
+
+        public PacketHandlerAttribute(RealmOp op)
+        {
+            Type = PacketType.RealmPacket;
+            Id = (UInt32)op;
         }
     }
 
