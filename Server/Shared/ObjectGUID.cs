@@ -29,6 +29,7 @@ namespace Shared
         }
 
         public UInt64 ToUInt64() { return _value; }
+        public Int64 ToInt64() { return (Int64)_value; }
 
         public byte[] ToPackedBytes()
         {

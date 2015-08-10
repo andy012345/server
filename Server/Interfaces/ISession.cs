@@ -22,6 +22,7 @@ namespace Server
         Task HandleAuthSession(CMSG_AUTH_SESSION auth, UInt32 ServerSeed);
         Task OnSocketDisconnect();
         Task GetSessionKeyFromAuthAccount(string AccountName);
+        Task SetRealmInfo(RealmSettings settings);
         Task SendPacket(Packet p);
 
         Task HandleReadyForAccountDataTimes();

@@ -248,7 +248,7 @@ namespace Server.Networking
                 sck.processor.sock = sck;
                 sck.CreateSession();
 
-                sck.OnConnect();
+                sck.OnConnect(this);
                 sck.Read();
             }
 
@@ -263,10 +263,10 @@ namespace Server.Networking
 
         public void SetProcessor(PacketProcessor p) { processor = p; p.SetSocket(this); }
 
-        void OnConnect()
+        void OnConnect(ServerSocket parent = null)
         {
             if (processor != null)
-                processor.OnConnect();
+                processor.OnConnect(parent);
         }
     }
 }

@@ -27,4 +27,7 @@
     <Networking Address="localhost" Port="11111" />
     <ProxyingGateway Address="localhost" Port="30000" />
   </Override>
+
+<DataStore DataConnectionString="server=127.0.0.1;userid=USER;password=PASSWORD;database=DATABASE;" />
 </OrleansConfiguration>
+

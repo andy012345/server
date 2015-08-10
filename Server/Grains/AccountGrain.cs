@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
+using System.Linq;
 using Shared;
 
 namespace Server
@@ -19,6 +20,13 @@ namespace Server
         public UInt32[] Size = new UInt32[8]; //Decompressed size of data
     }
 
+    public class PlayerCharacterListEntry
+    {
+        public IPlayer Player = null;
+        public int CharacterSlot = 0;
+        public int RealmID = 0;
+    }
+
     public interface AccountState : IGrainState
     {
         AccountFlags Flags { get; set; }
@@ -28,6 +36,7 @@ namespace Server
 
         //Account Data, I think this is for the UI config or something. Whatever.
         AccountData Data { get; set; }
+        PlayerCharacterListEntry[] CharacterList { get; set; }
     }
 
     public enum AccountFlags
@@ -240,13 +249,29 @@ namespace Server
             await SendPacketRealm(p);
         }
 
-        public async Task SendCharEnum()
+        public async Task SendCharEnum(int RealmID = 0)
         {
+            var chars = GetCharacters(RealmID);
+
             Packet p = new Packet(RealmOp.SMSG_CHAR_ENUM);
 
-            p.Write((byte)0); //todo :)
+            p.Write((byte)chars.Length); //todo :)
 
             await SendPacketRealm(p);
+        }
+
+        PlayerCharacterListEntry[] GetCharacters(int realm)
+        {
+            if (State.CharacterList == null)
+                return null;
+            return State.CharacterList.Where(chr => chr.RealmID == realm).ToArray();
+        }
+
+        PlayerCharacterListEntry GetCharListEntryForPlayer(IPlayer player)
+        {
+            if (State.CharacterList == null)
+                return null;
+            return State.CharacterList.Where(chr => chr.Player == player).FirstOrDefault();
         }
     }
 }

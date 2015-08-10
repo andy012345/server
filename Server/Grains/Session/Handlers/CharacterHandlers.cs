@@ -22,7 +22,7 @@ namespace Server
             if (!IsAuthedRealmSession())
                 return;
 
-            Account.SendCharEnum();
+            await Account.SendCharEnum(RealmID);
         }
     }
 }

@@ -19,9 +19,18 @@ namespace Server.RealmServer
         RealmOp opcode;
         int DecryptPointer = 0;
         public UInt32 Seed = 0;
+        public int RealmID = 0;
 
-        public override void OnConnect()
+        public override void OnConnect(ServerSocket parent = null)
         {
+            if (sock.session == null)
+                throw new Exception("Realm connection with no session");
+            var realmparent = parent as RealmClientSocket;
+            if (realmparent == null)
+                throw new Exception("Realm connection with non realm parent!");
+
+            sock.session.SetRealmInfo(realmparent.GetRealmSettings());
+
             Random rnd = new Random();
             Seed = (UInt32)rnd.Next();
 
@@ -39,7 +48,6 @@ namespace Server.RealmServer
             p.Write(0xA4F170F4);
 
             SendPacket(p);
-
 
         }
 

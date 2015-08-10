@@ -45,9 +45,9 @@ namespace Server
 
                 Console.WriteLine("Test");
 
-                IPlayerTest test1 = factory.GetGrain<IPlayerTestImpl>(0);
-                IUnitTest test2 = factory.GetGrain<IUnitTestImpl>(0);
-                IObjectTest test3 = factory.GetGrain<IObjectTestImpl>(0);
+                IPlayer test1 = factory.GetGrain<IPlayer>(0);
+                IUnit test2 = factory.GetGrain<IUnit>(0);
+                IObject test3 = factory.GetGrain<IObject>(0);
 
                 test1.GetPrimaryKeyLong();
 

@@ -44,6 +44,8 @@ namespace Server
 
             public AccountData @Data { get; set; }
 
+            public PlayerCharacterListEntry[] @CharacterList { get; set; }
+
             public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
             {   
                 object value;
@@ -52,11 +54,12 @@ namespace Server
                 if (values.TryGetValue("Password", out value)) @Password = (String) value;
                 if (values.TryGetValue("PasswordPlain", out value)) @PasswordPlain = (String) value;
                 if (values.TryGetValue("Data", out value)) @Data = (AccountData) value;
+                if (values.TryGetValue("CharacterList", out value)) @CharacterList = (PlayerCharacterListEntry[]) value;
             }
 
             public override System.String ToString()
             {
-                return System.String.Format("AccountGrainState( Flags={0} Password={1} PasswordPlain={2} Data={3} )", @Flags, @Password, @PasswordPlain, @Data);
+                return System.String.Format("AccountGrainState( Flags={0} Password={1} PasswordPlain={2} Data={3} CharacterList={4} )", @Flags, @Password, @PasswordPlain, @Data, @CharacterList);
             }
         
         public AccountGrainState() : 
@@ -72,6 +75,7 @@ namespace Server
             result["Password"] = this.Password;
             result["PasswordPlain"] = this.PasswordPlain;
             result["Data"] = this.Data;
+            result["CharacterList"] = this.CharacterList;
             return result;
         }
         
@@ -81,6 +85,7 @@ namespace Server
             this.Password = default(String);
             this.PasswordPlain = default(String);
             this.Data = new AccountData();
+            this.CharacterList = default(PlayerCharacterListEntry[]);
         }
         
         [global::Orleans.CodeGeneration.CopierMethodAttribute()]
@@ -101,6 +106,283 @@ namespace Server
         public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
         {
             AccountGrainState result = new AccountGrainState();
+            result.DeserializeFrom(stream);
+            return result;
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [SerializableAttribute()]
+    [global::Orleans.CodeGeneration.GrainStateAttribute("Server.UnitImpl")]
+    public class UnitImplState : global::Orleans.GrainState, UnitData
+    {
+        
+
+            public Int32 @object_test { get; set; }
+
+            public Int32 @unit_test { get; set; }
+
+            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
+            {   
+                object value;
+                if (values == null) { InitStateFields(); return; }
+                if (values.TryGetValue("object_test", out value)) @object_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("unit_test", out value)) @unit_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+            }
+
+            public override System.String ToString()
+            {
+                return System.String.Format("UnitImplState( object_test={0} unit_test={1} )", @object_test, @unit_test);
+            }
+        
+        public UnitImplState() : 
+                base("Server.UnitImpl")
+        {
+            this.InitStateFields();
+        }
+        
+        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
+        {
+            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
+            result["object_test"] = this.object_test;
+            result["unit_test"] = this.unit_test;
+            return result;
+        }
+        
+        private void InitStateFields()
+        {
+            this.object_test = default(Int32);
+            this.unit_test = default(Int32);
+        }
+        
+        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+        public static object _Copier(object original)
+        {
+            UnitImplState input = ((UnitImplState)(original));
+            return input.DeepCopy();
+        }
+        
+        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            UnitImplState input = ((UnitImplState)(original));
+            input.SerializeTo(stream);
+        }
+        
+        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            UnitImplState result = new UnitImplState();
+            result.DeserializeFrom(stream);
+            return result;
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [SerializableAttribute()]
+    [global::Orleans.CodeGeneration.GrainStateAttribute("Server.Player")]
+    public class PlayerState : global::Orleans.GrainState, PlayerData
+    {
+        
+
+            public Int32 @unit_test { get; set; }
+
+            public Int32 @object_test { get; set; }
+
+            public Int32 @player_test { get; set; }
+
+            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
+            {   
+                object value;
+                if (values == null) { InitStateFields(); return; }
+                if (values.TryGetValue("unit_test", out value)) @unit_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("object_test", out value)) @object_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("player_test", out value)) @player_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+            }
+
+            public override System.String ToString()
+            {
+                return System.String.Format("PlayerState( unit_test={0} object_test={1} player_test={2} )", @unit_test, @object_test, @player_test);
+            }
+        
+        public PlayerState() : 
+                base("Server.Player")
+        {
+            this.InitStateFields();
+        }
+        
+        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
+        {
+            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
+            result["unit_test"] = this.unit_test;
+            result["object_test"] = this.object_test;
+            result["player_test"] = this.player_test;
+            return result;
+        }
+        
+        private void InitStateFields()
+        {
+            this.unit_test = default(Int32);
+            this.object_test = default(Int32);
+            this.player_test = default(Int32);
+        }
+        
+        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+        public static object _Copier(object original)
+        {
+            PlayerState input = ((PlayerState)(original));
+            return input.DeepCopy();
+        }
+        
+        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            PlayerState input = ((PlayerState)(original));
+            input.SerializeTo(stream);
+        }
+        
+        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            PlayerState result = new PlayerState();
+            result.DeserializeFrom(stream);
+            return result;
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [SerializableAttribute()]
+    [global::Orleans.CodeGeneration.GrainStateAttribute("Server.PlayerImpl")]
+    public class PlayerImplState : global::Orleans.GrainState, PlayerData
+    {
+        
+
+            public Int32 @unit_test { get; set; }
+
+            public Int32 @object_test { get; set; }
+
+            public Int32 @player_test { get; set; }
+
+            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
+            {   
+                object value;
+                if (values == null) { InitStateFields(); return; }
+                if (values.TryGetValue("unit_test", out value)) @unit_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("object_test", out value)) @object_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("player_test", out value)) @player_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+            }
+
+            public override System.String ToString()
+            {
+                return System.String.Format("PlayerImplState( unit_test={0} object_test={1} player_test={2} )", @unit_test, @object_test, @player_test);
+            }
+        
+        public PlayerImplState() : 
+                base("Server.PlayerImpl")
+        {
+            this.InitStateFields();
+        }
+        
+        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
+        {
+            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
+            result["unit_test"] = this.unit_test;
+            result["object_test"] = this.object_test;
+            result["player_test"] = this.player_test;
+            return result;
+        }
+        
+        private void InitStateFields()
+        {
+            this.unit_test = default(Int32);
+            this.object_test = default(Int32);
+            this.player_test = default(Int32);
+        }
+        
+        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+        public static object _Copier(object original)
+        {
+            PlayerImplState input = ((PlayerImplState)(original));
+            return input.DeepCopy();
+        }
+        
+        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            PlayerImplState input = ((PlayerImplState)(original));
+            input.SerializeTo(stream);
+        }
+        
+        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            PlayerImplState result = new PlayerImplState();
+            result.DeserializeFrom(stream);
+            return result;
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [SerializableAttribute()]
+    [global::Orleans.CodeGeneration.GrainStateAttribute("Server.ObjectImpl")]
+    public class ObjectImplState : global::Orleans.GrainState, ObjectData
+    {
+        
+
+            public Int32 @object_test { get; set; }
+
+            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
+            {   
+                object value;
+                if (values == null) { InitStateFields(); return; }
+                if (values.TryGetValue("object_test", out value)) @object_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+            }
+
+            public override System.String ToString()
+            {
+                return System.String.Format("ObjectImplState( object_test={0} )", @object_test);
+            }
+        
+        public ObjectImplState() : 
+                base("Server.ObjectImpl")
+        {
+            this.InitStateFields();
+        }
+        
+        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
+        {
+            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
+            result["object_test"] = this.object_test;
+            return result;
+        }
+        
+        private void InitStateFields()
+        {
+            this.object_test = default(Int32);
+        }
+        
+        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+        public static object _Copier(object original)
+        {
+            ObjectImplState input = ((ObjectImplState)(original));
+            return input.DeepCopy();
+        }
+        
+        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            ObjectImplState input = ((ObjectImplState)(original));
+            input.SerializeTo(stream);
+        }
+        
+        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            ObjectImplState result = new ObjectImplState();
             result.DeserializeFrom(stream);
             return result;
         }
@@ -232,283 +514,6 @@ namespace Server
         public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
         {
             SessionState result = new SessionState();
-            result.DeserializeFrom(stream);
-            return result;
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    [SerializableAttribute()]
-    [global::Orleans.CodeGeneration.GrainStateAttribute("Server.PlayerGrainTest")]
-    public class PlayerGrainTestState : global::Orleans.GrainState, PlayerData
-    {
-        
-
-            public Int32 @unit_test { get; set; }
-
-            public Int32 @object_test { get; set; }
-
-            public Int32 @player_test { get; set; }
-
-            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
-            {   
-                object value;
-                if (values == null) { InitStateFields(); return; }
-                if (values.TryGetValue("unit_test", out value)) @unit_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
-                if (values.TryGetValue("object_test", out value)) @object_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
-                if (values.TryGetValue("player_test", out value)) @player_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
-            }
-
-            public override System.String ToString()
-            {
-                return System.String.Format("PlayerGrainTestState( unit_test={0} object_test={1} player_test={2} )", @unit_test, @object_test, @player_test);
-            }
-        
-        public PlayerGrainTestState() : 
-                base("Server.PlayerGrainTest")
-        {
-            this.InitStateFields();
-        }
-        
-        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
-        {
-            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
-            result["unit_test"] = this.unit_test;
-            result["object_test"] = this.object_test;
-            result["player_test"] = this.player_test;
-            return result;
-        }
-        
-        private void InitStateFields()
-        {
-            this.unit_test = default(Int32);
-            this.object_test = default(Int32);
-            this.player_test = default(Int32);
-        }
-        
-        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
-        public static object _Copier(object original)
-        {
-            PlayerGrainTestState input = ((PlayerGrainTestState)(original));
-            return input.DeepCopy();
-        }
-        
-        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
-        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
-        {
-            PlayerGrainTestState input = ((PlayerGrainTestState)(original));
-            input.SerializeTo(stream);
-        }
-        
-        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
-        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
-        {
-            PlayerGrainTestState result = new PlayerGrainTestState();
-            result.DeserializeFrom(stream);
-            return result;
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    [SerializableAttribute()]
-    [global::Orleans.CodeGeneration.GrainStateAttribute("Server.PlayerGrainTestImpl")]
-    public class PlayerGrainTestImplState : global::Orleans.GrainState, PlayerData
-    {
-        
-
-            public Int32 @unit_test { get; set; }
-
-            public Int32 @object_test { get; set; }
-
-            public Int32 @player_test { get; set; }
-
-            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
-            {   
-                object value;
-                if (values == null) { InitStateFields(); return; }
-                if (values.TryGetValue("unit_test", out value)) @unit_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
-                if (values.TryGetValue("object_test", out value)) @object_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
-                if (values.TryGetValue("player_test", out value)) @player_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
-            }
-
-            public override System.String ToString()
-            {
-                return System.String.Format("PlayerGrainTestImplState( unit_test={0} object_test={1} player_test={2} )", @unit_test, @object_test, @player_test);
-            }
-        
-        public PlayerGrainTestImplState() : 
-                base("Server.PlayerGrainTestImpl")
-        {
-            this.InitStateFields();
-        }
-        
-        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
-        {
-            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
-            result["unit_test"] = this.unit_test;
-            result["object_test"] = this.object_test;
-            result["player_test"] = this.player_test;
-            return result;
-        }
-        
-        private void InitStateFields()
-        {
-            this.unit_test = default(Int32);
-            this.object_test = default(Int32);
-            this.player_test = default(Int32);
-        }
-        
-        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
-        public static object _Copier(object original)
-        {
-            PlayerGrainTestImplState input = ((PlayerGrainTestImplState)(original));
-            return input.DeepCopy();
-        }
-        
-        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
-        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
-        {
-            PlayerGrainTestImplState input = ((PlayerGrainTestImplState)(original));
-            input.SerializeTo(stream);
-        }
-        
-        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
-        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
-        {
-            PlayerGrainTestImplState result = new PlayerGrainTestImplState();
-            result.DeserializeFrom(stream);
-            return result;
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    [SerializableAttribute()]
-    [global::Orleans.CodeGeneration.GrainStateAttribute("Server.UnitGrainTestImpl")]
-    public class UnitGrainTestImplState : global::Orleans.GrainState, UnitData
-    {
-        
-
-            public Int32 @object_test { get; set; }
-
-            public Int32 @unit_test { get; set; }
-
-            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
-            {   
-                object value;
-                if (values == null) { InitStateFields(); return; }
-                if (values.TryGetValue("object_test", out value)) @object_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
-                if (values.TryGetValue("unit_test", out value)) @unit_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
-            }
-
-            public override System.String ToString()
-            {
-                return System.String.Format("UnitGrainTestImplState( object_test={0} unit_test={1} )", @object_test, @unit_test);
-            }
-        
-        public UnitGrainTestImplState() : 
-                base("Server.UnitGrainTestImpl")
-        {
-            this.InitStateFields();
-        }
-        
-        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
-        {
-            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
-            result["object_test"] = this.object_test;
-            result["unit_test"] = this.unit_test;
-            return result;
-        }
-        
-        private void InitStateFields()
-        {
-            this.object_test = default(Int32);
-            this.unit_test = default(Int32);
-        }
-        
-        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
-        public static object _Copier(object original)
-        {
-            UnitGrainTestImplState input = ((UnitGrainTestImplState)(original));
-            return input.DeepCopy();
-        }
-        
-        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
-        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
-        {
-            UnitGrainTestImplState input = ((UnitGrainTestImplState)(original));
-            input.SerializeTo(stream);
-        }
-        
-        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
-        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
-        {
-            UnitGrainTestImplState result = new UnitGrainTestImplState();
-            result.DeserializeFrom(stream);
-            return result;
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    [SerializableAttribute()]
-    [global::Orleans.CodeGeneration.GrainStateAttribute("Server.ObjectGrainTestImpl")]
-    public class ObjectGrainTestImplState : global::Orleans.GrainState, ObjectData
-    {
-        
-
-            public Int32 @object_test { get; set; }
-
-            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
-            {   
-                object value;
-                if (values == null) { InitStateFields(); return; }
-                if (values.TryGetValue("object_test", out value)) @object_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
-            }
-
-            public override System.String ToString()
-            {
-                return System.String.Format("ObjectGrainTestImplState( object_test={0} )", @object_test);
-            }
-        
-        public ObjectGrainTestImplState() : 
-                base("Server.ObjectGrainTestImpl")
-        {
-            this.InitStateFields();
-        }
-        
-        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
-        {
-            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
-            result["object_test"] = this.object_test;
-            return result;
-        }
-        
-        private void InitStateFields()
-        {
-            this.object_test = default(Int32);
-        }
-        
-        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
-        public static object _Copier(object original)
-        {
-            ObjectGrainTestImplState input = ((ObjectGrainTestImplState)(original));
-            return input.DeepCopy();
-        }
-        
-        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
-        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
-        {
-            ObjectGrainTestImplState input = ((ObjectGrainTestImplState)(original));
-            input.SerializeTo(stream);
-        }
-        
-        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
-        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
-        {
-            ObjectGrainTestImplState result = new ObjectGrainTestImplState();
             result.DeserializeFrom(stream);
             return result;
         }

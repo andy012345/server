@@ -41,6 +41,7 @@ namespace Server
         IAsyncStream<SocketCommand> commandStream = null;
 
         SessionType SessionType = SessionType.Unknown;
+        int RealmID = 0;
 
         public object Assert { get; private set; }
 
@@ -171,5 +172,11 @@ namespace Server
             SessionKey = await auth_session.GetSessionKey();
         }
 
+        public Task SetRealmInfo(RealmSettings settings)
+        {
+            SessionType = SessionType.RealmSession;
+            RealmID = settings.RealmID;
+            return TaskDone.Done;
+        }
     }
 }

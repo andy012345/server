@@ -25,6 +25,7 @@ namespace Server.RealmServer
         public RealmClientSocket(Socket s) : base(s) { }
 
         public void SetRealmSettings(RealmSettings s) { settings = s; }
+        public RealmSettings GetRealmSettings() { return settings; }
         public void PingRunner()
         {
             PingTaskCancelSource = new CancellationTokenSource();

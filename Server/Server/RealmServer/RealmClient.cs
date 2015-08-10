@@ -22,6 +22,7 @@ namespace Server.RealmServer
 
         public void Run()
         {
+            Init();
             var realm_manager = Orleans.GrainClient.GrainFactory.GetGrain<IRealmManager>(0);
             realm_manager.AddRealm(settings);
 
@@ -35,6 +36,11 @@ namespace Server.RealmServer
 
             //make sure the realm client is pinging the server so it doesn't get marked offline!
             sock.PingRunner();
+        }
+
+        public void Init()
+        {
+            var datastore_manager = Orleans.GrainClient.GrainFactory.GetGrain<IDataStoreManager>(0);
         }
     }
 }

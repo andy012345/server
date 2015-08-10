@@ -6,23 +6,23 @@ using Server;
 
 namespace Server
 {
-    public interface IPlayerTestImpl : IPlayerTest { }
-    public interface IUnitTestImpl : IUnitTest { }
-    public interface IObjectTestImpl : IObjectTest { }
+    public interface IPlayer : IPlayerImpl { }
+    public interface IUnit : IUnitImpl { }
+    public interface IObject : IObjectImpl { }
 
-    public interface IPlayerTest : IUnitTest
+    public interface IPlayerImpl : IUnitImpl
     {
        // Task<string> VirtualCall();
         Task<string> PlayerCall();
     }
 
-    public interface IUnitTest : IObjectTest
+    public interface IUnitImpl : IObjectImpl
     {
         //  Task<string> VirtualCall();
         Task<string> UnitCall();
     }
 
-    public interface IObjectTest : IGrainWithIntegerKey
+    public interface IObjectImpl : IGrainWithIntegerKey
     {
         Task<string> VirtualCall();
         Task<string> ObjectCall();

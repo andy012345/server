@@ -82,7 +82,7 @@ namespace Server.Networking
         }
 
         public virtual PacketProcessResult ProcessData() { return PacketProcessResult.Processed; }
-        public virtual void OnConnect() { }
+        public virtual void OnConnect(ServerSocket parent = null) { }
 
         PacketProcessResult HandleProcess()
         {

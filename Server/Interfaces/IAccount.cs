@@ -43,6 +43,6 @@ namespace Server
         Task UpdateAccountData(UInt32 id, UInt32 time, UInt32 size, byte[] data);
         Task SendAccountData(UInt32 id);
 
-        Task SendCharEnum();
+        Task SendCharEnum(int RealmID = 0);
     }
 }
