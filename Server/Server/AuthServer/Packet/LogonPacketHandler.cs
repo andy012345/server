@@ -21,7 +21,7 @@ namespace Server.AuthServer
 
         public override PacketProcessResult ProcessData()
         {
-            opcode = (AuthOp)packetReader.ReadByte();
+            opcode = (AuthOp)currentPacket.ReadByte();
 
             return ProcessPacket();
         }

@@ -26,10 +26,10 @@ namespace Server.RealmServer
         public static PacketProcessResult HandleUpdateAccountData(PacketProcessor p)
         {
 
-            var type = p.packetReader.ReadUInt32();
-            var time = p.packetReader.ReadUInt32();
-            var size = p.packetReader.ReadUInt32();
-            var data = p.packetReader.ReadBytes((int)p.packetReader.RemainingLength);
+            var type = p.currentPacket.ReadUInt32();
+            var time = p.currentPacket.ReadUInt32();
+            var size = p.currentPacket.ReadUInt32();
+            var data = p.currentPacket.ReadBytes((int)p.currentPacket.RemainingLength);
 
             p.sock.session.HandleUpdateAccountData(type, time, size, data);
 
@@ -40,7 +40,7 @@ namespace Server.RealmServer
         [PacketHandler(RealmOp.CMSG_REQUEST_ACCOUNT_DATA)]
         public static PacketProcessResult HandleRequestAccountData(PacketProcessor p)
         {
-            var type = p.packetReader.ReadUInt32();
+            var type = p.currentPacket.ReadUInt32();
 
             p.sock.session.HandleRequestAccountData(type);
 

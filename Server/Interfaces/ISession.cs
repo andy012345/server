@@ -23,12 +23,13 @@ namespace Server
         Task OnSocketDisconnect();
         Task GetSessionKeyFromAuthAccount(string AccountName);
         Task SetRealmInfo(RealmSettings settings);
-        Task SendPacket(Packet p);
+        Task SendPacket(PacketOut p);
 
         Task HandleReadyForAccountDataTimes();
         Task HandleUpdateAccountData(UInt32 type, UInt32 time, UInt32 size, byte[] data);
         Task HandleRequestAccountData(UInt32 type);
 
         Task HandleCharEnum();
+        Task HandleCharCreate(CMSG_CHAR_CREATE create);
     }
 }

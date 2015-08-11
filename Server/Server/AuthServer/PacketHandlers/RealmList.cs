@@ -13,7 +13,7 @@ namespace Server.AuthServer
         [PacketHandler(AuthOp.REALM_LIST)]
         public static PacketProcessResult HandleRealmList(PacketProcessor p)
         {
-            p.dataNeeded = 5; if (p.packetData.Length < p.dataNeeded) return PacketProcessResult.RequiresData;
+            p.dataNeeded = 5; if (p.currentPacket.Length < p.dataNeeded) return PacketProcessResult.RequiresData;
             if (p.sock != null && p.sock.session != null)
                 p.sock.session.OnRealmList();
             return PacketProcessResult.Processed;

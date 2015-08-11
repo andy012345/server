@@ -24,5 +24,12 @@ namespace Server
 
             await Account.SendCharEnum(RealmID);
         }
+
+        public async Task HandleCharCreate(CMSG_CHAR_CREATE create)
+        {
+            if (!IsAuthedRealmSession())
+                return;
+            await Account.CreatePlayer(create);
+        }
     }
 }

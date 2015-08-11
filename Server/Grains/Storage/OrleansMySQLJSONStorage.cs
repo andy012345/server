@@ -110,8 +110,8 @@ namespace Orleans.Storage.MySQLDB
                 {
                     try
                     {
-                        object data = Newtonsoft.Json.JsonConvert.DeserializeObject(dict["data"].ToString(), grainState.GetType());
-                        grainState.SetAll(((IGrainState)data).AsDictionary());
+                        var data = (IGrainState)Newtonsoft.Json.JsonConvert.DeserializeObject(dict["data"].ToString(), grainState.GetType());
+                        grainState.SetAll(data.AsDictionary());
                     }
                     catch { grainState.SetAll(null); /* corruption? */ }
                 }

@@ -17,9 +17,21 @@ namespace Server.RealmServer
         [PacketHandler(RealmOp.CMSG_CHAR_ENUM)]
         public static PacketProcessResult HandleCharEnum(PacketProcessor p)
         {
-            p.sock.session.HandleCharEnum();          
+            p.sock.session.HandleCharEnum();
 
             return PacketProcessResult.Processed;
-        }      
+        }
+
+
+        [PacketHandler(RealmOp.CMSG_CHAR_CREATE)]
+        public static PacketProcessResult HandleCharCreate(PacketProcessor p)
+        {
+            CMSG_CHAR_CREATE create = new CMSG_CHAR_CREATE();
+            create.Read(p.currentPacket);            
+
+            p.sock.session.HandleCharCreate(create);
+
+            return PacketProcessResult.Processed;
+        }
     }
 }

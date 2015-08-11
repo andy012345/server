@@ -17,4 +17,5 @@ namespace Shared
 
         public static uint GetUnixTime() { return GetUnixTime(DateTime.UtcNow); }
     }
+
 }

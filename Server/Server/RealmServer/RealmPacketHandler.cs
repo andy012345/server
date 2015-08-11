@@ -17,7 +17,7 @@ namespace Server.RealmServer
         public RealmPacketProcessor() : base() { dataNeeded = DefaultDataNeeded(); } //opcode
 
         RealmOp opcode;
-        int DecryptPointer = 0;
+        public int DecryptPointer = 0;
         public UInt32 Seed = 0;
         public int RealmID = 0;
 
@@ -34,7 +34,7 @@ namespace Server.RealmServer
             Random rnd = new Random();
             Seed = (UInt32)rnd.Next();
 
-            Packet p = new Packet(RealmOp.SMSG_AUTH_CHALLENGE);
+            PacketOut p = new PacketOut(RealmOp.SMSG_AUTH_CHALLENGE);
             p.Write((int)1);
             p.Write(Seed);
 
@@ -81,7 +81,7 @@ namespace Server.RealmServer
             sock.Encrypt.Process(buf, 0, buf.Length);
         }
 
-        public void SendPacket(Packet p)
+        public void SendPacket(PacketOut p)
         {
             p.Finalise();
             var parray = p.strm.ToArray();
@@ -93,32 +93,34 @@ namespace Server.RealmServer
         public override PacketProcessResult ProcessData()
         {
             DecryptData(6);
-            int sz = packetReader.ReadUInt16BE();
+            int sz = currentPacket.ReadUInt16BE();
 
             if ((sz & 0x8000) != 0) //large packet
             {
                 dataNeeded = 3; //we need 3 byte size to continue
-                if (packetData.Length < dataNeeded) return PacketProcessResult.RequiresData;
+                if (currentPacket.Length < dataNeeded) return PacketProcessResult.RequiresData;
 
                 DecryptData(7);
-                packetData.Position = 3;
+                currentPacket.Position = 3;
                 sz = 0;
-                sz |= packetData.GetBuffer()[0] & 0x7F;
+                sz |= currentPacket.GetBuffer()[0] & 0x7F;
                 sz <<= 8;
-                sz |= packetData.GetBuffer()[1];
+                sz |= currentPacket.GetBuffer()[1];
                 sz <<= 8;
-                sz |= packetData.GetBuffer()[2];
+                sz |= currentPacket.GetBuffer()[2];
 
                 dataNeeded = 3 + sz;
-                if (packetData.Length < dataNeeded) return PacketProcessResult.RequiresData;
+                if (currentPacket.Length < dataNeeded) return PacketProcessResult.RequiresData;
             }
             else
             {
                 dataNeeded = 2 + sz;
-                if (packetData.Length < dataNeeded) return PacketProcessResult.RequiresData;
+                if (currentPacket.Length < dataNeeded) return PacketProcessResult.RequiresData;
             }
 
-            opcode = (RealmOp)packetReader.ReadUInt32();
+            opcode = (RealmOp)currentPacket.ReadUInt32();
+
+            Console.WriteLine("Received Packet {0} Length {1}", opcode.ToString(), sz);
 
             //ok now we need sz + 2 to continue
 
@@ -130,7 +132,8 @@ namespace Server.RealmServer
             if (sock.Decrypt == null || DecryptPointer >= to)
                 return;
 
-            sock.Decrypt.Process(packetData.GetBuffer(), DecryptPointer, (to - DecryptPointer));
+            sock.Decrypt.Process(currentPacket.GetBuffer(), DecryptPointer, (to - DecryptPointer));
+            DecryptPointer = to;
         }
 
         PacketProcessResult ProcessPacket()

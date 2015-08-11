@@ -57,7 +57,7 @@ namespace Server
 
             Shared.BigInteger unk = new Shared.BigInteger(new Random(), 128); //I'm sure this is used for matrix proofing (2 factor auth)
 
-            Packet rtn = new Packet(AuthOp.AUTH_LOGON_CHALLENGE);
+            PacketOut rtn = new PacketOut(AuthOp.AUTH_LOGON_CHALLENGE);
             rtn.Write((byte)AuthError.Success);
             rtn.Write((byte)0); //unknown
             rtn.WriteBigInt(B, 32);
@@ -137,7 +137,7 @@ namespace Server
 
                 BigInteger M2 = BigInt.Hash(A, M, SessionKey);
 
-                Packet p = new Packet(AuthOp.AUTH_LOGON_PROOF);
+                PacketOut p = new PacketOut(AuthOp.AUTH_LOGON_PROOF);
                 p.Write((byte)AuthError.Success);
                 p.WriteBigInt(M2, 20);
                 p.Write((int)0);
@@ -164,7 +164,7 @@ namespace Server
 
             var realms = await realm_manager.GetRealms();
 
-            Packet p = new Packet(AuthOp.REALM_LIST);
+            PacketOut p = new PacketOut(AuthOp.REALM_LIST);
             p.Write((UInt16)0); //size
 
             p.Write((int)0);
@@ -202,7 +202,7 @@ namespace Server
 
         Task SendAuthError(AuthError error)
         {
-            Packet p = new Packet();
+            PacketOut p = new PacketOut();
             p.w.Write((byte)AuthOp.AUTH_LOGON_CHALLENGE);
             p.w.Write((byte)0);
             p.w.Write((byte)error);

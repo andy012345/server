@@ -36,13 +36,14 @@ namespace Server
         Task<ISession> GetRealmSession();
 
 
-        Task SendPacketRealm(Packet p);
-        Task SendPacketAuth(Packet p);
+        Task SendPacketRealm(PacketOut p);
+        Task SendPacketAuth(PacketOut p);
 
         Task SendAccountDataTimes(UInt32 mask);
         Task UpdateAccountData(UInt32 id, UInt32 time, UInt32 size, byte[] data);
         Task SendAccountData(UInt32 id);
 
         Task SendCharEnum(int RealmID = 0);
+        Task CreatePlayer(CMSG_CHAR_CREATE create);
     }
 }

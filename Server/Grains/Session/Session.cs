@@ -80,12 +80,12 @@ namespace Server
             return TaskDone.Done;
         }
 
-        public async Task SendPacketAsync(Packet p)
+        public async Task SendPacketAsync(PacketOut p)
         {
             p.Finalise();
             await packetStream.OnNextAsync(p.strm.ToArray());
         }
-        public Task SendPacket(Packet p)
+        public Task SendPacket(PacketOut p)
         {
             p.Finalise();
             packetStream.OnNextAsync(p.strm.ToArray());
@@ -137,7 +137,7 @@ namespace Server
             await Account.AddSession(this); //set realm session (and disconnect any others)
 
             //TODO: add queues
-            Packet p = new Packet(RealmOp.SMSG_AUTH_RESPONSE);
+            PacketOut p = new PacketOut(RealmOp.SMSG_AUTH_RESPONSE);
 
             p.Write((byte)LoginErrorCode.AUTH_OK);
             p.Write((int)0);
@@ -150,7 +150,7 @@ namespace Server
 
         public Task SendAuthResponse(LoginErrorCode code)
         {
-            Packet p = new Packet(RealmOp.SMSG_AUTH_RESPONSE);
+            PacketOut p = new PacketOut(RealmOp.SMSG_AUTH_RESPONSE);
             p.Write((byte)code);
             SendPacket(p);
             return TaskDone.Done;

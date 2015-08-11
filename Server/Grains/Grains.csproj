@@ -58,6 +58,7 @@
     <Compile Include="DataStores\DataStoreGetters.cs" />
     <Compile Include="DataStores\DataStoreManager.cs" />
     <Compile Include="DataStores\DataStoreLoader.cs" />
+    <Compile Include="Objects\Creator.cs" />
     <Compile Include="Objects\Unit.cs" />
     <Compile Include="Objects\Player.cs" />
     <Compile Include="Objects\Object.cs" />

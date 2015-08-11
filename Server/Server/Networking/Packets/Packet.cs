@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Server.RealmServer;
+using Shared;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,14 +18,23 @@ namespace Server.Networking
 
     public class PacketProcessor
     {
-        public MemoryStream packetData;
-        public Reader.PacketReader packetReader;
-        public int dataNeeded = 0;
+        public PacketIn currentPacket;
+        public int _dataNeeded = 0;
         public ServerSocket sock = null;
+
+        public int dataNeeded
+        {
+            get { return _dataNeeded; }
+            set
+            {
+                Console.WriteLine("DataNeeded: {0}", value);
+                _dataNeeded = value;
+            }
+        }
 
         public PacketProcessor() { Reset(); }
 
-        void Reset() { packetData = new MemoryStream(); packetReader = new Reader.PacketReader(packetData); dataNeeded = DefaultDataNeeded(); }
+        void Reset() { currentPacket = new PacketIn(); dataNeeded = DefaultDataNeeded(); }
 
         public virtual int DefaultDataNeeded() { return 0; }
 
@@ -43,9 +54,12 @@ namespace Server.Networking
 
             if (res == PacketProcessResult.Processed)
             {
-                packetData = new MemoryStream();
-                packetReader = new Reader.PacketReader(packetData);
+                currentPacket.Reset();
                 dataNeeded = DefaultDataNeeded();
+
+                var realmProcessor = this as RealmPacketProcessor;
+                if (realmProcessor != null)
+                    realmProcessor.DecryptPointer = 0;
             }
             dataIndex += copyAmount;
 
@@ -59,13 +73,13 @@ namespace Server.Networking
         PacketProcessResult OnReceive(byte[] data, int dataIndex, int dataSize, out int copyAmount)
         {
             copyAmount = 0;
-            int dataLeft = dataNeeded - (int)packetData.Length;
+            int dataLeft = dataNeeded - (int)currentPacket.Length;
 
             if (dataLeft >= 1)
             {
                 if (dataLeft <= (dataSize - dataIndex)) //we have received all we need to continue processing, WOO!
                 {
-                    packetData.Write(data, dataIndex, dataLeft);
+                    currentPacket.Write(data, dataIndex, dataLeft);
                     copyAmount = dataLeft;
                     //pass to our handler
                     return HandleProcess();
@@ -73,7 +87,7 @@ namespace Server.Networking
                 else
                 {
                     //copy what we can :(
-                    packetData.Write(data, dataIndex, (dataSize - dataIndex));
+                    currentPacket.Write(data, dataIndex, (dataSize - dataIndex));
                     copyAmount = (dataSize - dataIndex);
                     return PacketProcessResult.RequiresData;
                 }
@@ -86,12 +100,12 @@ namespace Server.Networking
 
         PacketProcessResult HandleProcess()
         {
-            var oldPosition = packetData.Position;
-            packetData.Position = 0;
+            var oldPosition = currentPacket.Position;
+            currentPacket.Position = 0;
 
             var retval = ProcessData();
 
-            packetData.Position = oldPosition;
+            currentPacket.Position = oldPosition;
 
             return retval;
         }

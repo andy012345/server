@@ -18,98 +18,15 @@
 
 namespace Server
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
     using Orleans;
+    using System;
     using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
     using Shared;
+    using System.Collections;
+    using System.Collections.Generic;
     using Orleans.Runtime;
     
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    [SerializableAttribute()]
-    [global::Orleans.CodeGeneration.GrainStateAttribute("Server.AccountGrain")]
-    public class AccountGrainState : global::Orleans.GrainState, AccountState
-    {
-        
-
-            public AccountFlags @Flags { get; set; }
-
-            public String @Password { get; set; }
-
-            public String @PasswordPlain { get; set; }
-
-            public AccountData @Data { get; set; }
-
-            public PlayerCharacterListEntry[] @CharacterList { get; set; }
-
-            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
-            {   
-                object value;
-                if (values == null) { InitStateFields(); return; }
-                if (values.TryGetValue("Flags", out value)) @Flags = (AccountFlags) value;
-                if (values.TryGetValue("Password", out value)) @Password = (String) value;
-                if (values.TryGetValue("PasswordPlain", out value)) @PasswordPlain = (String) value;
-                if (values.TryGetValue("Data", out value)) @Data = (AccountData) value;
-                if (values.TryGetValue("CharacterList", out value)) @CharacterList = (PlayerCharacterListEntry[]) value;
-            }
-
-            public override System.String ToString()
-            {
-                return System.String.Format("AccountGrainState( Flags={0} Password={1} PasswordPlain={2} Data={3} CharacterList={4} )", @Flags, @Password, @PasswordPlain, @Data, @CharacterList);
-            }
-        
-        public AccountGrainState() : 
-                base("Server.AccountGrain")
-        {
-            this.InitStateFields();
-        }
-        
-        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
-        {
-            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
-            result["Flags"] = this.Flags;
-            result["Password"] = this.Password;
-            result["PasswordPlain"] = this.PasswordPlain;
-            result["Data"] = this.Data;
-            result["CharacterList"] = this.CharacterList;
-            return result;
-        }
-        
-        private void InitStateFields()
-        {
-            this.Flags = default(AccountFlags);
-            this.Password = default(String);
-            this.PasswordPlain = default(String);
-            this.Data = new AccountData();
-            this.CharacterList = default(PlayerCharacterListEntry[]);
-        }
-        
-        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
-        public static object _Copier(object original)
-        {
-            AccountGrainState input = ((AccountGrainState)(original));
-            return input.DeepCopy();
-        }
-        
-        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
-        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
-        {
-            AccountGrainState input = ((AccountGrainState)(original));
-            input.SerializeTo(stream);
-        }
-        
-        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
-        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
-        {
-            AccountGrainState result = new AccountGrainState();
-            result.DeserializeFrom(stream);
-            return result;
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
@@ -119,7 +36,11 @@ namespace Server
     {
         
 
-            public Int32 @object_test { get; set; }
+            public Boolean @Exists { get; set; }
+
+            public ObjectType @ObjType { get; set; }
+
+            public UpdateField[] @UpdateFields { get; set; }
 
             public Int32 @unit_test { get; set; }
 
@@ -127,13 +48,15 @@ namespace Server
             {   
                 object value;
                 if (values == null) { InitStateFields(); return; }
-                if (values.TryGetValue("object_test", out value)) @object_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("Exists", out value)) @Exists = (Boolean) value;
+                if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
+                if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
                 if (values.TryGetValue("unit_test", out value)) @unit_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
             }
 
             public override System.String ToString()
             {
-                return System.String.Format("UnitImplState( object_test={0} unit_test={1} )", @object_test, @unit_test);
+                return System.String.Format("UnitImplState( Exists={0} ObjType={1} UpdateFields={2} unit_test={3} )", @Exists, @ObjType, @UpdateFields, @unit_test);
             }
         
         public UnitImplState() : 
@@ -145,14 +68,18 @@ namespace Server
         public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
         {
             System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
-            result["object_test"] = this.object_test;
+            result["Exists"] = this.Exists;
+            result["ObjType"] = this.ObjType;
+            result["UpdateFields"] = this.UpdateFields;
             result["unit_test"] = this.unit_test;
             return result;
         }
         
         private void InitStateFields()
         {
-            this.object_test = default(Int32);
+            this.Exists = default(Boolean);
+            this.ObjType = default(ObjectType);
+            this.UpdateFields = default(UpdateField[]);
             this.unit_test = default(Int32);
         }
         
@@ -189,7 +116,11 @@ namespace Server
 
             public Int32 @unit_test { get; set; }
 
-            public Int32 @object_test { get; set; }
+            public Boolean @Exists { get; set; }
+
+            public ObjectType @ObjType { get; set; }
+
+            public UpdateField[] @UpdateFields { get; set; }
 
             public Int32 @player_test { get; set; }
 
@@ -198,13 +129,15 @@ namespace Server
                 object value;
                 if (values == null) { InitStateFields(); return; }
                 if (values.TryGetValue("unit_test", out value)) @unit_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
-                if (values.TryGetValue("object_test", out value)) @object_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("Exists", out value)) @Exists = (Boolean) value;
+                if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
+                if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
                 if (values.TryGetValue("player_test", out value)) @player_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
             }
 
             public override System.String ToString()
             {
-                return System.String.Format("PlayerState( unit_test={0} object_test={1} player_test={2} )", @unit_test, @object_test, @player_test);
+                return System.String.Format("PlayerState( unit_test={0} Exists={1} ObjType={2} UpdateFields={3} player_test={4} )", @unit_test, @Exists, @ObjType, @UpdateFields, @player_test);
             }
         
         public PlayerState() : 
@@ -217,7 +150,9 @@ namespace Server
         {
             System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
             result["unit_test"] = this.unit_test;
-            result["object_test"] = this.object_test;
+            result["Exists"] = this.Exists;
+            result["ObjType"] = this.ObjType;
+            result["UpdateFields"] = this.UpdateFields;
             result["player_test"] = this.player_test;
             return result;
         }
@@ -225,7 +160,9 @@ namespace Server
         private void InitStateFields()
         {
             this.unit_test = default(Int32);
-            this.object_test = default(Int32);
+            this.Exists = default(Boolean);
+            this.ObjType = default(ObjectType);
+            this.UpdateFields = default(UpdateField[]);
             this.player_test = default(Int32);
         }
         
@@ -262,7 +199,11 @@ namespace Server
 
             public Int32 @unit_test { get; set; }
 
-            public Int32 @object_test { get; set; }
+            public Boolean @Exists { get; set; }
+
+            public ObjectType @ObjType { get; set; }
+
+            public UpdateField[] @UpdateFields { get; set; }
 
             public Int32 @player_test { get; set; }
 
@@ -271,13 +212,15 @@ namespace Server
                 object value;
                 if (values == null) { InitStateFields(); return; }
                 if (values.TryGetValue("unit_test", out value)) @unit_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
-                if (values.TryGetValue("object_test", out value)) @object_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("Exists", out value)) @Exists = (Boolean) value;
+                if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
+                if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
                 if (values.TryGetValue("player_test", out value)) @player_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
             }
 
             public override System.String ToString()
             {
-                return System.String.Format("PlayerImplState( unit_test={0} object_test={1} player_test={2} )", @unit_test, @object_test, @player_test);
+                return System.String.Format("PlayerImplState( unit_test={0} Exists={1} ObjType={2} UpdateFields={3} player_test={4} )", @unit_test, @Exists, @ObjType, @UpdateFields, @player_test);
             }
         
         public PlayerImplState() : 
@@ -290,7 +233,9 @@ namespace Server
         {
             System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
             result["unit_test"] = this.unit_test;
-            result["object_test"] = this.object_test;
+            result["Exists"] = this.Exists;
+            result["ObjType"] = this.ObjType;
+            result["UpdateFields"] = this.UpdateFields;
             result["player_test"] = this.player_test;
             return result;
         }
@@ -298,7 +243,9 @@ namespace Server
         private void InitStateFields()
         {
             this.unit_test = default(Int32);
-            this.object_test = default(Int32);
+            this.Exists = default(Boolean);
+            this.ObjType = default(ObjectType);
+            this.UpdateFields = default(UpdateField[]);
             this.player_test = default(Int32);
         }
         
@@ -333,18 +280,24 @@ namespace Server
     {
         
 
-            public Int32 @object_test { get; set; }
+            public Boolean @Exists { get; set; }
+
+            public ObjectType @ObjType { get; set; }
+
+            public UpdateField[] @UpdateFields { get; set; }
 
             public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
             {   
                 object value;
                 if (values == null) { InitStateFields(); return; }
-                if (values.TryGetValue("object_test", out value)) @object_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("Exists", out value)) @Exists = (Boolean) value;
+                if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
+                if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
             }
 
             public override System.String ToString()
             {
-                return System.String.Format("ObjectImplState( object_test={0} )", @object_test);
+                return System.String.Format("ObjectImplState( Exists={0} ObjType={1} UpdateFields={2} )", @Exists, @ObjType, @UpdateFields);
             }
         
         public ObjectImplState() : 
@@ -356,13 +309,17 @@ namespace Server
         public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
         {
             System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
-            result["object_test"] = this.object_test;
+            result["Exists"] = this.Exists;
+            result["ObjType"] = this.ObjType;
+            result["UpdateFields"] = this.UpdateFields;
             return result;
         }
         
         private void InitStateFields()
         {
-            this.object_test = default(Int32);
+            this.Exists = default(Boolean);
+            this.ObjType = default(ObjectType);
+            this.UpdateFields = default(UpdateField[]);
         }
         
         [global::Orleans.CodeGeneration.CopierMethodAttribute()]

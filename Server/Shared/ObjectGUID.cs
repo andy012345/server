@@ -11,7 +11,7 @@ namespace Shared
     {
         UInt64 _value = 0;
 
-        ObjectGUID(UInt64 g) { _value = g; }
+        public ObjectGUID(UInt64 g) { _value = g; }
 
         public override bool Equals(object obj)
         {

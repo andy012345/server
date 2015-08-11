@@ -8,20 +8,17 @@ using System.Threading.Tasks;
 
 namespace Server
 {
-    public interface UnitData : ObjectData, IGrainState
+    public interface UnitData : ObjectData
     {
         int unit_test { get; set; }
     }
 
     public class UnitImpl : Unit<UnitData>, IUnit { }
     public class Unit<T> : Object<T>, IUnitImpl
-        where T : class, IGrainState
+        where T : class, UnitData
     {
         public override Task<string> VirtualCall() { return Task.FromResult("Virtual call from unit"); }
         public Task<string> UnitCall() { return Task.FromResult("Call from unit"); }
 
     }
-
-
-
 }

@@ -14,15 +14,15 @@ namespace Server.AuthServer
         public static PacketProcessResult HandleLogonAuthProof(PacketProcessor p)
         {
             p.dataNeeded = 75; //1 op, 32 A, 20 M1, 20 crc_hash, 1 number_of_keys, 1 unk
-            if (p.packetData.Length < p.dataNeeded) return PacketProcessResult.RequiresData;
+            if (p.currentPacket.Length < p.dataNeeded) return PacketProcessResult.RequiresData;
 
             AuthLogonProof proof = new AuthLogonProof();
 
-            proof.A = p.packetReader.ReadBytes(32);
-            proof.M1 = p.packetReader.ReadBytes(20);
-            proof.crchash = p.packetReader.ReadBytes(20);
-            proof.number_of_keys = p.packetReader.ReadByte();
-            proof.unk = p.packetReader.ReadByte();
+            proof.A = p.currentPacket.ReadBytes(32);
+            proof.M1 = p.currentPacket.ReadBytes(20);
+            proof.crchash = p.currentPacket.ReadBytes(20);
+            proof.number_of_keys = p.currentPacket.ReadByte();
+            proof.unk = p.currentPacket.ReadByte();
 
             if (p.sock != null && p.sock.session != null)
                 p.sock.session.OnLogonProof(proof);

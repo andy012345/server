@@ -47,10 +47,14 @@
     <Compile Include="Enums\RealmServerEnums.cs" />
     <Compile Include="Enums\AuthServerEnums.cs" />
     <Compile Include="Enums\Session.cs" />
+    <Compile Include="Enums\Object.cs" />
     <Compile Include="Enums\SocketCommand.cs" />
+    <Compile Include="Enums\UpdateFields.cs" />
     <Compile Include="Memorystream.cs" />
     <Compile Include="ObjectGUID.cs" />
     <Compile Include="PacketHandlerAttrib.cs" />
+    <Compile Include="Packet.cs" />
+    <Compile Include="PacketIn.cs" />
     <Compile Include="PacketWriter.cs" />
     <Compile Include="RC4.cs" />
     <Compile Include="SHA.cs" />
@@ -59,7 +63,9 @@
     <Compile Include="Structs\DataStore\PlayerDataStore.cs" />
     <Compile Include="Structs\RealmManager.cs" />
     <Compile Include="Structs\AuthServerStructs.cs" />
+    <Compile Include="Structs\RealmPackets\Character.cs" />
     <Compile Include="Structs\RealmPackets\AuthSession.cs" />
+    <Compile Include="Structs\UpdateField.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Types.cs" />
     <Compile Include="ZLib.cs" />

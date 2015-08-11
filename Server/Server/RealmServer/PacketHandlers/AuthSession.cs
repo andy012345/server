@@ -22,20 +22,20 @@ namespace Server.RealmServer
             UInt32 unk, unk2, unk3, unk4, unk5;
             UInt64 unk6;
 
-            auth.Build = p.packetReader.ReadUInt32();
-            unk = p.packetReader.ReadUInt32();
-            auth.Account = p.packetReader.ReadCString();
-            unk2 = p.packetReader.ReadUInt32();
+            auth.Build = p.currentPacket.ReadUInt32();
+            unk = p.currentPacket.ReadUInt32();
+            auth.Account = p.currentPacket.ReadCString();
+            unk2 = p.currentPacket.ReadUInt32();
 
-            auth.Seed = p.packetReader.ReadUInt32();
-            unk3 = p.packetReader.ReadUInt32();
-            unk4 = p.packetReader.ReadUInt32();
-            unk5 = p.packetReader.ReadUInt32();
-            unk6 = p.packetReader.ReadUInt64();
-            auth.Digest = p.packetReader.ReadBigInteger(20);
+            auth.Seed = p.currentPacket.ReadUInt32();
+            unk3 = p.currentPacket.ReadUInt32();
+            unk4 = p.currentPacket.ReadUInt32();
+            unk5 = p.currentPacket.ReadUInt32();
+            unk6 = p.currentPacket.ReadUInt64();
+            auth.Digest = p.currentPacket.ReadBigInteger(20);
 
-            var decompressedDataSize = p.packetReader.ReadInt32();
-            var compressedData = p.packetReader.ReadBytes((int)(p.packetData.Length - p.packetData.Position)); //read remaining array
+            var decompressedDataSize = p.currentPacket.ReadInt32();
+            var compressedData = p.currentPacket.ReadBytes((int)(p.currentPacket.Length - p.currentPacket.Position)); //read remaining array
             auth.AddonData = Shared.ZLib.Decompress(compressedData);
 
             var realmprocessor = p as RealmPacketProcessor;

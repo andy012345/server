@@ -208,6 +208,2644 @@ namespace Server
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    public class PlayerByNameIndexFactory
+    {
+        
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IPlayerByNameIndex> instead.")]
+                        public static IPlayerByNameIndex GetGrain(System.String primaryKey)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IPlayerByNameIndex), primaryKey));
+                        }
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IPlayerByNameIndex> instead.")]
+                        public static IPlayerByNameIndex GetGrain(System.String primaryKey, string grainClassNamePrefix)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IPlayerByNameIndex), primaryKey, grainClassNamePrefix));
+                        }
+
+            public static IPlayerByNameIndex Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return PlayerByNameIndexReference.Cast(grainRef);
+            }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+        [System.SerializableAttribute()]
+        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IPlayerByNameIndex")]
+        internal class PlayerByNameIndexReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IPlayerByNameIndex
+        {
+            
+
+            public static IPlayerByNameIndex Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return (IPlayerByNameIndex) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IPlayerByNameIndex), (global::Orleans.Runtime.GrainReference gr) => { return new PlayerByNameIndexReference(gr);}, grainRef, -410311541);
+            }
+            
+            protected internal PlayerByNameIndexReference(global::Orleans.Runtime.GrainReference reference) : 
+                    base(reference)
+            {
+            }
+            
+            protected internal PlayerByNameIndexReference(SerializationInfo info, StreamingContext context) : 
+                    base(info, context)
+            {
+            }
+            
+            protected override int InterfaceId
+            {
+                get
+                {
+                    return -410311541;
+                }
+            }
+            
+            public override string InterfaceName
+            {
+                get
+                {
+                    return "Server.IPlayerByNameIndex";
+                }
+            }
+            
+            [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+            public static object _Copier(object original)
+            {
+                PlayerByNameIndexReference input = ((PlayerByNameIndexReference)(original));
+                return ((PlayerByNameIndexReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
+            }
+            
+            [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+            public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+            {
+                PlayerByNameIndexReference input = ((PlayerByNameIndexReference)(original));
+                global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
+            }
+            
+            [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+            public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+            {
+                return PlayerByNameIndexReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
+            }
+            
+            public override bool IsCompatible(int interfaceId)
+            {
+                return ((interfaceId == this.InterfaceId) 
+                            || (interfaceId == -1277021679));
+            }
+            
+            protected override string GetMethodName(int interfaceId, int methodId)
+            {
+                return PlayerByNameIndexMethodInvoker.GetMethodName(interfaceId, methodId);
+            }
+            
+            System.Threading.Tasks.Task<bool> Server.IPlayerByNameIndex.SetPlayer(Server.IPlayer @plr)
+            {
+
+                return base.InvokeMethodAsync<System.Boolean>(970804849, new object[] {@plr is global::Orleans.Grain ? @plr.AsReference<Server.IPlayer>() : @plr} );
+            }
+            
+            System.Threading.Tasks.Task<Server.IPlayer> Server.IPlayerByNameIndex.GetPlayer()
+            {
+
+                return base.InvokeMethodAsync<Server.IPlayer>(880552289, null );
+            }
+            
+            System.Threading.Tasks.Task Server.IPlayerByNameIndex.Save()
+            {
+
+                return base.InvokeMethodAsync<object>(-1038277770, null );
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IPlayerByNameIndex", -410311541)]
+    internal class PlayerByNameIndexMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
+    {
+        
+        int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
+        {
+            get
+            {
+                return -410311541;
+            }
+        }
+        
+        global::System.Threading.Tasks.Task<object> global::Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(global::Orleans.Runtime.IAddressable grain, int interfaceId, int methodId, object[] arguments)
+        {
+
+            try
+            {                    if (grain == null) throw new System.ArgumentNullException("grain");
+                switch (interfaceId)
+                {
+                    case -410311541:  // IPlayerByNameIndex
+                        switch (methodId)
+                        {
+                            case 970804849: 
+                                return ((IPlayerByNameIndex)grain).SetPlayer((IPlayer)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 880552289: 
+                                return ((IPlayerByNameIndex)grain).GetPlayer().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IPlayerByNameIndex)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case -1277021679:  // IGrainWithStringKey
+                        switch (methodId)
+                        {
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }
+                    default:
+                        throw new System.InvalidCastException("interfaceId="+interfaceId);
+                }
+            }
+            catch(Exception ex)
+            {
+                var t = new System.Threading.Tasks.TaskCompletionSource<object>();
+                t.SetException(ex);
+                return t.Task;
+            }
+        }
+        
+        public static string GetMethodName(int interfaceId, int methodId)
+        {
+
+            switch (interfaceId)
+            {
+                
+                case -410311541:  // IPlayerByNameIndex
+                    switch (methodId)
+                    {
+                        case 970804849:
+                            return "SetPlayer";
+                    case 880552289:
+                            return "GetPlayer";
+                    case -1038277770:
+                            return "Save";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case -1277021679:  // IGrainWithStringKey
+                    switch (methodId)
+                    {
+                        
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+
+                default:
+                    throw new System.InvalidCastException("interfaceId="+interfaceId);
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    public class BaseObjectImplFactory
+    {
+        
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IBaseObjectImpl> instead.")]
+                        public static IBaseObjectImpl GetGrain(long primaryKey)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IBaseObjectImpl), primaryKey));
+                        }
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IBaseObjectImpl> instead.")]
+                        public static IBaseObjectImpl GetGrain(long primaryKey, string grainClassNamePrefix)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IBaseObjectImpl), primaryKey, grainClassNamePrefix));
+                        }
+
+            public static IBaseObjectImpl Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return BaseObjectImplReference.Cast(grainRef);
+            }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+        [System.SerializableAttribute()]
+        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IBaseObjectImpl")]
+        internal class BaseObjectImplReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IBaseObjectImpl
+        {
+            
+
+            public static IBaseObjectImpl Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return (IBaseObjectImpl) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IBaseObjectImpl), (global::Orleans.Runtime.GrainReference gr) => { return new BaseObjectImplReference(gr);}, grainRef, 436426678);
+            }
+            
+            protected internal BaseObjectImplReference(global::Orleans.Runtime.GrainReference reference) : 
+                    base(reference)
+            {
+            }
+            
+            protected internal BaseObjectImplReference(SerializationInfo info, StreamingContext context) : 
+                    base(info, context)
+            {
+            }
+            
+            protected override int InterfaceId
+            {
+                get
+                {
+                    return 436426678;
+                }
+            }
+            
+            public override string InterfaceName
+            {
+                get
+                {
+                    return "Server.IBaseObjectImpl";
+                }
+            }
+            
+            [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+            public static object _Copier(object original)
+            {
+                BaseObjectImplReference input = ((BaseObjectImplReference)(original));
+                return ((BaseObjectImplReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
+            }
+            
+            [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+            public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+            {
+                BaseObjectImplReference input = ((BaseObjectImplReference)(original));
+                global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
+            }
+            
+            [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+            public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+            {
+                return BaseObjectImplReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
+            }
+            
+            public override bool IsCompatible(int interfaceId)
+            {
+                return (interfaceId == this.InterfaceId);
+            }
+            
+            protected override string GetMethodName(int interfaceId, int methodId)
+            {
+                return BaseObjectImplMethodInvoker.GetMethodName(interfaceId, methodId);
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IBaseObjectImpl", 436426678)]
+    internal class BaseObjectImplMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
+    {
+        
+        int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
+        {
+            get
+            {
+                return 436426678;
+            }
+        }
+        
+        global::System.Threading.Tasks.Task<object> global::Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(global::Orleans.Runtime.IAddressable grain, int interfaceId, int methodId, object[] arguments)
+        {
+
+            try
+            {                    if (grain == null) throw new System.ArgumentNullException("grain");
+                switch (interfaceId)
+                {
+                    case 436426678:  // IBaseObjectImpl
+                        switch (methodId)
+                        {
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }
+                    default:
+                        throw new System.InvalidCastException("interfaceId="+interfaceId);
+                }
+            }
+            catch(Exception ex)
+            {
+                var t = new System.Threading.Tasks.TaskCompletionSource<object>();
+                t.SetException(ex);
+                return t.Task;
+            }
+        }
+        
+        public static string GetMethodName(int interfaceId, int methodId)
+        {
+
+            switch (interfaceId)
+            {
+                
+                case 436426678:  // IBaseObjectImpl
+                    switch (methodId)
+                    {
+                        
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+
+                default:
+                    throw new System.InvalidCastException("interfaceId="+interfaceId);
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    public class ObjectImplFactory
+    {
+        
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IObjectImpl> instead.")]
+                        public static IObjectImpl GetGrain(long primaryKey)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IObjectImpl), primaryKey));
+                        }
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IObjectImpl> instead.")]
+                        public static IObjectImpl GetGrain(long primaryKey, string grainClassNamePrefix)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IObjectImpl), primaryKey, grainClassNamePrefix));
+                        }
+
+            public static IObjectImpl Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return ObjectImplReference.Cast(grainRef);
+            }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+        [System.SerializableAttribute()]
+        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IObjectImpl")]
+        internal class ObjectImplReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IObjectImpl
+        {
+            
+
+            public static IObjectImpl Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return (IObjectImpl) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IObjectImpl), (global::Orleans.Runtime.GrainReference gr) => { return new ObjectImplReference(gr);}, grainRef, 1962518542);
+            }
+            
+            protected internal ObjectImplReference(global::Orleans.Runtime.GrainReference reference) : 
+                    base(reference)
+            {
+            }
+            
+            protected internal ObjectImplReference(SerializationInfo info, StreamingContext context) : 
+                    base(info, context)
+            {
+            }
+            
+            protected override int InterfaceId
+            {
+                get
+                {
+                    return 1962518542;
+                }
+            }
+            
+            public override string InterfaceName
+            {
+                get
+                {
+                    return "Server.IObjectImpl";
+                }
+            }
+            
+            [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+            public static object _Copier(object original)
+            {
+                ObjectImplReference input = ((ObjectImplReference)(original));
+                return ((ObjectImplReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
+            }
+            
+            [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+            public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+            {
+                ObjectImplReference input = ((ObjectImplReference)(original));
+                global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
+            }
+            
+            [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+            public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+            {
+                return ObjectImplReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
+            }
+            
+            public override bool IsCompatible(int interfaceId)
+            {
+                return ((interfaceId == this.InterfaceId) 
+                            || (interfaceId == 436426678));
+            }
+            
+            protected override string GetMethodName(int interfaceId, int methodId)
+            {
+                return ObjectImplMethodInvoker.GetMethodName(interfaceId, methodId);
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IObjectImpl.VirtualCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(911766124, null );
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IObjectImpl.ObjectCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(-509390599, null );
+            }
+            
+            System.Threading.Tasks.Task<byte> Server.IObjectImpl.GetByte(int @field, int @index)
+            {
+
+                return base.InvokeMethodAsync<System.Byte>(194300607, new object[] {@field, @index} );
+            }
+            
+            System.Threading.Tasks.Task<uint> Server.IObjectImpl.GetUInt32(int @field)
+            {
+
+                return base.InvokeMethodAsync<System.UInt32>(-1305326038, new object[] {@field} );
+            }
+            
+            System.Threading.Tasks.Task<float> Server.IObjectImpl.GetFloat(uint @field)
+            {
+
+                return base.InvokeMethodAsync<System.Single>(-1053963025, new object[] {@field} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetByte(int @field, int @index, byte @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-1778927808, new object[] {@field, @index, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetUInt32(int @field, uint @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-890930237, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetInt32(int @field, int @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-1920519729, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetFloat(int @field, float @val)
+            {
+
+                return base.InvokeMethodAsync<object>(1703182622, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetUInt64(int @field, ulong @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-2061902484, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetGUID(int @field, Shared.ObjectGUID @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-140687627, new object[] {@field, @val} );
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IObjectImpl", 1962518542)]
+    internal class ObjectImplMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
+    {
+        
+        int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
+        {
+            get
+            {
+                return 1962518542;
+            }
+        }
+        
+        global::System.Threading.Tasks.Task<object> global::Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(global::Orleans.Runtime.IAddressable grain, int interfaceId, int methodId, object[] arguments)
+        {
+
+            try
+            {                    if (grain == null) throw new System.ArgumentNullException("grain");
+                switch (interfaceId)
+                {
+                    case 1962518542:  // IObjectImpl
+                        switch (methodId)
+                        {
+                            case 911766124: 
+                                return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IObjectImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IObjectImpl)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IObjectImpl)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IObjectImpl)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IObjectImpl)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IObjectImpl)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IObjectImpl)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IObjectImpl)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IObjectImpl)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case 436426678:  // IBaseObjectImpl
+                        switch (methodId)
+                        {
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }
+                    default:
+                        throw new System.InvalidCastException("interfaceId="+interfaceId);
+                }
+            }
+            catch(Exception ex)
+            {
+                var t = new System.Threading.Tasks.TaskCompletionSource<object>();
+                t.SetException(ex);
+                return t.Task;
+            }
+        }
+        
+        public static string GetMethodName(int interfaceId, int methodId)
+        {
+
+            switch (interfaceId)
+            {
+                
+                case 1962518542:  // IObjectImpl
+                    switch (methodId)
+                    {
+                        case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case 436426678:  // IBaseObjectImpl
+                    switch (methodId)
+                    {
+                        
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+
+                default:
+                    throw new System.InvalidCastException("interfaceId="+interfaceId);
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    public class UnitImplFactory
+    {
+        
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IUnitImpl> instead.")]
+                        public static IUnitImpl GetGrain(long primaryKey)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IUnitImpl), primaryKey));
+                        }
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IUnitImpl> instead.")]
+                        public static IUnitImpl GetGrain(long primaryKey, string grainClassNamePrefix)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IUnitImpl), primaryKey, grainClassNamePrefix));
+                        }
+
+            public static IUnitImpl Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return UnitImplReference.Cast(grainRef);
+            }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+        [System.SerializableAttribute()]
+        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IUnitImpl")]
+        internal class UnitImplReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IUnitImpl
+        {
+            
+
+            public static IUnitImpl Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return (IUnitImpl) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IUnitImpl), (global::Orleans.Runtime.GrainReference gr) => { return new UnitImplReference(gr);}, grainRef, -459325194);
+            }
+            
+            protected internal UnitImplReference(global::Orleans.Runtime.GrainReference reference) : 
+                    base(reference)
+            {
+            }
+            
+            protected internal UnitImplReference(SerializationInfo info, StreamingContext context) : 
+                    base(info, context)
+            {
+            }
+            
+            protected override int InterfaceId
+            {
+                get
+                {
+                    return -459325194;
+                }
+            }
+            
+            public override string InterfaceName
+            {
+                get
+                {
+                    return "Server.IUnitImpl";
+                }
+            }
+            
+            [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+            public static object _Copier(object original)
+            {
+                UnitImplReference input = ((UnitImplReference)(original));
+                return ((UnitImplReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
+            }
+            
+            [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+            public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+            {
+                UnitImplReference input = ((UnitImplReference)(original));
+                global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
+            }
+            
+            [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+            public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+            {
+                return UnitImplReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
+            }
+            
+            public override bool IsCompatible(int interfaceId)
+            {
+                return (((interfaceId == this.InterfaceId) 
+                            || (interfaceId == 1962518542)) 
+                            || (interfaceId == 436426678));
+            }
+            
+            protected override string GetMethodName(int interfaceId, int methodId)
+            {
+                return UnitImplMethodInvoker.GetMethodName(interfaceId, methodId);
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IUnitImpl.UnitCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(1519937893, null );
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IObjectImpl.VirtualCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(911766124, null );
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IObjectImpl.ObjectCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(-509390599, null );
+            }
+            
+            System.Threading.Tasks.Task<byte> Server.IObjectImpl.GetByte(int @field, int @index)
+            {
+
+                return base.InvokeMethodAsync<System.Byte>(194300607, new object[] {@field, @index} );
+            }
+            
+            System.Threading.Tasks.Task<uint> Server.IObjectImpl.GetUInt32(int @field)
+            {
+
+                return base.InvokeMethodAsync<System.UInt32>(-1305326038, new object[] {@field} );
+            }
+            
+            System.Threading.Tasks.Task<float> Server.IObjectImpl.GetFloat(uint @field)
+            {
+
+                return base.InvokeMethodAsync<System.Single>(-1053963025, new object[] {@field} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetByte(int @field, int @index, byte @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-1778927808, new object[] {@field, @index, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetUInt32(int @field, uint @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-890930237, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetInt32(int @field, int @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-1920519729, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetFloat(int @field, float @val)
+            {
+
+                return base.InvokeMethodAsync<object>(1703182622, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetUInt64(int @field, ulong @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-2061902484, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetGUID(int @field, Shared.ObjectGUID @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-140687627, new object[] {@field, @val} );
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IUnitImpl", -459325194)]
+    internal class UnitImplMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
+    {
+        
+        int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
+        {
+            get
+            {
+                return -459325194;
+            }
+        }
+        
+        global::System.Threading.Tasks.Task<object> global::Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(global::Orleans.Runtime.IAddressable grain, int interfaceId, int methodId, object[] arguments)
+        {
+
+            try
+            {                    if (grain == null) throw new System.ArgumentNullException("grain");
+                switch (interfaceId)
+                {
+                    case -459325194:  // IUnitImpl
+                        switch (methodId)
+                        {
+                            case 1519937893: 
+                                return ((IUnitImpl)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 911766124: 
+                                return ((IUnitImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IUnitImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IUnitImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IUnitImpl)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IUnitImpl)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IUnitImpl)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IUnitImpl)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IUnitImpl)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IUnitImpl)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IUnitImpl)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IUnitImpl)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case 1962518542:  // IObjectImpl
+                        switch (methodId)
+                        {
+                            case 911766124: 
+                                return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IObjectImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IObjectImpl)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IObjectImpl)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IObjectImpl)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IObjectImpl)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IObjectImpl)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IObjectImpl)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IObjectImpl)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IObjectImpl)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case 436426678:  // IBaseObjectImpl
+                        switch (methodId)
+                        {
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }
+                    default:
+                        throw new System.InvalidCastException("interfaceId="+interfaceId);
+                }
+            }
+            catch(Exception ex)
+            {
+                var t = new System.Threading.Tasks.TaskCompletionSource<object>();
+                t.SetException(ex);
+                return t.Task;
+            }
+        }
+        
+        public static string GetMethodName(int interfaceId, int methodId)
+        {
+
+            switch (interfaceId)
+            {
+                
+                case -459325194:  // IUnitImpl
+                    switch (methodId)
+                    {
+                        case 1519937893:
+                            return "UnitCall";
+                    case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case 1962518542:  // IObjectImpl
+                    switch (methodId)
+                    {
+                        case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case 436426678:  // IBaseObjectImpl
+                    switch (methodId)
+                    {
+                        
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+
+                default:
+                    throw new System.InvalidCastException("interfaceId="+interfaceId);
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    public class PlayerImplFactory
+    {
+        
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IPlayerImpl> instead.")]
+                        public static IPlayerImpl GetGrain(long primaryKey)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IPlayerImpl), primaryKey));
+                        }
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IPlayerImpl> instead.")]
+                        public static IPlayerImpl GetGrain(long primaryKey, string grainClassNamePrefix)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IPlayerImpl), primaryKey, grainClassNamePrefix));
+                        }
+
+            public static IPlayerImpl Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return PlayerImplReference.Cast(grainRef);
+            }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+        [System.SerializableAttribute()]
+        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IPlayerImpl")]
+        internal class PlayerImplReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IPlayerImpl
+        {
+            
+
+            public static IPlayerImpl Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return (IPlayerImpl) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IPlayerImpl), (global::Orleans.Runtime.GrainReference gr) => { return new PlayerImplReference(gr);}, grainRef, 1374563470);
+            }
+            
+            protected internal PlayerImplReference(global::Orleans.Runtime.GrainReference reference) : 
+                    base(reference)
+            {
+            }
+            
+            protected internal PlayerImplReference(SerializationInfo info, StreamingContext context) : 
+                    base(info, context)
+            {
+            }
+            
+            protected override int InterfaceId
+            {
+                get
+                {
+                    return 1374563470;
+                }
+            }
+            
+            public override string InterfaceName
+            {
+                get
+                {
+                    return "Server.IPlayerImpl";
+                }
+            }
+            
+            [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+            public static object _Copier(object original)
+            {
+                PlayerImplReference input = ((PlayerImplReference)(original));
+                return ((PlayerImplReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
+            }
+            
+            [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+            public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+            {
+                PlayerImplReference input = ((PlayerImplReference)(original));
+                global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
+            }
+            
+            [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+            public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+            {
+                return PlayerImplReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
+            }
+            
+            public override bool IsCompatible(int interfaceId)
+            {
+                return ((((interfaceId == this.InterfaceId) 
+                            || (interfaceId == -459325194)) 
+                            || (interfaceId == 1962518542)) 
+                            || (interfaceId == 436426678));
+            }
+            
+            protected override string GetMethodName(int interfaceId, int methodId)
+            {
+                return PlayerImplMethodInvoker.GetMethodName(interfaceId, methodId);
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IPlayerImpl.PlayerCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(-851262471, null );
+            }
+            
+            System.Threading.Tasks.Task Server.IPlayerImpl.Create(Shared.CMSG_CHAR_CREATE @creationData)
+            {
+
+                return base.InvokeMethodAsync<object>(-1038877739, new object[] {@creationData} );
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IUnitImpl.UnitCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(1519937893, null );
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IObjectImpl.VirtualCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(911766124, null );
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IObjectImpl.ObjectCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(-509390599, null );
+            }
+            
+            System.Threading.Tasks.Task<byte> Server.IObjectImpl.GetByte(int @field, int @index)
+            {
+
+                return base.InvokeMethodAsync<System.Byte>(194300607, new object[] {@field, @index} );
+            }
+            
+            System.Threading.Tasks.Task<uint> Server.IObjectImpl.GetUInt32(int @field)
+            {
+
+                return base.InvokeMethodAsync<System.UInt32>(-1305326038, new object[] {@field} );
+            }
+            
+            System.Threading.Tasks.Task<float> Server.IObjectImpl.GetFloat(uint @field)
+            {
+
+                return base.InvokeMethodAsync<System.Single>(-1053963025, new object[] {@field} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetByte(int @field, int @index, byte @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-1778927808, new object[] {@field, @index, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetUInt32(int @field, uint @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-890930237, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetInt32(int @field, int @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-1920519729, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetFloat(int @field, float @val)
+            {
+
+                return base.InvokeMethodAsync<object>(1703182622, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetUInt64(int @field, ulong @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-2061902484, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetGUID(int @field, Shared.ObjectGUID @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-140687627, new object[] {@field, @val} );
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IPlayerImpl", 1374563470)]
+    internal class PlayerImplMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
+    {
+        
+        int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
+        {
+            get
+            {
+                return 1374563470;
+            }
+        }
+        
+        global::System.Threading.Tasks.Task<object> global::Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(global::Orleans.Runtime.IAddressable grain, int interfaceId, int methodId, object[] arguments)
+        {
+
+            try
+            {                    if (grain == null) throw new System.ArgumentNullException("grain");
+                switch (interfaceId)
+                {
+                    case 1374563470:  // IPlayerImpl
+                        switch (methodId)
+                        {
+                            case -851262471: 
+                                return ((IPlayerImpl)grain).PlayerCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038877739: 
+                                return ((IPlayerImpl)grain).Create((CMSG_CHAR_CREATE)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1519937893: 
+                                return ((IPlayerImpl)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 911766124: 
+                                return ((IPlayerImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IPlayerImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IPlayerImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IPlayerImpl)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IPlayerImpl)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IPlayerImpl)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IPlayerImpl)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IPlayerImpl)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IPlayerImpl)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IPlayerImpl)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IPlayerImpl)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case -459325194:  // IUnitImpl
+                        switch (methodId)
+                        {
+                            case 1519937893: 
+                                return ((IUnitImpl)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 911766124: 
+                                return ((IUnitImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IUnitImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IUnitImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IUnitImpl)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IUnitImpl)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IUnitImpl)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IUnitImpl)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IUnitImpl)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IUnitImpl)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IUnitImpl)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IUnitImpl)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case 1962518542:  // IObjectImpl
+                        switch (methodId)
+                        {
+                            case 911766124: 
+                                return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IObjectImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IObjectImpl)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IObjectImpl)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IObjectImpl)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IObjectImpl)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IObjectImpl)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IObjectImpl)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IObjectImpl)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IObjectImpl)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case 436426678:  // IBaseObjectImpl
+                        switch (methodId)
+                        {
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }
+                    default:
+                        throw new System.InvalidCastException("interfaceId="+interfaceId);
+                }
+            }
+            catch(Exception ex)
+            {
+                var t = new System.Threading.Tasks.TaskCompletionSource<object>();
+                t.SetException(ex);
+                return t.Task;
+            }
+        }
+        
+        public static string GetMethodName(int interfaceId, int methodId)
+        {
+
+            switch (interfaceId)
+            {
+                
+                case 1374563470:  // IPlayerImpl
+                    switch (methodId)
+                    {
+                        case -851262471:
+                            return "PlayerCall";
+                    case -1038877739:
+                            return "Create";
+                    case 1519937893:
+                            return "UnitCall";
+                    case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case -459325194:  // IUnitImpl
+                    switch (methodId)
+                    {
+                        case 1519937893:
+                            return "UnitCall";
+                    case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case 1962518542:  // IObjectImpl
+                    switch (methodId)
+                    {
+                        case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case 436426678:  // IBaseObjectImpl
+                    switch (methodId)
+                    {
+                        
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+
+                default:
+                    throw new System.InvalidCastException("interfaceId="+interfaceId);
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    public class PlayerFactory
+    {
+        
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IPlayer> instead.")]
+                        public static IPlayer GetGrain(long primaryKey)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IPlayer), primaryKey));
+                        }
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IPlayer> instead.")]
+                        public static IPlayer GetGrain(long primaryKey, string grainClassNamePrefix)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IPlayer), primaryKey, grainClassNamePrefix));
+                        }
+
+            public static IPlayer Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return PlayerReference.Cast(grainRef);
+            }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+        [System.SerializableAttribute()]
+        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IPlayer")]
+        internal class PlayerReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IPlayer
+        {
+            
+
+            public static IPlayer Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return (IPlayer) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IPlayer), (global::Orleans.Runtime.GrainReference gr) => { return new PlayerReference(gr);}, grainRef, -1840646871);
+            }
+            
+            protected internal PlayerReference(global::Orleans.Runtime.GrainReference reference) : 
+                    base(reference)
+            {
+            }
+            
+            protected internal PlayerReference(SerializationInfo info, StreamingContext context) : 
+                    base(info, context)
+            {
+            }
+            
+            protected override int InterfaceId
+            {
+                get
+                {
+                    return -1840646871;
+                }
+            }
+            
+            public override string InterfaceName
+            {
+                get
+                {
+                    return "Server.IPlayer";
+                }
+            }
+            
+            [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+            public static object _Copier(object original)
+            {
+                PlayerReference input = ((PlayerReference)(original));
+                return ((PlayerReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
+            }
+            
+            [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+            public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+            {
+                PlayerReference input = ((PlayerReference)(original));
+                global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
+            }
+            
+            [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+            public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+            {
+                return PlayerReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
+            }
+            
+            public override bool IsCompatible(int interfaceId)
+            {
+                return (((((interfaceId == this.InterfaceId) 
+                            || (interfaceId == 1374563470)) 
+                            || (interfaceId == -459325194)) 
+                            || (interfaceId == 1962518542)) 
+                            || (interfaceId == 436426678));
+            }
+            
+            protected override string GetMethodName(int interfaceId, int methodId)
+            {
+                return PlayerMethodInvoker.GetMethodName(interfaceId, methodId);
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IPlayerImpl.PlayerCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(-851262471, null );
+            }
+            
+            System.Threading.Tasks.Task Server.IPlayerImpl.Create(Shared.CMSG_CHAR_CREATE @creationData)
+            {
+
+                return base.InvokeMethodAsync<object>(-1038877739, new object[] {@creationData} );
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IUnitImpl.UnitCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(1519937893, null );
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IObjectImpl.VirtualCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(911766124, null );
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IObjectImpl.ObjectCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(-509390599, null );
+            }
+            
+            System.Threading.Tasks.Task<byte> Server.IObjectImpl.GetByte(int @field, int @index)
+            {
+
+                return base.InvokeMethodAsync<System.Byte>(194300607, new object[] {@field, @index} );
+            }
+            
+            System.Threading.Tasks.Task<uint> Server.IObjectImpl.GetUInt32(int @field)
+            {
+
+                return base.InvokeMethodAsync<System.UInt32>(-1305326038, new object[] {@field} );
+            }
+            
+            System.Threading.Tasks.Task<float> Server.IObjectImpl.GetFloat(uint @field)
+            {
+
+                return base.InvokeMethodAsync<System.Single>(-1053963025, new object[] {@field} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetByte(int @field, int @index, byte @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-1778927808, new object[] {@field, @index, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetUInt32(int @field, uint @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-890930237, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetInt32(int @field, int @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-1920519729, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetFloat(int @field, float @val)
+            {
+
+                return base.InvokeMethodAsync<object>(1703182622, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetUInt64(int @field, ulong @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-2061902484, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetGUID(int @field, Shared.ObjectGUID @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-140687627, new object[] {@field, @val} );
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IPlayer", -1840646871)]
+    internal class PlayerMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
+    {
+        
+        int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
+        {
+            get
+            {
+                return -1840646871;
+            }
+        }
+        
+        global::System.Threading.Tasks.Task<object> global::Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(global::Orleans.Runtime.IAddressable grain, int interfaceId, int methodId, object[] arguments)
+        {
+
+            try
+            {                    if (grain == null) throw new System.ArgumentNullException("grain");
+                switch (interfaceId)
+                {
+                    case -1840646871:  // IPlayer
+                        switch (methodId)
+                        {
+                            case -851262471: 
+                                return ((IPlayer)grain).PlayerCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038877739: 
+                                return ((IPlayer)grain).Create((CMSG_CHAR_CREATE)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1519937893: 
+                                return ((IPlayer)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 911766124: 
+                                return ((IPlayer)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IPlayer)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IPlayer)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IPlayer)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IPlayer)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IPlayer)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IPlayer)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IPlayer)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IPlayer)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IPlayer)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IPlayer)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case 1374563470:  // IPlayerImpl
+                        switch (methodId)
+                        {
+                            case -851262471: 
+                                return ((IPlayerImpl)grain).PlayerCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038877739: 
+                                return ((IPlayerImpl)grain).Create((CMSG_CHAR_CREATE)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1519937893: 
+                                return ((IPlayerImpl)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 911766124: 
+                                return ((IPlayerImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IPlayerImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IPlayerImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IPlayerImpl)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IPlayerImpl)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IPlayerImpl)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IPlayerImpl)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IPlayerImpl)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IPlayerImpl)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IPlayerImpl)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IPlayerImpl)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case -459325194:  // IUnitImpl
+                        switch (methodId)
+                        {
+                            case 1519937893: 
+                                return ((IUnitImpl)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 911766124: 
+                                return ((IUnitImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IUnitImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IUnitImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IUnitImpl)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IUnitImpl)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IUnitImpl)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IUnitImpl)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IUnitImpl)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IUnitImpl)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IUnitImpl)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IUnitImpl)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case 1962518542:  // IObjectImpl
+                        switch (methodId)
+                        {
+                            case 911766124: 
+                                return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IObjectImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IObjectImpl)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IObjectImpl)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IObjectImpl)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IObjectImpl)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IObjectImpl)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IObjectImpl)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IObjectImpl)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IObjectImpl)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case 436426678:  // IBaseObjectImpl
+                        switch (methodId)
+                        {
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }
+                    default:
+                        throw new System.InvalidCastException("interfaceId="+interfaceId);
+                }
+            }
+            catch(Exception ex)
+            {
+                var t = new System.Threading.Tasks.TaskCompletionSource<object>();
+                t.SetException(ex);
+                return t.Task;
+            }
+        }
+        
+        public static string GetMethodName(int interfaceId, int methodId)
+        {
+
+            switch (interfaceId)
+            {
+                
+                case -1840646871:  // IPlayer
+                    switch (methodId)
+                    {
+                        case -851262471:
+                            return "PlayerCall";
+                    case -1038877739:
+                            return "Create";
+                    case 1519937893:
+                            return "UnitCall";
+                    case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case 1374563470:  // IPlayerImpl
+                    switch (methodId)
+                    {
+                        case -851262471:
+                            return "PlayerCall";
+                    case -1038877739:
+                            return "Create";
+                    case 1519937893:
+                            return "UnitCall";
+                    case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case -459325194:  // IUnitImpl
+                    switch (methodId)
+                    {
+                        case 1519937893:
+                            return "UnitCall";
+                    case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case 1962518542:  // IObjectImpl
+                    switch (methodId)
+                    {
+                        case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case 436426678:  // IBaseObjectImpl
+                    switch (methodId)
+                    {
+                        
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+
+                default:
+                    throw new System.InvalidCastException("interfaceId="+interfaceId);
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    public class ObjectFactory
+    {
+        
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IObject> instead.")]
+                        public static IObject GetGrain(long primaryKey)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IObject), primaryKey));
+                        }
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IObject> instead.")]
+                        public static IObject GetGrain(long primaryKey, string grainClassNamePrefix)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IObject), primaryKey, grainClassNamePrefix));
+                        }
+
+            public static IObject Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return ObjectReference.Cast(grainRef);
+            }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+        [System.SerializableAttribute()]
+        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IObject")]
+        internal class ObjectReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IObject
+        {
+            
+
+            public static IObject Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return (IObject) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IObject), (global::Orleans.Runtime.GrainReference gr) => { return new ObjectReference(gr);}, grainRef, -167405501);
+            }
+            
+            protected internal ObjectReference(global::Orleans.Runtime.GrainReference reference) : 
+                    base(reference)
+            {
+            }
+            
+            protected internal ObjectReference(SerializationInfo info, StreamingContext context) : 
+                    base(info, context)
+            {
+            }
+            
+            protected override int InterfaceId
+            {
+                get
+                {
+                    return -167405501;
+                }
+            }
+            
+            public override string InterfaceName
+            {
+                get
+                {
+                    return "Server.IObject";
+                }
+            }
+            
+            [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+            public static object _Copier(object original)
+            {
+                ObjectReference input = ((ObjectReference)(original));
+                return ((ObjectReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
+            }
+            
+            [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+            public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+            {
+                ObjectReference input = ((ObjectReference)(original));
+                global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
+            }
+            
+            [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+            public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+            {
+                return ObjectReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
+            }
+            
+            public override bool IsCompatible(int interfaceId)
+            {
+                return (((interfaceId == this.InterfaceId) 
+                            || (interfaceId == 1962518542)) 
+                            || (interfaceId == 436426678));
+            }
+            
+            protected override string GetMethodName(int interfaceId, int methodId)
+            {
+                return ObjectMethodInvoker.GetMethodName(interfaceId, methodId);
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IObjectImpl.VirtualCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(911766124, null );
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IObjectImpl.ObjectCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(-509390599, null );
+            }
+            
+            System.Threading.Tasks.Task<byte> Server.IObjectImpl.GetByte(int @field, int @index)
+            {
+
+                return base.InvokeMethodAsync<System.Byte>(194300607, new object[] {@field, @index} );
+            }
+            
+            System.Threading.Tasks.Task<uint> Server.IObjectImpl.GetUInt32(int @field)
+            {
+
+                return base.InvokeMethodAsync<System.UInt32>(-1305326038, new object[] {@field} );
+            }
+            
+            System.Threading.Tasks.Task<float> Server.IObjectImpl.GetFloat(uint @field)
+            {
+
+                return base.InvokeMethodAsync<System.Single>(-1053963025, new object[] {@field} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetByte(int @field, int @index, byte @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-1778927808, new object[] {@field, @index, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetUInt32(int @field, uint @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-890930237, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetInt32(int @field, int @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-1920519729, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetFloat(int @field, float @val)
+            {
+
+                return base.InvokeMethodAsync<object>(1703182622, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetUInt64(int @field, ulong @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-2061902484, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetGUID(int @field, Shared.ObjectGUID @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-140687627, new object[] {@field, @val} );
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IObject", -167405501)]
+    internal class ObjectMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
+    {
+        
+        int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
+        {
+            get
+            {
+                return -167405501;
+            }
+        }
+        
+        global::System.Threading.Tasks.Task<object> global::Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(global::Orleans.Runtime.IAddressable grain, int interfaceId, int methodId, object[] arguments)
+        {
+
+            try
+            {                    if (grain == null) throw new System.ArgumentNullException("grain");
+                switch (interfaceId)
+                {
+                    case -167405501:  // IObject
+                        switch (methodId)
+                        {
+                            case 911766124: 
+                                return ((IObject)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IObject)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IObject)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IObject)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IObject)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IObject)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IObject)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IObject)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IObject)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IObject)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IObject)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case 1962518542:  // IObjectImpl
+                        switch (methodId)
+                        {
+                            case 911766124: 
+                                return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IObjectImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IObjectImpl)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IObjectImpl)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IObjectImpl)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IObjectImpl)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IObjectImpl)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IObjectImpl)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IObjectImpl)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IObjectImpl)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case 436426678:  // IBaseObjectImpl
+                        switch (methodId)
+                        {
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }
+                    default:
+                        throw new System.InvalidCastException("interfaceId="+interfaceId);
+                }
+            }
+            catch(Exception ex)
+            {
+                var t = new System.Threading.Tasks.TaskCompletionSource<object>();
+                t.SetException(ex);
+                return t.Task;
+            }
+        }
+        
+        public static string GetMethodName(int interfaceId, int methodId)
+        {
+
+            switch (interfaceId)
+            {
+                
+                case -167405501:  // IObject
+                    switch (methodId)
+                    {
+                        case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case 1962518542:  // IObjectImpl
+                    switch (methodId)
+                    {
+                        case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case 436426678:  // IBaseObjectImpl
+                    switch (methodId)
+                    {
+                        
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+
+                default:
+                    throw new System.InvalidCastException("interfaceId="+interfaceId);
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    public class UnitFactory
+    {
+        
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IUnit> instead.")]
+                        public static IUnit GetGrain(long primaryKey)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IUnit), primaryKey));
+                        }
+
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IUnit> instead.")]
+                        public static IUnit GetGrain(long primaryKey, string grainClassNamePrefix)
+                        {
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IUnit), primaryKey, grainClassNamePrefix));
+                        }
+
+            public static IUnit Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return UnitReference.Cast(grainRef);
+            }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+        [System.SerializableAttribute()]
+        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IUnit")]
+        internal class UnitReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IUnit
+        {
+            
+
+            public static IUnit Cast(global::Orleans.Runtime.IAddressable grainRef)
+            {
+                
+                return (IUnit) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IUnit), (global::Orleans.Runtime.GrainReference gr) => { return new UnitReference(gr);}, grainRef, 1237625140);
+            }
+            
+            protected internal UnitReference(global::Orleans.Runtime.GrainReference reference) : 
+                    base(reference)
+            {
+            }
+            
+            protected internal UnitReference(SerializationInfo info, StreamingContext context) : 
+                    base(info, context)
+            {
+            }
+            
+            protected override int InterfaceId
+            {
+                get
+                {
+                    return 1237625140;
+                }
+            }
+            
+            public override string InterfaceName
+            {
+                get
+                {
+                    return "Server.IUnit";
+                }
+            }
+            
+            [global::Orleans.CodeGeneration.CopierMethodAttribute()]
+            public static object _Copier(object original)
+            {
+                UnitReference input = ((UnitReference)(original));
+                return ((UnitReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
+            }
+            
+            [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
+            public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+            {
+                UnitReference input = ((UnitReference)(original));
+                global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
+            }
+            
+            [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
+            public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+            {
+                return UnitReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
+            }
+            
+            public override bool IsCompatible(int interfaceId)
+            {
+                return ((((interfaceId == this.InterfaceId) 
+                            || (interfaceId == -459325194)) 
+                            || (interfaceId == 1962518542)) 
+                            || (interfaceId == 436426678));
+            }
+            
+            protected override string GetMethodName(int interfaceId, int methodId)
+            {
+                return UnitMethodInvoker.GetMethodName(interfaceId, methodId);
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IUnitImpl.UnitCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(1519937893, null );
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IObjectImpl.VirtualCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(911766124, null );
+            }
+            
+            System.Threading.Tasks.Task<string> Server.IObjectImpl.ObjectCall()
+            {
+
+                return base.InvokeMethodAsync<System.String>(-509390599, null );
+            }
+            
+            System.Threading.Tasks.Task<byte> Server.IObjectImpl.GetByte(int @field, int @index)
+            {
+
+                return base.InvokeMethodAsync<System.Byte>(194300607, new object[] {@field, @index} );
+            }
+            
+            System.Threading.Tasks.Task<uint> Server.IObjectImpl.GetUInt32(int @field)
+            {
+
+                return base.InvokeMethodAsync<System.UInt32>(-1305326038, new object[] {@field} );
+            }
+            
+            System.Threading.Tasks.Task<float> Server.IObjectImpl.GetFloat(uint @field)
+            {
+
+                return base.InvokeMethodAsync<System.Single>(-1053963025, new object[] {@field} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetByte(int @field, int @index, byte @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-1778927808, new object[] {@field, @index, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetUInt32(int @field, uint @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-890930237, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetInt32(int @field, int @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-1920519729, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetFloat(int @field, float @val)
+            {
+
+                return base.InvokeMethodAsync<object>(1703182622, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetUInt64(int @field, ulong @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-2061902484, new object[] {@field, @val} );
+            }
+            
+            System.Threading.Tasks.Task Server.IObjectImpl.SetGUID(int @field, Shared.ObjectGUID @val)
+            {
+
+                return base.InvokeMethodAsync<object>(-140687627, new object[] {@field, @val} );
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IUnit", 1237625140)]
+    internal class UnitMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
+    {
+        
+        int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
+        {
+            get
+            {
+                return 1237625140;
+            }
+        }
+        
+        global::System.Threading.Tasks.Task<object> global::Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(global::Orleans.Runtime.IAddressable grain, int interfaceId, int methodId, object[] arguments)
+        {
+
+            try
+            {                    if (grain == null) throw new System.ArgumentNullException("grain");
+                switch (interfaceId)
+                {
+                    case 1237625140:  // IUnit
+                        switch (methodId)
+                        {
+                            case 1519937893: 
+                                return ((IUnit)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 911766124: 
+                                return ((IUnit)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IUnit)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IUnit)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IUnit)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IUnit)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IUnit)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IUnit)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IUnit)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IUnit)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IUnit)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IUnit)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case -459325194:  // IUnitImpl
+                        switch (methodId)
+                        {
+                            case 1519937893: 
+                                return ((IUnitImpl)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 911766124: 
+                                return ((IUnitImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IUnitImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IUnitImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IUnitImpl)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IUnitImpl)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IUnitImpl)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IUnitImpl)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IUnitImpl)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IUnitImpl)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IUnitImpl)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IUnitImpl)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case 1962518542:  // IObjectImpl
+                        switch (methodId)
+                        {
+                            case 911766124: 
+                                return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -509390599: 
+                                return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 194300607: 
+                                return ((IObjectImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1305326038: 
+                                return ((IObjectImpl)grain).GetUInt32((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1053963025: 
+                                return ((IObjectImpl)grain).GetFloat((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1778927808: 
+                                return ((IObjectImpl)grain).SetByte((Int32)arguments[0], (Int32)arguments[1], (Byte)arguments[2]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -890930237: 
+                                return ((IObjectImpl)grain).SetUInt32((Int32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1920519729: 
+                                return ((IObjectImpl)grain).SetInt32((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 1703182622: 
+                                return ((IObjectImpl)grain).SetFloat((Int32)arguments[0], (Single)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2061902484: 
+                                return ((IObjectImpl)grain).SetUInt64((Int32)arguments[0], (UInt64)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -140687627: 
+                                return ((IObjectImpl)grain).SetGUID((Int32)arguments[0], (ObjectGUID)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }case 436426678:  // IBaseObjectImpl
+                        switch (methodId)
+                        {
+                            default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                        }
+                    default:
+                        throw new System.InvalidCastException("interfaceId="+interfaceId);
+                }
+            }
+            catch(Exception ex)
+            {
+                var t = new System.Threading.Tasks.TaskCompletionSource<object>();
+                t.SetException(ex);
+                return t.Task;
+            }
+        }
+        
+        public static string GetMethodName(int interfaceId, int methodId)
+        {
+
+            switch (interfaceId)
+            {
+                
+                case 1237625140:  // IUnit
+                    switch (methodId)
+                    {
+                        case 1519937893:
+                            return "UnitCall";
+                    case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case -459325194:  // IUnitImpl
+                    switch (methodId)
+                    {
+                        case 1519937893:
+                            return "UnitCall";
+                    case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case 1962518542:  // IObjectImpl
+                    switch (methodId)
+                    {
+                        case 911766124:
+                            return "VirtualCall";
+                    case -509390599:
+                            return "ObjectCall";
+                    case 194300607:
+                            return "GetByte";
+                    case -1305326038:
+                            return "GetUInt32";
+                    case -1053963025:
+                            return "GetFloat";
+                    case -1778927808:
+                            return "SetByte";
+                    case -890930237:
+                            return "SetUInt32";
+                    case -1920519729:
+                            return "SetInt32";
+                    case 1703182622:
+                            return "SetFloat";
+                    case -2061902484:
+                            return "SetUInt64";
+                    case -140687627:
+                            return "SetGUID";
+                    
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+                case 436426678:  // IBaseObjectImpl
+                    switch (methodId)
+                    {
+                        
+                        default: 
+                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
+                    }
+
+                default:
+                    throw new System.InvalidCastException("interfaceId="+interfaceId);
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
     public class RealmManagerFactory
     {
         
@@ -413,48 +3051,48 @@ namespace Server
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    public class ObjectImplFactory
+    public class ObjectCreatorFactory
     {
         
 
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IObjectImpl> instead.")]
-                        public static IObjectImpl GetGrain(long primaryKey)
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IObjectCreator> instead.")]
+                        public static IObjectCreator GetGrain(long primaryKey)
                         {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IObjectImpl), primaryKey));
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IObjectCreator), primaryKey));
                         }
 
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IObjectImpl> instead.")]
-                        public static IObjectImpl GetGrain(long primaryKey, string grainClassNamePrefix)
+                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IObjectCreator> instead.")]
+                        public static IObjectCreator GetGrain(long primaryKey, string grainClassNamePrefix)
                         {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IObjectImpl), primaryKey, grainClassNamePrefix));
+                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IObjectCreator), primaryKey, grainClassNamePrefix));
                         }
 
-            public static IObjectImpl Cast(global::Orleans.Runtime.IAddressable grainRef)
+            public static IObjectCreator Cast(global::Orleans.Runtime.IAddressable grainRef)
             {
                 
-                return ObjectImplReference.Cast(grainRef);
+                return ObjectCreatorReference.Cast(grainRef);
             }
         
         [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
         [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
         [System.SerializableAttribute()]
-        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IObjectImpl")]
-        internal class ObjectImplReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IObjectImpl
+        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IObjectCreator")]
+        internal class ObjectCreatorReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IObjectCreator
         {
             
 
-            public static IObjectImpl Cast(global::Orleans.Runtime.IAddressable grainRef)
+            public static IObjectCreator Cast(global::Orleans.Runtime.IAddressable grainRef)
             {
                 
-                return (IObjectImpl) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IObjectImpl), (global::Orleans.Runtime.GrainReference gr) => { return new ObjectImplReference(gr);}, grainRef, 1962518542);
+                return (IObjectCreator) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IObjectCreator), (global::Orleans.Runtime.GrainReference gr) => { return new ObjectCreatorReference(gr);}, grainRef, 628373308);
             }
             
-            protected internal ObjectImplReference(global::Orleans.Runtime.GrainReference reference) : 
+            protected internal ObjectCreatorReference(global::Orleans.Runtime.GrainReference reference) : 
                     base(reference)
             {
             }
             
-            protected internal ObjectImplReference(SerializationInfo info, StreamingContext context) : 
+            protected internal ObjectCreatorReference(SerializationInfo info, StreamingContext context) : 
                     base(info, context)
             {
             }
@@ -463,7 +3101,7 @@ namespace Server
             {
                 get
                 {
-                    return 1962518542;
+                    return 628373308;
                 }
             }
             
@@ -471,28 +3109,28 @@ namespace Server
             {
                 get
                 {
-                    return "Server.IObjectImpl";
+                    return "Server.IObjectCreator";
                 }
             }
             
             [global::Orleans.CodeGeneration.CopierMethodAttribute()]
             public static object _Copier(object original)
             {
-                ObjectImplReference input = ((ObjectImplReference)(original));
-                return ((ObjectImplReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
+                ObjectCreatorReference input = ((ObjectCreatorReference)(original));
+                return ((ObjectCreatorReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
             }
             
             [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
             public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
             {
-                ObjectImplReference input = ((ObjectImplReference)(original));
+                ObjectCreatorReference input = ((ObjectCreatorReference)(original));
                 global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
             }
             
             [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
             public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
             {
-                return ObjectImplReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
+                return ObjectCreatorReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
             }
             
             public override bool IsCompatible(int interfaceId)
@@ -502,34 +3140,28 @@ namespace Server
             
             protected override string GetMethodName(int interfaceId, int methodId)
             {
-                return ObjectImplMethodInvoker.GetMethodName(interfaceId, methodId);
+                return ObjectCreatorMethodInvoker.GetMethodName(interfaceId, methodId);
             }
             
-            System.Threading.Tasks.Task<string> Server.IObjectImpl.VirtualCall()
+            System.Threading.Tasks.Task<Shared.ObjectGUID> Server.IObjectCreator.GenerateGUID(Shared.ObjectType @objectType)
             {
 
-                return base.InvokeMethodAsync<System.String>(911766124, null );
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IObjectImpl.ObjectCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(-509390599, null );
+                return base.InvokeMethodAsync<Shared.ObjectGUID>(962302109, new object[] {@objectType} );
             }
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IObjectImpl", 1962518542)]
-    internal class ObjectImplMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
+    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IObjectCreator", 628373308)]
+    internal class ObjectCreatorMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
     {
         
         int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
         {
             get
             {
-                return 1962518542;
+                return 628373308;
             }
         }
         
@@ -540,13 +3172,11 @@ namespace Server
             {                    if (grain == null) throw new System.ArgumentNullException("grain");
                 switch (interfaceId)
                 {
-                    case 1962518542:  // IObjectImpl
+                    case 628373308:  // IObjectCreator
                         switch (methodId)
                         {
-                            case 911766124: 
-                                return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 962302109: 
+                                return ((IObjectCreator)grain).GenerateGUID((ObjectType)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                         }
@@ -568,1157 +3198,11 @@ namespace Server
             switch (interfaceId)
             {
                 
-                case 1962518542:  // IObjectImpl
+                case 628373308:  // IObjectCreator
                     switch (methodId)
                     {
-                        case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
-                    
-                        default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                    }
-
-                default:
-                    throw new System.InvalidCastException("interfaceId="+interfaceId);
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    public class UnitImplFactory
-    {
-        
-
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IUnitImpl> instead.")]
-                        public static IUnitImpl GetGrain(long primaryKey)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IUnitImpl), primaryKey));
-                        }
-
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IUnitImpl> instead.")]
-                        public static IUnitImpl GetGrain(long primaryKey, string grainClassNamePrefix)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IUnitImpl), primaryKey, grainClassNamePrefix));
-                        }
-
-            public static IUnitImpl Cast(global::Orleans.Runtime.IAddressable grainRef)
-            {
-                
-                return UnitImplReference.Cast(grainRef);
-            }
-        
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-        [System.SerializableAttribute()]
-        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IUnitImpl")]
-        internal class UnitImplReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IUnitImpl
-        {
-            
-
-            public static IUnitImpl Cast(global::Orleans.Runtime.IAddressable grainRef)
-            {
-                
-                return (IUnitImpl) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IUnitImpl), (global::Orleans.Runtime.GrainReference gr) => { return new UnitImplReference(gr);}, grainRef, -459325194);
-            }
-            
-            protected internal UnitImplReference(global::Orleans.Runtime.GrainReference reference) : 
-                    base(reference)
-            {
-            }
-            
-            protected internal UnitImplReference(SerializationInfo info, StreamingContext context) : 
-                    base(info, context)
-            {
-            }
-            
-            protected override int InterfaceId
-            {
-                get
-                {
-                    return -459325194;
-                }
-            }
-            
-            public override string InterfaceName
-            {
-                get
-                {
-                    return "Server.IUnitImpl";
-                }
-            }
-            
-            [global::Orleans.CodeGeneration.CopierMethodAttribute()]
-            public static object _Copier(object original)
-            {
-                UnitImplReference input = ((UnitImplReference)(original));
-                return ((UnitImplReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
-            }
-            
-            [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
-            public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
-            {
-                UnitImplReference input = ((UnitImplReference)(original));
-                global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
-            }
-            
-            [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
-            public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
-            {
-                return UnitImplReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
-            }
-            
-            public override bool IsCompatible(int interfaceId)
-            {
-                return ((interfaceId == this.InterfaceId) 
-                            || (interfaceId == 1962518542));
-            }
-            
-            protected override string GetMethodName(int interfaceId, int methodId)
-            {
-                return UnitImplMethodInvoker.GetMethodName(interfaceId, methodId);
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IUnitImpl.UnitCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(1519937893, null );
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IObjectImpl.VirtualCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(911766124, null );
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IObjectImpl.ObjectCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(-509390599, null );
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IUnitImpl", -459325194)]
-    internal class UnitImplMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
-    {
-        
-        int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
-        {
-            get
-            {
-                return -459325194;
-            }
-        }
-        
-        global::System.Threading.Tasks.Task<object> global::Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(global::Orleans.Runtime.IAddressable grain, int interfaceId, int methodId, object[] arguments)
-        {
-
-            try
-            {                    if (grain == null) throw new System.ArgumentNullException("grain");
-                switch (interfaceId)
-                {
-                    case -459325194:  // IUnitImpl
-                        switch (methodId)
-                        {
-                            case 1519937893: 
-                                return ((IUnitImpl)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 911766124: 
-                                return ((IUnitImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IUnitImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                        }case 1962518542:  // IObjectImpl
-                        switch (methodId)
-                        {
-                            case 911766124: 
-                                return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                        }
-                    default:
-                        throw new System.InvalidCastException("interfaceId="+interfaceId);
-                }
-            }
-            catch(Exception ex)
-            {
-                var t = new System.Threading.Tasks.TaskCompletionSource<object>();
-                t.SetException(ex);
-                return t.Task;
-            }
-        }
-        
-        public static string GetMethodName(int interfaceId, int methodId)
-        {
-
-            switch (interfaceId)
-            {
-                
-                case -459325194:  // IUnitImpl
-                    switch (methodId)
-                    {
-                        case 1519937893:
-                            return "UnitCall";
-                    case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
-                    
-                        default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                    }
-                case 1962518542:  // IObjectImpl
-                    switch (methodId)
-                    {
-                        case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
-                    
-                        default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                    }
-
-                default:
-                    throw new System.InvalidCastException("interfaceId="+interfaceId);
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    public class PlayerImplFactory
-    {
-        
-
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IPlayerImpl> instead.")]
-                        public static IPlayerImpl GetGrain(long primaryKey)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IPlayerImpl), primaryKey));
-                        }
-
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IPlayerImpl> instead.")]
-                        public static IPlayerImpl GetGrain(long primaryKey, string grainClassNamePrefix)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IPlayerImpl), primaryKey, grainClassNamePrefix));
-                        }
-
-            public static IPlayerImpl Cast(global::Orleans.Runtime.IAddressable grainRef)
-            {
-                
-                return PlayerImplReference.Cast(grainRef);
-            }
-        
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-        [System.SerializableAttribute()]
-        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IPlayerImpl")]
-        internal class PlayerImplReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IPlayerImpl
-        {
-            
-
-            public static IPlayerImpl Cast(global::Orleans.Runtime.IAddressable grainRef)
-            {
-                
-                return (IPlayerImpl) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IPlayerImpl), (global::Orleans.Runtime.GrainReference gr) => { return new PlayerImplReference(gr);}, grainRef, 1374563470);
-            }
-            
-            protected internal PlayerImplReference(global::Orleans.Runtime.GrainReference reference) : 
-                    base(reference)
-            {
-            }
-            
-            protected internal PlayerImplReference(SerializationInfo info, StreamingContext context) : 
-                    base(info, context)
-            {
-            }
-            
-            protected override int InterfaceId
-            {
-                get
-                {
-                    return 1374563470;
-                }
-            }
-            
-            public override string InterfaceName
-            {
-                get
-                {
-                    return "Server.IPlayerImpl";
-                }
-            }
-            
-            [global::Orleans.CodeGeneration.CopierMethodAttribute()]
-            public static object _Copier(object original)
-            {
-                PlayerImplReference input = ((PlayerImplReference)(original));
-                return ((PlayerImplReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
-            }
-            
-            [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
-            public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
-            {
-                PlayerImplReference input = ((PlayerImplReference)(original));
-                global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
-            }
-            
-            [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
-            public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
-            {
-                return PlayerImplReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
-            }
-            
-            public override bool IsCompatible(int interfaceId)
-            {
-                return (((interfaceId == this.InterfaceId) 
-                            || (interfaceId == -459325194)) 
-                            || (interfaceId == 1962518542));
-            }
-            
-            protected override string GetMethodName(int interfaceId, int methodId)
-            {
-                return PlayerImplMethodInvoker.GetMethodName(interfaceId, methodId);
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IPlayerImpl.PlayerCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(-851262471, null );
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IUnitImpl.UnitCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(1519937893, null );
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IObjectImpl.VirtualCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(911766124, null );
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IObjectImpl.ObjectCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(-509390599, null );
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IPlayerImpl", 1374563470)]
-    internal class PlayerImplMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
-    {
-        
-        int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
-        {
-            get
-            {
-                return 1374563470;
-            }
-        }
-        
-        global::System.Threading.Tasks.Task<object> global::Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(global::Orleans.Runtime.IAddressable grain, int interfaceId, int methodId, object[] arguments)
-        {
-
-            try
-            {                    if (grain == null) throw new System.ArgumentNullException("grain");
-                switch (interfaceId)
-                {
-                    case 1374563470:  // IPlayerImpl
-                        switch (methodId)
-                        {
-                            case -851262471: 
-                                return ((IPlayerImpl)grain).PlayerCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 1519937893: 
-                                return ((IPlayerImpl)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 911766124: 
-                                return ((IPlayerImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IPlayerImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                        }case -459325194:  // IUnitImpl
-                        switch (methodId)
-                        {
-                            case 1519937893: 
-                                return ((IUnitImpl)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 911766124: 
-                                return ((IUnitImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IUnitImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                        }case 1962518542:  // IObjectImpl
-                        switch (methodId)
-                        {
-                            case 911766124: 
-                                return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                        }
-                    default:
-                        throw new System.InvalidCastException("interfaceId="+interfaceId);
-                }
-            }
-            catch(Exception ex)
-            {
-                var t = new System.Threading.Tasks.TaskCompletionSource<object>();
-                t.SetException(ex);
-                return t.Task;
-            }
-        }
-        
-        public static string GetMethodName(int interfaceId, int methodId)
-        {
-
-            switch (interfaceId)
-            {
-                
-                case 1374563470:  // IPlayerImpl
-                    switch (methodId)
-                    {
-                        case -851262471:
-                            return "PlayerCall";
-                    case 1519937893:
-                            return "UnitCall";
-                    case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
-                    
-                        default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                    }
-                case -459325194:  // IUnitImpl
-                    switch (methodId)
-                    {
-                        case 1519937893:
-                            return "UnitCall";
-                    case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
-                    
-                        default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                    }
-                case 1962518542:  // IObjectImpl
-                    switch (methodId)
-                    {
-                        case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
-                    
-                        default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                    }
-
-                default:
-                    throw new System.InvalidCastException("interfaceId="+interfaceId);
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    public class PlayerFactory
-    {
-        
-
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IPlayer> instead.")]
-                        public static IPlayer GetGrain(long primaryKey)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IPlayer), primaryKey));
-                        }
-
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IPlayer> instead.")]
-                        public static IPlayer GetGrain(long primaryKey, string grainClassNamePrefix)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IPlayer), primaryKey, grainClassNamePrefix));
-                        }
-
-            public static IPlayer Cast(global::Orleans.Runtime.IAddressable grainRef)
-            {
-                
-                return PlayerReference.Cast(grainRef);
-            }
-        
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-        [System.SerializableAttribute()]
-        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IPlayer")]
-        internal class PlayerReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IPlayer
-        {
-            
-
-            public static IPlayer Cast(global::Orleans.Runtime.IAddressable grainRef)
-            {
-                
-                return (IPlayer) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IPlayer), (global::Orleans.Runtime.GrainReference gr) => { return new PlayerReference(gr);}, grainRef, -1840646871);
-            }
-            
-            protected internal PlayerReference(global::Orleans.Runtime.GrainReference reference) : 
-                    base(reference)
-            {
-            }
-            
-            protected internal PlayerReference(SerializationInfo info, StreamingContext context) : 
-                    base(info, context)
-            {
-            }
-            
-            protected override int InterfaceId
-            {
-                get
-                {
-                    return -1840646871;
-                }
-            }
-            
-            public override string InterfaceName
-            {
-                get
-                {
-                    return "Server.IPlayer";
-                }
-            }
-            
-            [global::Orleans.CodeGeneration.CopierMethodAttribute()]
-            public static object _Copier(object original)
-            {
-                PlayerReference input = ((PlayerReference)(original));
-                return ((PlayerReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
-            }
-            
-            [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
-            public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
-            {
-                PlayerReference input = ((PlayerReference)(original));
-                global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
-            }
-            
-            [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
-            public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
-            {
-                return PlayerReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
-            }
-            
-            public override bool IsCompatible(int interfaceId)
-            {
-                return ((((interfaceId == this.InterfaceId) 
-                            || (interfaceId == 1374563470)) 
-                            || (interfaceId == -459325194)) 
-                            || (interfaceId == 1962518542));
-            }
-            
-            protected override string GetMethodName(int interfaceId, int methodId)
-            {
-                return PlayerMethodInvoker.GetMethodName(interfaceId, methodId);
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IPlayerImpl.PlayerCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(-851262471, null );
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IUnitImpl.UnitCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(1519937893, null );
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IObjectImpl.VirtualCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(911766124, null );
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IObjectImpl.ObjectCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(-509390599, null );
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IPlayer", -1840646871)]
-    internal class PlayerMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
-    {
-        
-        int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
-        {
-            get
-            {
-                return -1840646871;
-            }
-        }
-        
-        global::System.Threading.Tasks.Task<object> global::Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(global::Orleans.Runtime.IAddressable grain, int interfaceId, int methodId, object[] arguments)
-        {
-
-            try
-            {                    if (grain == null) throw new System.ArgumentNullException("grain");
-                switch (interfaceId)
-                {
-                    case -1840646871:  // IPlayer
-                        switch (methodId)
-                        {
-                            case -851262471: 
-                                return ((IPlayer)grain).PlayerCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 1519937893: 
-                                return ((IPlayer)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 911766124: 
-                                return ((IPlayer)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IPlayer)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                        }case 1374563470:  // IPlayerImpl
-                        switch (methodId)
-                        {
-                            case -851262471: 
-                                return ((IPlayerImpl)grain).PlayerCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 1519937893: 
-                                return ((IPlayerImpl)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 911766124: 
-                                return ((IPlayerImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IPlayerImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                        }case -459325194:  // IUnitImpl
-                        switch (methodId)
-                        {
-                            case 1519937893: 
-                                return ((IUnitImpl)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 911766124: 
-                                return ((IUnitImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IUnitImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                        }case 1962518542:  // IObjectImpl
-                        switch (methodId)
-                        {
-                            case 911766124: 
-                                return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                        }
-                    default:
-                        throw new System.InvalidCastException("interfaceId="+interfaceId);
-                }
-            }
-            catch(Exception ex)
-            {
-                var t = new System.Threading.Tasks.TaskCompletionSource<object>();
-                t.SetException(ex);
-                return t.Task;
-            }
-        }
-        
-        public static string GetMethodName(int interfaceId, int methodId)
-        {
-
-            switch (interfaceId)
-            {
-                
-                case -1840646871:  // IPlayer
-                    switch (methodId)
-                    {
-                        case -851262471:
-                            return "PlayerCall";
-                    case 1519937893:
-                            return "UnitCall";
-                    case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
-                    
-                        default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                    }
-                case 1374563470:  // IPlayerImpl
-                    switch (methodId)
-                    {
-                        case -851262471:
-                            return "PlayerCall";
-                    case 1519937893:
-                            return "UnitCall";
-                    case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
-                    
-                        default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                    }
-                case -459325194:  // IUnitImpl
-                    switch (methodId)
-                    {
-                        case 1519937893:
-                            return "UnitCall";
-                    case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
-                    
-                        default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                    }
-                case 1962518542:  // IObjectImpl
-                    switch (methodId)
-                    {
-                        case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
-                    
-                        default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                    }
-
-                default:
-                    throw new System.InvalidCastException("interfaceId="+interfaceId);
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    public class UnitFactory
-    {
-        
-
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IUnit> instead.")]
-                        public static IUnit GetGrain(long primaryKey)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IUnit), primaryKey));
-                        }
-
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IUnit> instead.")]
-                        public static IUnit GetGrain(long primaryKey, string grainClassNamePrefix)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IUnit), primaryKey, grainClassNamePrefix));
-                        }
-
-            public static IUnit Cast(global::Orleans.Runtime.IAddressable grainRef)
-            {
-                
-                return UnitReference.Cast(grainRef);
-            }
-        
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-        [System.SerializableAttribute()]
-        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IUnit")]
-        internal class UnitReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IUnit
-        {
-            
-
-            public static IUnit Cast(global::Orleans.Runtime.IAddressable grainRef)
-            {
-                
-                return (IUnit) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IUnit), (global::Orleans.Runtime.GrainReference gr) => { return new UnitReference(gr);}, grainRef, 1237625140);
-            }
-            
-            protected internal UnitReference(global::Orleans.Runtime.GrainReference reference) : 
-                    base(reference)
-            {
-            }
-            
-            protected internal UnitReference(SerializationInfo info, StreamingContext context) : 
-                    base(info, context)
-            {
-            }
-            
-            protected override int InterfaceId
-            {
-                get
-                {
-                    return 1237625140;
-                }
-            }
-            
-            public override string InterfaceName
-            {
-                get
-                {
-                    return "Server.IUnit";
-                }
-            }
-            
-            [global::Orleans.CodeGeneration.CopierMethodAttribute()]
-            public static object _Copier(object original)
-            {
-                UnitReference input = ((UnitReference)(original));
-                return ((UnitReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
-            }
-            
-            [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
-            public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
-            {
-                UnitReference input = ((UnitReference)(original));
-                global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
-            }
-            
-            [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
-            public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
-            {
-                return UnitReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
-            }
-            
-            public override bool IsCompatible(int interfaceId)
-            {
-                return (((interfaceId == this.InterfaceId) 
-                            || (interfaceId == -459325194)) 
-                            || (interfaceId == 1962518542));
-            }
-            
-            protected override string GetMethodName(int interfaceId, int methodId)
-            {
-                return UnitMethodInvoker.GetMethodName(interfaceId, methodId);
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IUnitImpl.UnitCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(1519937893, null );
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IObjectImpl.VirtualCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(911766124, null );
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IObjectImpl.ObjectCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(-509390599, null );
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IUnit", 1237625140)]
-    internal class UnitMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
-    {
-        
-        int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
-        {
-            get
-            {
-                return 1237625140;
-            }
-        }
-        
-        global::System.Threading.Tasks.Task<object> global::Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(global::Orleans.Runtime.IAddressable grain, int interfaceId, int methodId, object[] arguments)
-        {
-
-            try
-            {                    if (grain == null) throw new System.ArgumentNullException("grain");
-                switch (interfaceId)
-                {
-                    case 1237625140:  // IUnit
-                        switch (methodId)
-                        {
-                            case 1519937893: 
-                                return ((IUnit)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 911766124: 
-                                return ((IUnit)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IUnit)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                        }case -459325194:  // IUnitImpl
-                        switch (methodId)
-                        {
-                            case 1519937893: 
-                                return ((IUnitImpl)grain).UnitCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case 911766124: 
-                                return ((IUnitImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IUnitImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                        }case 1962518542:  // IObjectImpl
-                        switch (methodId)
-                        {
-                            case 911766124: 
-                                return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                        }
-                    default:
-                        throw new System.InvalidCastException("interfaceId="+interfaceId);
-                }
-            }
-            catch(Exception ex)
-            {
-                var t = new System.Threading.Tasks.TaskCompletionSource<object>();
-                t.SetException(ex);
-                return t.Task;
-            }
-        }
-        
-        public static string GetMethodName(int interfaceId, int methodId)
-        {
-
-            switch (interfaceId)
-            {
-                
-                case 1237625140:  // IUnit
-                    switch (methodId)
-                    {
-                        case 1519937893:
-                            return "UnitCall";
-                    case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
-                    
-                        default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                    }
-                case -459325194:  // IUnitImpl
-                    switch (methodId)
-                    {
-                        case 1519937893:
-                            return "UnitCall";
-                    case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
-                    
-                        default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                    }
-                case 1962518542:  // IObjectImpl
-                    switch (methodId)
-                    {
-                        case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
-                    
-                        default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                    }
-
-                default:
-                    throw new System.InvalidCastException("interfaceId="+interfaceId);
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    public class ObjectFactory
-    {
-        
-
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IObject> instead.")]
-                        public static IObject GetGrain(long primaryKey)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IObject), primaryKey));
-                        }
-
-                        [System.Obsolete("This method has been deprecated. Please use GrainFactory.GetGrain<IObject> instead.")]
-                        public static IObject GetGrain(long primaryKey, string grainClassNamePrefix)
-                        {
-                            return Cast(global::Orleans.CodeGeneration.GrainFactoryBase.MakeGrainReferenceInternal(typeof(IObject), primaryKey, grainClassNamePrefix));
-                        }
-
-            public static IObject Cast(global::Orleans.Runtime.IAddressable grainRef)
-            {
-                
-                return ObjectReference.Cast(grainRef);
-            }
-        
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-        [System.SerializableAttribute()]
-        [global::Orleans.CodeGeneration.GrainReferenceAttribute("Server.IObject")]
-        internal class ObjectReference : global::Orleans.Runtime.GrainReference, global::Orleans.Runtime.IAddressable, Server.IObject
-        {
-            
-
-            public static IObject Cast(global::Orleans.Runtime.IAddressable grainRef)
-            {
-                
-                return (IObject) global::Orleans.Runtime.GrainReference.CastInternal(typeof(IObject), (global::Orleans.Runtime.GrainReference gr) => { return new ObjectReference(gr);}, grainRef, -167405501);
-            }
-            
-            protected internal ObjectReference(global::Orleans.Runtime.GrainReference reference) : 
-                    base(reference)
-            {
-            }
-            
-            protected internal ObjectReference(SerializationInfo info, StreamingContext context) : 
-                    base(info, context)
-            {
-            }
-            
-            protected override int InterfaceId
-            {
-                get
-                {
-                    return -167405501;
-                }
-            }
-            
-            public override string InterfaceName
-            {
-                get
-                {
-                    return "Server.IObject";
-                }
-            }
-            
-            [global::Orleans.CodeGeneration.CopierMethodAttribute()]
-            public static object _Copier(object original)
-            {
-                ObjectReference input = ((ObjectReference)(original));
-                return ((ObjectReference)(global::Orleans.Runtime.GrainReference.CopyGrainReference(input)));
-            }
-            
-            [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
-            public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
-            {
-                ObjectReference input = ((ObjectReference)(original));
-                global::Orleans.Runtime.GrainReference.SerializeGrainReference(input, stream, expected);
-            }
-            
-            [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
-            public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
-            {
-                return ObjectReference.Cast(((global::Orleans.Runtime.GrainReference)(global::Orleans.Runtime.GrainReference.DeserializeGrainReference(expected, stream))));
-            }
-            
-            public override bool IsCompatible(int interfaceId)
-            {
-                return ((interfaceId == this.InterfaceId) 
-                            || (interfaceId == 1962518542));
-            }
-            
-            protected override string GetMethodName(int interfaceId, int methodId)
-            {
-                return ObjectMethodInvoker.GetMethodName(interfaceId, methodId);
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IObjectImpl.VirtualCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(911766124, null );
-            }
-            
-            System.Threading.Tasks.Task<string> Server.IObjectImpl.ObjectCall()
-            {
-
-                return base.InvokeMethodAsync<System.String>(-509390599, null );
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    [global::Orleans.CodeGeneration.MethodInvokerAttribute("Server.IObject", -167405501)]
-    internal class ObjectMethodInvoker : global::Orleans.CodeGeneration.IGrainMethodInvoker
-    {
-        
-        int global::Orleans.CodeGeneration.IGrainMethodInvoker.InterfaceId
-        {
-            get
-            {
-                return -167405501;
-            }
-        }
-        
-        global::System.Threading.Tasks.Task<object> global::Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(global::Orleans.Runtime.IAddressable grain, int interfaceId, int methodId, object[] arguments)
-        {
-
-            try
-            {                    if (grain == null) throw new System.ArgumentNullException("grain");
-                switch (interfaceId)
-                {
-                    case -167405501:  // IObject
-                        switch (methodId)
-                        {
-                            case 911766124: 
-                                return ((IObject)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IObject)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                        }case 1962518542:  // IObjectImpl
-                        switch (methodId)
-                        {
-                            case 911766124: 
-                                return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -509390599: 
-                                return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                        }
-                    default:
-                        throw new System.InvalidCastException("interfaceId="+interfaceId);
-                }
-            }
-            catch(Exception ex)
-            {
-                var t = new System.Threading.Tasks.TaskCompletionSource<object>();
-                t.SetException(ex);
-                return t.Task;
-            }
-        }
-        
-        public static string GetMethodName(int interfaceId, int methodId)
-        {
-
-            switch (interfaceId)
-            {
-                
-                case -167405501:  // IObject
-                    switch (methodId)
-                    {
-                        case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
-                    
-                        default: 
-                            throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
-                    }
-                case 1962518542:  // IObjectImpl
-                    switch (methodId)
-                    {
-                        case 911766124:
-                            return "VirtualCall";
-                    case -509390599:
-                            return "ObjectCall";
+                        case 962302109:
+                            return "GenerateGUID";
                     
                         default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
@@ -1891,16 +3375,16 @@ namespace Server
                 return base.InvokeMethodAsync<Server.ISession>(-1106931492, null );
             }
             
-            System.Threading.Tasks.Task Server.IAccountGrain.SendPacketRealm(Shared.Packet @p)
+            System.Threading.Tasks.Task Server.IAccountGrain.SendPacketRealm(Shared.PacketOut @p)
             {
 
-                return base.InvokeMethodAsync<object>(-439758238, new object[] {@p} );
+                return base.InvokeMethodAsync<object>(-1007635377, new object[] {@p} );
             }
             
-            System.Threading.Tasks.Task Server.IAccountGrain.SendPacketAuth(Shared.Packet @p)
+            System.Threading.Tasks.Task Server.IAccountGrain.SendPacketAuth(Shared.PacketOut @p)
             {
 
-                return base.InvokeMethodAsync<object>(663614913, new object[] {@p} );
+                return base.InvokeMethodAsync<object>(862002919, new object[] {@p} );
             }
             
             System.Threading.Tasks.Task Server.IAccountGrain.SendAccountDataTimes(uint @mask)
@@ -1925,6 +3409,12 @@ namespace Server
             {
 
                 return base.InvokeMethodAsync<object>(1560354665, new object[] {@RealmID} );
+            }
+            
+            System.Threading.Tasks.Task Server.IAccountGrain.CreatePlayer(Shared.CMSG_CHAR_CREATE @create)
+            {
+
+                return base.InvokeMethodAsync<object>(-549773541, new object[] {@create} );
             }
         }
     }
@@ -1975,10 +3465,10 @@ namespace Server
                                 return ((IAccountGrain)grain).GetAuthSession().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1106931492: 
                                 return ((IAccountGrain)grain).GetRealmSession().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
-                            case -439758238: 
-                                return ((IAccountGrain)grain).SendPacketRealm((Packet)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
-                            case 663614913: 
-                                return ((IAccountGrain)grain).SendPacketAuth((Packet)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1007635377: 
+                                return ((IAccountGrain)grain).SendPacketRealm((PacketOut)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 862002919: 
+                                return ((IAccountGrain)grain).SendPacketAuth((PacketOut)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case 12719627: 
                                 return ((IAccountGrain)grain).SendAccountDataTimes((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case 2060811694: 
@@ -1987,6 +3477,8 @@ namespace Server
                                 return ((IAccountGrain)grain).SendAccountData((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case 1560354665: 
                                 return ((IAccountGrain)grain).SendCharEnum((Int32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -549773541: 
+                                return ((IAccountGrain)grain).CreatePlayer((CMSG_CHAR_CREATE)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                         }case -1277021679:  // IGrainWithStringKey
@@ -2038,9 +3530,9 @@ namespace Server
                             return "GetAuthSession";
                     case -1106931492:
                             return "GetRealmSession";
-                    case -439758238:
+                    case -1007635377:
                             return "SendPacketRealm";
-                    case 663614913:
+                    case 862002919:
                             return "SendPacketAuth";
                     case 12719627:
                             return "SendAccountDataTimes";
@@ -2050,6 +3542,8 @@ namespace Server
                             return "SendAccountData";
                     case 1560354665:
                             return "SendCharEnum";
+                    case -549773541:
+                            return "CreatePlayer";
                     
                         default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
@@ -2228,10 +3722,10 @@ namespace Server
                 return base.InvokeMethodAsync<object>(10551987, new object[] {@settings} );
             }
             
-            System.Threading.Tasks.Task Server.ISession.SendPacket(Shared.Packet @p)
+            System.Threading.Tasks.Task Server.ISession.SendPacket(Shared.PacketOut @p)
             {
 
-                return base.InvokeMethodAsync<object>(1045195182, new object[] {@p} );
+                return base.InvokeMethodAsync<object>(820464294, new object[] {@p} );
             }
             
             System.Threading.Tasks.Task Server.ISession.HandleReadyForAccountDataTimes()
@@ -2256,6 +3750,12 @@ namespace Server
             {
 
                 return base.InvokeMethodAsync<object>(-1842798826, null );
+            }
+            
+            System.Threading.Tasks.Task Server.ISession.HandleCharCreate(Shared.CMSG_CHAR_CREATE @create)
+            {
+
+                return base.InvokeMethodAsync<object>(-2128356724, new object[] {@create} );
             }
         }
     }
@@ -2306,8 +3806,8 @@ namespace Server
                                 return ((ISession)grain).GetSessionKeyFromAuthAccount((String)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case 10551987: 
                                 return ((ISession)grain).SetRealmInfo((RealmSettings)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
-                            case 1045195182: 
-                                return ((ISession)grain).SendPacket((Packet)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case 820464294: 
+                                return ((ISession)grain).SendPacket((PacketOut)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case 1136236795: 
                                 return ((ISession)grain).HandleReadyForAccountDataTimes().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case 857067198: 
@@ -2316,6 +3816,8 @@ namespace Server
                                 return ((ISession)grain).HandleRequestAccountData((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case -1842798826: 
                                 return ((ISession)grain).HandleCharEnum().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -2128356724: 
+                                return ((ISession)grain).HandleCharCreate((CMSG_CHAR_CREATE)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                         }
@@ -2362,7 +3864,7 @@ namespace Server
                             return "GetSessionKeyFromAuthAccount";
                     case 10551987:
                             return "SetRealmInfo";
-                    case 1045195182:
+                    case 820464294:
                             return "SendPacket";
                     case 1136236795:
                             return "HandleReadyForAccountDataTimes";
@@ -2372,6 +3874,8 @@ namespace Server
                             return "HandleRequestAccountData";
                     case -1842798826:
                             return "HandleCharEnum";
+                    case -2128356724:
+                            return "HandleCharCreate";
                     
                         default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
@@ -2454,6 +3958,106 @@ namespace InterfacesSerializers
         public static void Register()
         {
             global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.PlayerCreateInfo), DeepCopier, Serializer, Deserializer);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Shared_ObjectGUIDSerialization
+    {
+        
+        private static System.Reflection.FieldInfo fieldInfo1;
+        
+        static Shared_ObjectGUIDSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Shared.ObjectGUID input = ((Shared.ObjectGUID)(original));
+            Shared.ObjectGUID result = ((Shared.ObjectGUID)(System.Runtime.Serialization.FormatterServices.GetUninitializedObject(typeof(Shared.ObjectGUID))));
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            object objResult = ((object)(result));
+            object temp1 = fieldInfo1.GetValue(input);
+            fieldInfo1.SetValue(objResult, temp1);
+            return objResult;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Shared.ObjectGUID input = ((Shared.ObjectGUID)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo1.GetValue(input), stream, typeof(ulong));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Shared.ObjectGUID result = ((Shared.ObjectGUID)(System.Runtime.Serialization.FormatterServices.GetUninitializedObject(typeof(Shared.ObjectGUID))));
+            object objResult = ((object)(result));
+            object temp1 = ((ulong)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(ulong), stream)));
+            fieldInfo1.SetValue(objResult, temp1);
+            return objResult;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.ObjectGUID), DeepCopier, Serializer, Deserializer);
+            fieldInfo1 = typeof(Shared.ObjectGUID).GetField("_value", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Shared_CMSG_CHAR_CREATESerialization
+    {
+        
+        static Shared_CMSG_CHAR_CREATESerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            return original;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Shared.CMSG_CHAR_CREATE input = ((Shared.CMSG_CHAR_CREATE)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Class, stream, typeof(byte));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Face, stream, typeof(byte));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.FacialHair, stream, typeof(byte));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Gender, stream, typeof(byte));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.HairColor, stream, typeof(byte));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.HairStyle, stream, typeof(byte));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Name, stream, typeof(string));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Outfit, stream, typeof(byte));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Race, stream, typeof(byte));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Skin, stream, typeof(byte));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Shared.CMSG_CHAR_CREATE result = default(Shared.CMSG_CHAR_CREATE);
+            result.Class = ((byte)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte), stream)));
+            result.Face = ((byte)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte), stream)));
+            result.FacialHair = ((byte)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte), stream)));
+            result.Gender = ((byte)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte), stream)));
+            result.HairColor = ((byte)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte), stream)));
+            result.HairStyle = ((byte)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte), stream)));
+            result.Name = ((string)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string), stream)));
+            result.Outfit = ((byte)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte), stream)));
+            result.Race = ((byte)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte), stream)));
+            result.Skin = ((byte)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte), stream)));
+            return result;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.CMSG_CHAR_CREATE), DeepCopier, Serializer, Deserializer);
         }
     }
     
@@ -2615,22 +4219,22 @@ namespace InterfacesSerializers
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
     [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
-    internal class Shared_PacketSerialization
+    internal class Shared_PacketOutSerialization
     {
         
         private static System.Reflection.FieldInfo fieldInfo1;
         
         private static System.Reflection.FieldInfo fieldInfo2;
         
-        static Shared_PacketSerialization()
+        static Shared_PacketOutSerialization()
         {
             Register();
         }
         
         public static object DeepCopier(object original)
         {
-            Shared.Packet input = ((Shared.Packet)(original));
-            Shared.Packet result = new Shared.Packet();
+            Shared.PacketOut input = ((Shared.PacketOut)(original));
+            Shared.PacketOut result = new Shared.PacketOut();
             Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
             object objResult = ((object)(result));
             object temp1 = ((System.IO.MemoryStream)(Orleans.Serialization.SerializationManager.DeepCopyInner(fieldInfo1.GetValue(input))));
@@ -2642,14 +4246,14 @@ namespace InterfacesSerializers
         
         public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
         {
-            Shared.Packet input = ((Shared.Packet)(untypedInput));
+            Shared.PacketOut input = ((Shared.PacketOut)(untypedInput));
             Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo1.GetValue(input), stream, typeof(System.IO.MemoryStream));
             Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo2.GetValue(input), stream, typeof(Shared.PacketType));
         }
         
         public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
         {
-            Shared.Packet result = new Shared.Packet();
+            Shared.PacketOut result = new Shared.PacketOut();
             object objResult = ((object)(result));
             object temp1 = ((System.IO.MemoryStream)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(System.IO.MemoryStream), stream)));
             fieldInfo1.SetValue(objResult, temp1);
@@ -2660,10 +4264,10 @@ namespace InterfacesSerializers
         
         public static void Register()
         {
-            global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.Packet), DeepCopier, Serializer, Deserializer);
-            fieldInfo1 = typeof(Shared.Packet).GetField("_strm", (System.Reflection.BindingFlags.Instance 
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Shared.PacketOut), DeepCopier, Serializer, Deserializer);
+            fieldInfo1 = typeof(Shared.PacketOut).GetField("_strm", (System.Reflection.BindingFlags.Instance 
                             | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
-            fieldInfo2 = typeof(Shared.Packet).GetField("type", (System.Reflection.BindingFlags.Instance 
+            fieldInfo2 = typeof(Shared.PacketOut).GetField("type", (System.Reflection.BindingFlags.Instance 
                             | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
         }
     }

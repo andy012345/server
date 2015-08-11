@@ -16,7 +16,7 @@ namespace Shared
         Unknown
     }
 
-    public class Packet
+    public class PacketOut : PacketBase
     {
         [NonSerialized]
         BinaryWriter _w = null;
@@ -53,9 +53,9 @@ namespace Shared
         }
 
 
-        public Packet() { }
-        public Packet(AuthOp op) { Write((byte)op); type = PacketType.AuthPacket; }
-        public Packet(RealmOp op)
+        public PacketOut() { }
+        public PacketOut(AuthOp op) { Write((byte)op); type = PacketType.AuthPacket; }
+        public PacketOut(RealmOp op)
         {
             type = PacketType.RealmPacket;
 

@@ -47,7 +47,6 @@ namespace Server
                 for (int i = 0; i < reader.FieldCount; ++i)
                     dict.Add(reader.GetName(i), reader.GetValue(i));
 
-                UInt32 IndexValue = 0;
                 DataType data = MySQLGenerator.ToObject<DataType>(dict);
 
                 if (TableIndexes.Count == 0)
@@ -65,9 +64,6 @@ namespace Server
                         throw new Exception("Table has incorrect index");
                     Add(Convert.ToUInt32(dict[TableIndexes[0]]), Convert.ToUInt32(dict[TableIndexes[1]]), data);
                 }
-
-
-                Add(IndexValue, data);
             }
 
             reader.Dispose();
@@ -148,7 +144,7 @@ namespace Server
 
         public DataType Get(UInt32 index, UInt32 index2)
         {
-            if (TableDataIndex2 == null || !TableDataIndex2.ContainsKey(index) || TableDataIndex2[index].ContainsKey(index2) || TableDataIndex2[index][index2].Count == 0)
+            if (TableDataIndex2 == null || !TableDataIndex2.ContainsKey(index) || !TableDataIndex2[index].ContainsKey(index2) || TableDataIndex2[index][index2].Count == 0)
                 return default(DataType);
             return TableDataIndex2[index][index2][0];
         }

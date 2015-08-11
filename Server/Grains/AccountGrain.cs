@@ -27,16 +27,16 @@ namespace Server
         public int RealmID = 0;
     }
 
-    public interface AccountState : IGrainState
+    public class  AccountState : GrainState
     {
-        AccountFlags Flags { get; set; }
+        public AccountFlags Flags { get; set; }
 
-        string Password { get; set; }
-        string PasswordPlain { get; set; }
+        public string Password { get; set; }
+        public string PasswordPlain { get; set; }
 
         //Account Data, I think this is for the UI config or something. Whatever.
-        AccountData Data { get; set; }
-        PlayerCharacterListEntry[] CharacterList { get; set; }
+        public AccountData Data { get; set; }
+        public PlayerCharacterListEntry[] CharacterList { get; set; }
     }
 
     public enum AccountFlags
@@ -190,13 +190,13 @@ namespace Server
         public Task<ISession> GetAuthSession() { return Task.FromResult(AuthSession); }
         public Task<ISession> GetRealmSession() { return Task.FromResult(RealmSession); }
 
-        public async Task SendPacketRealm(Packet p)
+        public async Task SendPacketRealm(PacketOut p)
         {
             if (RealmSession == null)
                 return;
             await RealmSession.SendPacket(p);
         }
-        public async Task SendPacketAuth(Packet p)
+        public async Task SendPacketAuth(PacketOut p)
         {
             if (AuthSession == null)
                 return;
@@ -219,7 +219,7 @@ namespace Server
             if (id >= 8)
                 throw new ArgumentException("SendAccountData attempted to use out of range index");
 
-            Packet p = new Packet(RealmOp.SMSG_UPDATE_ACCOUNT_DATA);
+            PacketOut p = new PacketOut(RealmOp.SMSG_UPDATE_ACCOUNT_DATA);
             var guid = (UInt64)0; //TODO: replace with active character if they are there!
 
             p.Write(guid);
@@ -233,7 +233,7 @@ namespace Server
 
         public async Task SendAccountDataTimes(UInt32 mask)
         {
-            Packet p = new Packet(RealmOp.SMSG_ACCOUNT_DATA_TIMES);
+            PacketOut p = new PacketOut(RealmOp.SMSG_ACCOUNT_DATA_TIMES);
             p.Write(Time.GetUnixTime());
             p.Write((byte)1);
             p.Write(mask);
@@ -253,9 +253,9 @@ namespace Server
         {
             var chars = GetCharacters(RealmID);
 
-            Packet p = new Packet(RealmOp.SMSG_CHAR_ENUM);
+            PacketOut p = new PacketOut(RealmOp.SMSG_CHAR_ENUM);
 
-            p.Write((byte)chars.Length); //todo :)
+            p.Write(chars == null? (byte)0 : (byte)chars.Length); //todo :)
 
             await SendPacketRealm(p);
         }
@@ -272,6 +272,34 @@ namespace Server
             if (State.CharacterList == null)
                 return null;
             return State.CharacterList.Where(chr => chr.Player == player).FirstOrDefault();
+        }
+
+        public async Task CreatePlayer(CMSG_CHAR_CREATE create)
+        {
+            IDataStoreManager datastore = GrainFactory.GetGrain<IDataStoreManager>(0);
+
+            var createinfo = await datastore.GetPlayerCreateInfo(create.Class, create.Race);
+
+            if (createinfo == null)
+            {
+                await SendCharCreateReply(LoginErrorCode.CHAR_CREATE_ERROR);
+                return;
+            }
+
+            var plrnameindex = GrainFactory.GetGrain<IPlayerByNameIndex>(create.Name);
+            var plr = await plrnameindex.GetPlayer();
+            if (plr != null)
+            {
+                await SendCharCreateReply(LoginErrorCode.CHAR_CREATE_NAME_IN_USE);
+                return;
+            }
+        }
+
+        public async Task SendCharCreateReply(LoginErrorCode code)
+        {
+            PacketOut p = new PacketOut(RealmOp.SMSG_CHAR_CREATE);
+            p.Write((byte)code);
+            await SendPacketRealm(p);
         }
     }
 }

@@ -153,7 +153,6 @@
     <Compile Include="AuthServer\PacketHandlers\AuthProof.cs" />
     <Compile Include="AuthServer\Packet\LogonPacketHandler.cs" />
     <Compile Include="Networking\Packets\Packet.cs" />
-    <Compile Include="Networking\Reader\PacketReader.cs" />
     <Compile Include="Networking\Socket.cs" />
     <Compile Include="OrleansHostWrapper.cs" />
     <Compile Include="Main.cs" />
