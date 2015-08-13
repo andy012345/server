@@ -178,5 +178,7 @@ namespace Server
             RealmID = settings.RealmID;
             return TaskDone.Done;
         }
+
+        public Task<int> GetRealmID() { return Task.FromResult(RealmID); }
     }
 }

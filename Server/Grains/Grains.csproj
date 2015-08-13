@@ -53,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountGrain.cs" />
+    <Compile Include="Account.cs" />
     <Compile Include="DataStores\DataStore.cs" />
     <Compile Include="DataStores\DataStoreGetters.cs" />
     <Compile Include="DataStores\DataStoreManager.cs" />

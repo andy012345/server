@@ -61,7 +61,7 @@ namespace Server
                         if (index == -1)
                             index = i;
 
-                        Add(i, rec);
+                        Add(index, rec);
                     }
                 }
             }

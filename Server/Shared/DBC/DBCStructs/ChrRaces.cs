@@ -34,8 +34,6 @@ namespace Server
         public string[] FemaleName = new string[16];
         public string[] NeutralName = new string[16];
         public string ShortName = "";
-        //char const ChrRacesEntryfmt[] = "niixiixixxxxixssssssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxi";
-
 
         public override int Read()
         {

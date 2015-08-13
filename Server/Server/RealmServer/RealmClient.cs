@@ -40,7 +40,6 @@ namespace Server.RealmServer
 
         public void Init()
         {
-            var datastore_manager = Orleans.GrainClient.GrainFactory.GetGrain<IDataStoreManager>(0);
         }
     }
 }

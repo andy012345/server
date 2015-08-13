@@ -13,6 +13,9 @@ namespace Server
     {
         Task<string> VirtualCall();
         Task<string> ObjectCall();
+        Task Save();
+
+        Task<ObjectGUID> GetGUID();
 
 
         //Update FIelds

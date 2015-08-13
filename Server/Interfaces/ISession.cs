@@ -23,6 +23,7 @@ namespace Server
         Task OnSocketDisconnect();
         Task GetSessionKeyFromAuthAccount(string AccountName);
         Task SetRealmInfo(RealmSettings settings);
+        Task<int> GetRealmID();
         Task SendPacket(PacketOut p);
 
         Task HandleReadyForAccountDataTimes();

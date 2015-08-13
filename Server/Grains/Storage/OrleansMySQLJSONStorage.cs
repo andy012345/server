@@ -163,18 +163,24 @@ namespace Orleans.Storage.MySQLDB
 
             var data = Newtonsoft.Json.JsonConvert.SerializeObject(grainState, Newtonsoft.Json.Formatting.Indented);
 
-            string query;
-
+            List<string> queries = new List<string>();
             if (CustomTable)
-                query = string.Format("replace into `{0}` (`guid`, `data`) VALUE (\"{1}\", \"{2}\");", table, key, MySqlHelper.EscapeString(data));
+            {
+                queries.Add(string.Format("replace into `{0}` (`guid`, `data`) VALUE (\"{1}\", \"{2}\");", table, key, MySqlHelper.EscapeString(data)));
+            }
             else
-                query = string.Format("replace into `{0}` (`guid`, `type`, `data`) VALUE (\"{1}\", \"{2}\", \"{3}\");", table, key, MySqlHelper.EscapeString(grainType), MySqlHelper.EscapeString(data));
+            {
+                queries.Add(string.Format("delete from `{0}` where `guid` =\"{1}\" and `type` = \"{2}\";", table, key, MySqlHelper.EscapeString(grainType)));
+                queries.Add(string.Format("insert into `{0}` (`guid`, `type`, `data`) VALUE (\"{1}\", \"{2}\", \"{3}\");", table, key, MySqlHelper.EscapeString(grainType), MySqlHelper.EscapeString(data)));
+            }
 
-            MySqlCommand com = new MySqlCommand(query, DatabaseConnection);
-            Log.Verbose(query);
-            await com.ExecuteNonQueryAsync();
-
-            com.Dispose();
+            foreach (var q in queries)
+            {
+                MySqlCommand com = new MySqlCommand(q, DatabaseConnection);
+                Log.Verbose(q);
+                await com.ExecuteNonQueryAsync();
+                com.Dispose();
+            }
         }
 
         public async Task ClearStateAsync(string grainType, GrainReference grainReference, IGrainState grainState)

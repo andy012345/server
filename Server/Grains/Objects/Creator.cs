@@ -31,7 +31,7 @@ namespace Server
 
         private Task<ObjectGUID> GeneratePlayerGUID()
         {
-            var guid = new ObjectGUID(State.MaxPlayerGuid);
+            var guid = new ObjectGUID(State.MaxPlayerGuid | (UInt64)HighGuid.HIGHGUID_PLAYER);
             State.MaxPlayerGuid += 1;
             return Task.FromResult(guid);
         }

@@ -10,6 +10,7 @@ namespace Server
     public interface IPlayerByNameIndex : IGrainWithStringKey
     {
         Task<bool> SetPlayer(IPlayer plr);
+        Task<ObjectGUID> GetPlayerGUID();
         Task<IPlayer> GetPlayer();
         Task Save();
     }

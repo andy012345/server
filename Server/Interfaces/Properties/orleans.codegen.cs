@@ -330,6 +330,12 @@ namespace Server
                 return base.InvokeMethodAsync<System.Boolean>(970804849, new object[] {@plr is global::Orleans.Grain ? @plr.AsReference<Server.IPlayer>() : @plr} );
             }
             
+            System.Threading.Tasks.Task<Shared.ObjectGUID> Server.IPlayerByNameIndex.GetPlayerGUID()
+            {
+
+                return base.InvokeMethodAsync<Shared.ObjectGUID>(-574949896, null );
+            }
+            
             System.Threading.Tasks.Task<Server.IPlayer> Server.IPlayerByNameIndex.GetPlayer()
             {
 
@@ -370,6 +376,8 @@ namespace Server
                         {
                             case 970804849: 
                                 return ((IPlayerByNameIndex)grain).SetPlayer((IPlayer)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -574949896: 
+                                return ((IPlayerByNameIndex)grain).GetPlayerGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 880552289: 
                                 return ((IPlayerByNameIndex)grain).GetPlayer().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1038277770: 
@@ -405,6 +413,8 @@ namespace Server
                     {
                         case 970804849:
                             return "SetPlayer";
+                    case -574949896:
+                            return "GetPlayerGUID";
                     case 880552289:
                             return "GetPlayer";
                     case -1038277770:
@@ -689,6 +699,18 @@ namespace Server
                 return base.InvokeMethodAsync<System.String>(-509390599, null );
             }
             
+            System.Threading.Tasks.Task Server.IObjectImpl.Save()
+            {
+
+                return base.InvokeMethodAsync<object>(-1038277770, null );
+            }
+            
+            System.Threading.Tasks.Task<Shared.ObjectGUID> Server.IObjectImpl.GetGUID()
+            {
+
+                return base.InvokeMethodAsync<Shared.ObjectGUID>(-1893154936, null );
+            }
+            
             System.Threading.Tasks.Task<byte> Server.IObjectImpl.GetByte(int @field, int @index)
             {
 
@@ -773,6 +795,10 @@ namespace Server
                                 return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IObjectImpl)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IObjectImpl)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IObjectImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -824,6 +850,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -974,6 +1004,18 @@ namespace Server
                 return base.InvokeMethodAsync<System.String>(-509390599, null );
             }
             
+            System.Threading.Tasks.Task Server.IObjectImpl.Save()
+            {
+
+                return base.InvokeMethodAsync<object>(-1038277770, null );
+            }
+            
+            System.Threading.Tasks.Task<Shared.ObjectGUID> Server.IObjectImpl.GetGUID()
+            {
+
+                return base.InvokeMethodAsync<Shared.ObjectGUID>(-1893154936, null );
+            }
+            
             System.Threading.Tasks.Task<byte> Server.IObjectImpl.GetByte(int @field, int @index)
             {
 
@@ -1060,6 +1102,10 @@ namespace Server
                                 return ((IUnitImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IUnitImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IUnitImpl)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IUnitImpl)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IUnitImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -1087,6 +1133,10 @@ namespace Server
                                 return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IObjectImpl)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IObjectImpl)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IObjectImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -1140,6 +1190,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -1169,6 +1223,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -1332,6 +1390,18 @@ namespace Server
                 return base.InvokeMethodAsync<System.String>(-509390599, null );
             }
             
+            System.Threading.Tasks.Task Server.IObjectImpl.Save()
+            {
+
+                return base.InvokeMethodAsync<object>(-1038277770, null );
+            }
+            
+            System.Threading.Tasks.Task<Shared.ObjectGUID> Server.IObjectImpl.GetGUID()
+            {
+
+                return base.InvokeMethodAsync<Shared.ObjectGUID>(-1893154936, null );
+            }
+            
             System.Threading.Tasks.Task<byte> Server.IObjectImpl.GetByte(int @field, int @index)
             {
 
@@ -1422,6 +1492,10 @@ namespace Server
                                 return ((IPlayerImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IPlayerImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IPlayerImpl)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IPlayerImpl)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IPlayerImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -1451,6 +1525,10 @@ namespace Server
                                 return ((IUnitImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IUnitImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IUnitImpl)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IUnitImpl)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IUnitImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -1478,6 +1556,10 @@ namespace Server
                                 return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IObjectImpl)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IObjectImpl)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IObjectImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -1535,6 +1617,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -1566,6 +1652,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -1595,6 +1685,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -1759,6 +1853,18 @@ namespace Server
                 return base.InvokeMethodAsync<System.String>(-509390599, null );
             }
             
+            System.Threading.Tasks.Task Server.IObjectImpl.Save()
+            {
+
+                return base.InvokeMethodAsync<object>(-1038277770, null );
+            }
+            
+            System.Threading.Tasks.Task<Shared.ObjectGUID> Server.IObjectImpl.GetGUID()
+            {
+
+                return base.InvokeMethodAsync<Shared.ObjectGUID>(-1893154936, null );
+            }
+            
             System.Threading.Tasks.Task<byte> Server.IObjectImpl.GetByte(int @field, int @index)
             {
 
@@ -1849,6 +1955,10 @@ namespace Server
                                 return ((IPlayer)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IPlayer)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IPlayer)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IPlayer)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IPlayer)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -1882,6 +1992,10 @@ namespace Server
                                 return ((IPlayerImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IPlayerImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IPlayerImpl)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IPlayerImpl)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IPlayerImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -1911,6 +2025,10 @@ namespace Server
                                 return ((IUnitImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IUnitImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IUnitImpl)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IUnitImpl)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IUnitImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -1938,6 +2056,10 @@ namespace Server
                                 return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IObjectImpl)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IObjectImpl)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IObjectImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -1995,6 +2117,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -2030,6 +2156,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -2061,6 +2191,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -2090,6 +2224,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -2234,6 +2372,18 @@ namespace Server
                 return base.InvokeMethodAsync<System.String>(-509390599, null );
             }
             
+            System.Threading.Tasks.Task Server.IObjectImpl.Save()
+            {
+
+                return base.InvokeMethodAsync<object>(-1038277770, null );
+            }
+            
+            System.Threading.Tasks.Task<Shared.ObjectGUID> Server.IObjectImpl.GetGUID()
+            {
+
+                return base.InvokeMethodAsync<Shared.ObjectGUID>(-1893154936, null );
+            }
+            
             System.Threading.Tasks.Task<byte> Server.IObjectImpl.GetByte(int @field, int @index)
             {
 
@@ -2318,6 +2468,10 @@ namespace Server
                                 return ((IObject)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IObject)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IObject)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IObject)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IObject)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -2345,6 +2499,10 @@ namespace Server
                                 return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IObjectImpl)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IObjectImpl)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IObjectImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -2396,6 +2554,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -2425,6 +2587,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -2576,6 +2742,18 @@ namespace Server
                 return base.InvokeMethodAsync<System.String>(-509390599, null );
             }
             
+            System.Threading.Tasks.Task Server.IObjectImpl.Save()
+            {
+
+                return base.InvokeMethodAsync<object>(-1038277770, null );
+            }
+            
+            System.Threading.Tasks.Task<Shared.ObjectGUID> Server.IObjectImpl.GetGUID()
+            {
+
+                return base.InvokeMethodAsync<Shared.ObjectGUID>(-1893154936, null );
+            }
+            
             System.Threading.Tasks.Task<byte> Server.IObjectImpl.GetByte(int @field, int @index)
             {
 
@@ -2662,6 +2840,10 @@ namespace Server
                                 return ((IUnit)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IUnit)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IUnit)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IUnit)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IUnit)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -2691,6 +2873,10 @@ namespace Server
                                 return ((IUnitImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IUnitImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IUnitImpl)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IUnitImpl)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IUnitImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -2718,6 +2904,10 @@ namespace Server
                                 return ((IObjectImpl)grain).VirtualCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -509390599: 
                                 return ((IObjectImpl)grain).ObjectCall().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -1038277770: 
+                                return ((IObjectImpl)grain).Save().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -1893154936: 
+                                return ((IObjectImpl)grain).GetGUID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 194300607: 
                                 return ((IObjectImpl)grain).GetByte((Int32)arguments[0], (Int32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -1305326038: 
@@ -2771,6 +2961,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -2802,6 +2996,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -2831,6 +3029,10 @@ namespace Server
                             return "VirtualCall";
                     case -509390599:
                             return "ObjectCall";
+                    case -1038277770:
+                            return "Save";
+                    case -1893154936:
+                            return "GetGUID";
                     case 194300607:
                             return "GetByte";
                     case -1305326038:
@@ -3171,6 +3373,12 @@ namespace Server
 
                 return base.InvokeMethodAsync<Shared.ObjectGUID>(962302109, new object[] {@objectType} );
             }
+            
+            System.Threading.Tasks.Task<Server.IPlayer> Server.IObjectCreator.CreatePlayer(Shared.CMSG_CHAR_CREATE @creationData)
+            {
+
+                return base.InvokeMethodAsync<Server.IPlayer>(-549773541, new object[] {@creationData} );
+            }
         }
     }
     
@@ -3200,6 +3408,8 @@ namespace Server
                         {
                             case 962302109: 
                                 return ((IObjectCreator)grain).GenerateGUID((ObjectType)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case -549773541: 
+                                return ((IObjectCreator)grain).CreatePlayer((CMSG_CHAR_CREATE)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                         }
@@ -3226,6 +3436,8 @@ namespace Server
                     {
                         case 962302109:
                             return "GenerateGUID";
+                    case -549773541:
+                            return "CreatePlayer";
                     
                         default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
@@ -3745,6 +3957,12 @@ namespace Server
                 return base.InvokeMethodAsync<object>(10551987, new object[] {@settings} );
             }
             
+            System.Threading.Tasks.Task<int> Server.ISession.GetRealmID()
+            {
+
+                return base.InvokeMethodAsync<System.Int32>(-200604686, null );
+            }
+            
             System.Threading.Tasks.Task Server.ISession.SendPacket(Shared.PacketOut @p)
             {
 
@@ -3829,6 +4047,8 @@ namespace Server
                                 return ((ISession)grain).GetSessionKeyFromAuthAccount((String)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case 10551987: 
                                 return ((ISession)grain).SetRealmInfo((RealmSettings)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
+                            case -200604686: 
+                                return ((ISession)grain).GetRealmID().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case 820464294: 
                                 return ((ISession)grain).SendPacket((PacketOut)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)null; });
                             case 1136236795: 
@@ -3887,6 +4107,8 @@ namespace Server
                             return "GetSessionKeyFromAuthAccount";
                     case 10551987:
                             return "SetRealmInfo";
+                    case -200604686:
+                            return "GetRealmID";
                     case 820464294:
                             return "SendPacket";
                     case 1136236795:

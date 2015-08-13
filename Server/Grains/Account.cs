@@ -22,7 +22,7 @@ namespace Server
 
     public class PlayerCharacterListEntry
     {
-        public IPlayer Player = null;
+        public ObjectGUID Player = null;
         public int CharacterSlot = 0;
         public int RealmID = 0;
     }
@@ -36,7 +36,7 @@ namespace Server
 
         //Account Data, I think this is for the UI config or something. Whatever.
         public AccountData Data { get; set; }
-        public PlayerCharacterListEntry[] CharacterList { get; set; }
+        public List<PlayerCharacterListEntry> CharacterList { get; set; }
     }
 
     public enum AccountFlags
@@ -52,6 +52,7 @@ namespace Server
         List<ISession> ActiveSessions = new List<ISession>();
         ISession AuthSession;
         ISession RealmSession;
+        int RealmSessionRealmID = 0;
 
         public override async Task OnActivateAsync()
         {
@@ -64,7 +65,7 @@ namespace Server
                 State.Data = new AccountData();
         }
 
-        void SaveAccount()
+        void Save()
         {
             if ((State.Flags & AccountFlags.AccountNotValid) == AccountFlags.AccountNotValid)
                 return;
@@ -109,7 +110,7 @@ namespace Server
             State.PasswordPlain = password;
 
 
-            SaveAccount();
+            Save();
 
             return TaskDone.Done;
         }
@@ -158,6 +159,7 @@ namespace Server
                         if (RealmSession != null && s != RealmSession)
                             await RemoveSession(RealmSession, true);
                         RealmSession = s;
+                        RealmSessionRealmID = await RealmSession.GetRealmID();
                     } break;
             }
 
@@ -224,9 +226,18 @@ namespace Server
 
             p.Write(guid);
             p.Write(id);
-            p.Write(State.Data.TimeStamp[id]);
-            p.Write(State.Data.Size[id]);
-            p.Write(State.Data.Data[id]);
+
+            if (State.Data == null || State.Data.TimeStamp == null || State.Data.Size == null || State.Data.Data == null)
+            {
+                p.Write((int)0); //time
+                p.Write((int)0); //size
+            }
+            else
+            {
+                p.Write(State.Data.TimeStamp[id]);
+                p.Write(State.Data.Size[id]);
+                p.Write(State.Data.Data[id]);
+            }
 
             await SendPacketRealm(p);
         }
@@ -242,7 +253,10 @@ namespace Server
             {
                 if ((mask & (1 << i)) != 0)
                 {
-                    p.Write(State.Data.TimeStamp[i]);
+                    if (State.Data == null || State.Data.TimeStamp == null)
+                        p.Write((int)0);
+                    else
+                        p.Write(State.Data.TimeStamp[i]);
                 }
             }
 
@@ -256,6 +270,11 @@ namespace Server
             PacketOut p = new PacketOut(RealmOp.SMSG_CHAR_ENUM);
 
             p.Write(chars == null? (byte)0 : (byte)chars.Length); //todo :)
+
+            foreach (var c in chars)
+            {
+
+            }
 
             await SendPacketRealm(p);
         }
@@ -271,7 +290,7 @@ namespace Server
         {
             if (State.CharacterList == null)
                 return null;
-            return State.CharacterList.Where(chr => chr.Player == player).FirstOrDefault();
+            return State.CharacterList.Where(chr => chr.Player == player.GetGUID().Result).FirstOrDefault();
         }
 
         public async Task CreatePlayer(CMSG_CHAR_CREATE create)
@@ -287,14 +306,39 @@ namespace Server
             }
 
             var plrnameindex = GrainFactory.GetGrain<IPlayerByNameIndex>(create.Name);
-            var plr = await plrnameindex.GetPlayer();
-            if (plr != null)
+            var guidnameindex = await plrnameindex.GetPlayerGUID();
+            if (guidnameindex != 0)
             {
                 await SendCharCreateReply(LoginErrorCode.CHAR_CREATE_NAME_IN_USE);
                 return;
             }
 
+            var chrclass = await datastore.GetChrClasses(create.Class);
+            var chrrace = await datastore.GetChrRaces(create.Race);
 
+            if (chrclass == null || chrrace == null)
+            {
+                await SendCharCreateReply(LoginErrorCode.CHAR_CREATE_ERROR);
+                return;
+            }
+
+            var chars = GetCharacters(RealmSessionRealmID);
+            if (chars != null && chars.Length >= 10) //todo: add max
+            {
+                await SendCharCreateReply(LoginErrorCode.CHAR_CREATE_SERVER_LIMIT);
+                return;
+            }
+
+            var creator = GrainFactory.GetGrain<IObjectCreator>(0);
+
+            //OK LETS CREATE
+
+            var player = await creator.CreatePlayer(create);
+            await plrnameindex.SetPlayer(player);
+
+            await SendCharCreateReply(LoginErrorCode.CHAR_CREATE_SUCCESS);
+
+            await CreateCharacterListEntryForPlayer(player);
         }
 
         public async Task SendCharCreateReply(LoginErrorCode code)
@@ -302,6 +346,25 @@ namespace Server
             PacketOut p = new PacketOut(RealmOp.SMSG_CHAR_CREATE);
             p.Write((byte)code);
             await SendPacketRealm(p);
+        }
+
+        public async Task CreateCharacterListEntryForPlayer(IPlayer plr)
+        {
+            if (State.CharacterList == null)
+                State.CharacterList = new List<PlayerCharacterListEntry>();
+
+            var chars = GetCharacters(RealmSessionRealmID);
+            
+
+            PlayerCharacterListEntry entry = new PlayerCharacterListEntry();
+            entry.Player = await plr.GetGUID();
+
+            foreach (var c in chars)
+                entry.CharacterSlot = c.CharacterSlot + 1;
+
+            State.CharacterList.Add(entry);
+
+            Save();            
         }
     }
 }

@@ -22,8 +22,8 @@ namespace Shared
         public void Read(PacketIn p)
         {
             Name = p.ReadCString();
-            Class = p.ReadByte();
             Race = p.ReadByte();
+            Class = p.ReadByte();
             Gender = p.ReadByte();
             Skin = p.ReadByte();
             Face = p.ReadByte();

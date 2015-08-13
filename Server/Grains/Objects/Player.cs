@@ -16,20 +16,22 @@ namespace Server
 
     public class PlayerByNameIndexState : GrainState
     {
-        public IPlayer PlayerPtr { get; set; }
+        public ObjectGUID GUID { get; set; }
     }
 
     [StorageProvider(ProviderName = "Default")]
     public class PlayerByNameIndex : Grain<PlayerByNameIndexState>, IPlayerByNameIndex
     {
-        public Task<IPlayer> GetPlayer() { return Task.FromResult(State.PlayerPtr); }
+        public Task<ObjectGUID> GetPlayerGUID() { return Task.FromResult(State.GUID); }
+        public Task<IPlayer> GetPlayer() { return Task.FromResult(GrainFactory.GetGrain<IPlayer>(State.GUID.ToInt64())); }
         public async Task Save() { await WriteStateAsync(); }
 
         public async Task<bool> SetPlayer(IPlayer plr)
         {
-            if (State.PlayerPtr != plr)
+            ObjectGUID plrGUID = new ObjectGUID((UInt64)plr.GetPrimaryKeyLong());
+            if (State.GUID != 0)
                 return false;
-            State.PlayerPtr = plr;
+            State.GUID = plrGUID;
             await Save();
             return true;
         }
@@ -38,11 +40,7 @@ namespace Server
     public class PlayerImpl : Player, IPlayer { }
     public class Player : Unit<PlayerData>, IPlayerImpl
     {
-        /*public byte HairStyle
-        {
-           // get { return State.}
-        }*/
-
+ 
         public override Task<string> VirtualCall() { return Task.FromResult("Virtual call from player"); }
         public Task<string> PlayerCall() { return Task.FromResult("Call from player"); }
 
@@ -62,6 +60,10 @@ namespace Server
             HairColor = creationData.HairColor;
             FacialHair = creationData.FacialHair;
             //Outfit = creationData.HairColor;
+
+            State.Exists = true; //WE EXIST, YAY
+
+            await Save();
         }
 
         #region Customisation

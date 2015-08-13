@@ -49,7 +49,7 @@ namespace Server
             ExpansionRequired = GetUInt32(59);
 
 
-            return (int)Class;
+          return (int)Class;
         }
     }
 }

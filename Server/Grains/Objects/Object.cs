@@ -29,6 +29,16 @@ namespace Server
         public virtual Task<string> VirtualCall() { return Task.FromResult("Virtual call from object"); }
         public Task<string> ObjectCall() { return Task.FromResult("Call from object"); }
 
+        public async Task Save() { if (State.Exists) await WriteStateAsync(); }
+
+        public Task<ObjectGUID> GetGUID()
+        {
+            if (State.UpdateFields == null)
+                return Task.FromResult(new ObjectGUID(0));
+            var guid = _GetUInt64((int)EObjectFields.OBJECT_FIELD_GUID);
+            return Task.FromResult(new ObjectGUID(guid));
+        }
+
         public Task CreateUpdateFields(int sz)
         {
             State.UpdateFields = new UpdateField[sz];
@@ -59,6 +69,15 @@ namespace Server
 
         public byte _GetByte(int field, int index) { return State.UpdateFields[field].GetByte(index); }
         public UInt32 _GetUInt32(int field) { return State.UpdateFields[field].GetUInt32(); }
+        public UInt64 _GetUInt64(int field)
+        {
+            var low = _GetUInt32(field);
+            var high = _GetUInt32(field + 1);
+
+            var ret = (UInt64)low;
+            ret |= (UInt64)high << 32;
+            return ret;
+        }
         public float _GetFloat(UInt32 field) { return State.UpdateFields[field].GetFloat(); }
         public void _SetByte(int field, int index, byte val) { State.UpdateFields[field].Set(index, val); }
         public void _SetUInt32(int field, UInt32 val) { State.UpdateFields[field].Set(val); }
