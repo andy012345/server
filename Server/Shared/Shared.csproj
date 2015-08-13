@@ -42,22 +42,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Array.cs" />
-    <Compile Include="BigInteger.cs" />
+    <Compile Include="Helpers\Array.cs" />
+    <Compile Include="Crypto\BigInteger.cs" />
+    <Compile Include="DBC\DBCStructs\CharStartOutfit.cs" />
+    <Compile Include="DBC\DBCStructs\ChrClasses.cs" />
+    <Compile Include="DBC\DBCStructs\ChrRaces.cs" />
+    <Compile Include="DBC\DataStoreManagerDBC.cs" />
     <Compile Include="Enums\RealmServerEnums.cs" />
     <Compile Include="Enums\AuthServerEnums.cs" />
     <Compile Include="Enums\Session.cs" />
     <Compile Include="Enums\Object.cs" />
     <Compile Include="Enums\SocketCommand.cs" />
     <Compile Include="Enums\UpdateFields.cs" />
-    <Compile Include="Memorystream.cs" />
     <Compile Include="ObjectGUID.cs" />
-    <Compile Include="PacketHandlerAttrib.cs" />
-    <Compile Include="Packet.cs" />
-    <Compile Include="PacketIn.cs" />
-    <Compile Include="PacketWriter.cs" />
-    <Compile Include="RC4.cs" />
-    <Compile Include="SHA.cs" />
+    <Compile Include="Packet\PacketHandlerAttrib.cs" />
+    <Compile Include="Packet\Packet.cs" />
+    <Compile Include="Packet\PacketIn.cs" />
+    <Compile Include="Packet\PacketWriter.cs" />
+    <Compile Include="Crypto\RC4.cs" />
+    <Compile Include="Crypto\SHA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structs\AuthResponse.cs" />
     <Compile Include="Structs\DataStore\PlayerDataStore.cs" />
@@ -67,8 +70,7 @@
     <Compile Include="Structs\RealmPackets\AuthSession.cs" />
     <Compile Include="Structs\UpdateField.cs" />
     <Compile Include="Time.cs" />
-    <Compile Include="Types.cs" />
-    <Compile Include="ZLib.cs" />
+    <Compile Include="Crypto\ZLib.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

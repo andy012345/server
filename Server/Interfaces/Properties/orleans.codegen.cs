@@ -24,6 +24,9 @@ namespace Server
     using System.Runtime.Serialization.Formatters.Binary;
     using System.IO;
     using System.Collections.Generic;
+    using System.Reflection;
+    using Orleans.Serialization;
+    using Server;
     using Orleans;
     using Orleans.Runtime;
     using Orleans.Core;
@@ -136,6 +139,18 @@ namespace Server
 
                 return base.InvokeMethodAsync<Shared.PlayerCreateInfo>(-511591145, new object[] {@Class, @Race} );
             }
+            
+            System.Threading.Tasks.Task<Server.ChrClasses> Server.IDataStoreManager.GetChrClasses(uint @Class)
+            {
+
+                return base.InvokeMethodAsync<Server.ChrClasses>(1387734599, new object[] {@Class} );
+            }
+            
+            System.Threading.Tasks.Task<Server.ChrRaces> Server.IDataStoreManager.GetChrRaces(uint @Race)
+            {
+
+                return base.InvokeMethodAsync<Server.ChrRaces>(1590344148, new object[] {@Race} );
+            }
         }
     }
     
@@ -167,6 +182,10 @@ namespace Server
                                 return ((IDataStoreManager)grain).GetConnectionString().ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             case -511591145: 
                                 return ((IDataStoreManager)grain).GetPlayerCreateInfo((UInt32)arguments[0], (UInt32)arguments[1]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 1387734599: 
+                                return ((IDataStoreManager)grain).GetChrClasses((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
+                            case 1590344148: 
+                                return ((IDataStoreManager)grain).GetChrRaces((UInt32)arguments[0]).ContinueWith(t => {if (t.Status == System.Threading.Tasks.TaskStatus.Faulted) throw t.Exception; return (object)t.Result; });
                             default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
                         }
@@ -195,6 +214,10 @@ namespace Server
                             return "GetConnectionString";
                     case -511591145:
                             return "GetPlayerCreateInfo";
+                    case 1387734599:
+                            return "GetChrClasses";
+                    case 1590344148:
+                            return "GetChrRaces";
                     
                         default: 
                             throw new NotImplementedException("interfaceId="+interfaceId+",methodId="+methodId);
@@ -3884,6 +3907,208 @@ namespace Server
                 default:
                     throw new System.InvalidCastException("interfaceId="+interfaceId);
             }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Server_ChrClassesSerialization
+    {
+        
+        private static System.Reflection.FieldInfo fieldInfo8;
+        
+        private static System.Reflection.FieldInfo fieldInfo9;
+        
+        private static System.Reflection.FieldInfo fieldInfo10;
+        
+        private static System.Reflection.FieldInfo fieldInfo11;
+        
+        static Server_ChrClassesSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Server.ChrClasses input = ((Server.ChrClasses)(original));
+            Server.ChrClasses result = new Server.ChrClasses();
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            result.CinematicSequence = input.CinematicSequence;
+            result.Class = input.Class;
+            result.ExpansionRequired = input.ExpansionRequired;
+            result.FemaleName = ((string[])(Orleans.Serialization.SerializationManager.DeepCopyInner(input.FemaleName)));
+            result.Flags = input.Flags;
+            result.Name = ((string[])(Orleans.Serialization.SerializationManager.DeepCopyInner(input.Name)));
+            result.NeutralName = ((string[])(Orleans.Serialization.SerializationManager.DeepCopyInner(input.NeutralName)));
+            object objResult = ((object)(result));
+            object temp8 = ((byte[])(Orleans.Serialization.SerializationManager.DeepCopyInner(fieldInfo8.GetValue(input))));
+            fieldInfo8.SetValue(objResult, temp8);
+            object temp9 = input.SpellFamily;
+            fieldInfo9.SetValue(objResult, temp9);
+            object temp10 = ((byte[])(Orleans.Serialization.SerializationManager.DeepCopyInner(fieldInfo10.GetValue(input))));
+            fieldInfo10.SetValue(objResult, temp10);
+            object temp11 = input.powerType;
+            fieldInfo11.SetValue(objResult, temp11);
+            return objResult;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Server.ChrClasses input = ((Server.ChrClasses)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.CinematicSequence, stream, typeof(uint));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Class, stream, typeof(uint));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.ExpansionRequired, stream, typeof(uint));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.FemaleName, stream, typeof(string[]));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Flags, stream, typeof(uint));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Name, stream, typeof(string[]));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.NeutralName, stream, typeof(string[]));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo8.GetValue(input), stream, typeof(byte[]));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.SpellFamily, stream, typeof(uint));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo10.GetValue(input), stream, typeof(byte[]));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.powerType, stream, typeof(uint));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Server.ChrClasses result = new Server.ChrClasses();
+            result.CinematicSequence = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            result.Class = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            result.ExpansionRequired = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            result.FemaleName = ((string[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string[]), stream)));
+            result.Flags = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            result.Name = ((string[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string[]), stream)));
+            result.NeutralName = ((string[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string[]), stream)));
+            object objResult = ((object)(result));
+            object temp8 = ((byte[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte[]), stream)));
+            fieldInfo8.SetValue(objResult, temp8);
+            object temp9 = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            fieldInfo9.SetValue(objResult, temp9);
+            object temp10 = ((byte[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte[]), stream)));
+            fieldInfo10.SetValue(objResult, temp10);
+            object temp11 = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            fieldInfo11.SetValue(objResult, temp11);
+            return objResult;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Server.ChrClasses), DeepCopier, Serializer, Deserializer);
+            fieldInfo8 = typeof(Server.DBCRecordBase).GetField("RecordData", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo9 = typeof(Server.ChrClasses).GetField("SpellFamily", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo10 = typeof(Server.DBCRecordBase).GetField("StringData", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo11 = typeof(Server.ChrClasses).GetField("powerType", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
+    [global::Orleans.CodeGeneration.RegisterSerializerAttribute()]
+    internal class Server_ChrRacesSerialization
+    {
+        
+        private static System.Reflection.FieldInfo fieldInfo12;
+        
+        private static System.Reflection.FieldInfo fieldInfo13;
+        
+        private static System.Reflection.FieldInfo fieldInfo14;
+        
+        private static System.Reflection.FieldInfo fieldInfo15;
+        
+        static Server_ChrRacesSerialization()
+        {
+            Register();
+        }
+        
+        public static object DeepCopier(object original)
+        {
+            Server.ChrRaces input = ((Server.ChrRaces)(original));
+            Server.ChrRaces result = new Server.ChrRaces();
+            Orleans.Serialization.SerializationContext.Current.RecordObject(original, result);
+            result.CinematicSequence = input.CinematicSequence;
+            result.ExpensionRequired = input.ExpensionRequired;
+            result.ExplorationData = input.ExplorationData;
+            result.Faction = input.Faction;
+            result.FemaleName = ((string[])(Orleans.Serialization.SerializationManager.DeepCopyInner(input.FemaleName)));
+            result.Flags = input.Flags;
+            result.ModelFemale = input.ModelFemale;
+            result.ModelMale = input.ModelMale;
+            result.Name = ((string[])(Orleans.Serialization.SerializationManager.DeepCopyInner(input.Name)));
+            result.NeutralName = ((string[])(Orleans.Serialization.SerializationManager.DeepCopyInner(input.NeutralName)));
+            result.Race = input.Race;
+            object objResult = ((object)(result));
+            object temp12 = ((byte[])(Orleans.Serialization.SerializationManager.DeepCopyInner(fieldInfo12.GetValue(input))));
+            fieldInfo12.SetValue(objResult, temp12);
+            object temp13 = input.ShortName;
+            fieldInfo13.SetValue(objResult, temp13);
+            object temp14 = ((byte[])(Orleans.Serialization.SerializationManager.DeepCopyInner(fieldInfo14.GetValue(input))));
+            fieldInfo14.SetValue(objResult, temp14);
+            object temp15 = input.Team;
+            fieldInfo15.SetValue(objResult, temp15);
+            return objResult;
+        }
+        
+        public static void Serializer(object untypedInput, Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
+        {
+            Server.ChrRaces input = ((Server.ChrRaces)(untypedInput));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.CinematicSequence, stream, typeof(uint));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.ExpensionRequired, stream, typeof(uint));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.ExplorationData, stream, typeof(uint));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Faction, stream, typeof(uint));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.FemaleName, stream, typeof(string[]));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Flags, stream, typeof(uint));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.ModelFemale, stream, typeof(uint));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.ModelMale, stream, typeof(uint));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Name, stream, typeof(string[]));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.NeutralName, stream, typeof(string[]));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Race, stream, typeof(uint));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo12.GetValue(input), stream, typeof(byte[]));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.ShortName, stream, typeof(string));
+            Orleans.Serialization.SerializationManager.SerializeInner(fieldInfo14.GetValue(input), stream, typeof(byte[]));
+            Orleans.Serialization.SerializationManager.SerializeInner(input.Team, stream, typeof(uint));
+        }
+        
+        public static object Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
+        {
+            Server.ChrRaces result = new Server.ChrRaces();
+            result.CinematicSequence = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            result.ExpensionRequired = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            result.ExplorationData = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            result.Faction = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            result.FemaleName = ((string[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string[]), stream)));
+            result.Flags = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            result.ModelFemale = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            result.ModelMale = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            result.Name = ((string[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string[]), stream)));
+            result.NeutralName = ((string[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string[]), stream)));
+            result.Race = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            object objResult = ((object)(result));
+            object temp12 = ((byte[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte[]), stream)));
+            fieldInfo12.SetValue(objResult, temp12);
+            object temp13 = ((string)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(string), stream)));
+            fieldInfo13.SetValue(objResult, temp13);
+            object temp14 = ((byte[])(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(byte[]), stream)));
+            fieldInfo14.SetValue(objResult, temp14);
+            object temp15 = ((uint)(Orleans.Serialization.SerializationManager.DeserializeInner(typeof(uint), stream)));
+            fieldInfo15.SetValue(objResult, temp15);
+            return objResult;
+        }
+        
+        public static void Register()
+        {
+            global::Orleans.Serialization.SerializationManager.Register(typeof(Server.ChrRaces), DeepCopier, Serializer, Deserializer);
+            fieldInfo12 = typeof(Server.DBCRecordBase).GetField("RecordData", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo13 = typeof(Server.ChrRaces).GetField("ShortName", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo14 = typeof(Server.DBCRecordBase).GetField("StringData", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
+            fieldInfo15 = typeof(Server.ChrRaces).GetField("Team", (System.Reflection.BindingFlags.Instance 
+                            | (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic)));
         }
     }
 }

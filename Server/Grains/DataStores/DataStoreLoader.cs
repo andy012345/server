@@ -19,7 +19,22 @@ namespace Server
 
             List<Task> loaders = new List<Task>();
 
+            loaders.Add(LoadDBC());
             loaders.Add(_PlayerCreateInfo.Load(ConnectionString));
+
+            await Task.WhenAll(loaders);
+        }
+
+
+        CharStartOutfitStore _CharacterOutfitStore = new CharStartOutfitStore();
+        ChrClassesStore _ChrClassesStore = new ChrClassesStore();
+        ChrRacesStore _ChrRacesStore = new ChrRacesStore();
+
+        public async Task LoadDBC()
+        {
+            await _CharacterOutfitStore.Load("CharStartOutfit.dbc");
+            await _ChrClassesStore.Load("ChrClasses.dbc");
+            await _ChrRacesStore.Load("ChrRaces.dbc");
         }
     }
 }

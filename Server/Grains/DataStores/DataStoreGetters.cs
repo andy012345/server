@@ -15,5 +15,15 @@ namespace Server
 
             return Task.FromResult(entry);
         }
+
+        public Task<ChrClasses> GetChrClasses(UInt32 Class)
+        {
+            return Task.FromResult(_ChrClassesStore.Get(Class));
+        }
+
+        public Task<ChrRaces> GetChrRaces(UInt32 Race)
+        {
+            return Task.FromResult(_ChrRacesStore.Get(Race));
+        }
     }
 }

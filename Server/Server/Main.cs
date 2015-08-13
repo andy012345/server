@@ -65,6 +65,9 @@ namespace Server
 
                 foreach (var line in testres)
                     Console.WriteLine("{0}", line);
+
+                var manager = factory.GetGrain<IDataStoreManager>(0);
+                manager.GetPlayerCreateInfo(0, 0);
             }
 
             WebService.Run();

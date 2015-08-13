@@ -293,6 +293,8 @@ namespace Server
                 await SendCharCreateReply(LoginErrorCode.CHAR_CREATE_NAME_IN_USE);
                 return;
             }
+
+
         }
 
         public async Task SendCharCreateReply(LoginErrorCode code)
