@@ -39,7 +39,7 @@ namespace Shared
 
     public class ObjectGUID
     {
-        UInt64 _value = 0;
+        public UInt64 _value = 0;
 
         public ObjectGUID(UInt64 g) { _value = g; }
 
@@ -160,5 +160,9 @@ namespace Shared
         {
             return x._value <= y;
         }
+
+        public static implicit operator ObjectGUID(UInt64 val) { return new ObjectGUID(val); }
+        public static implicit operator ObjectGUID(Int64 val) { return new ObjectGUID((UInt64)val); }
+        public static implicit operator ObjectGUID(int val) { return new ObjectGUID((UInt64)val); }
     }
 }

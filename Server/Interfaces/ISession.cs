@@ -19,6 +19,7 @@ namespace Server
         Task<SessionType> GetSessionType();
         Task Disconnect();
         Task<BigInteger> GetSessionKey();
+        Task<SessionStream> GetSessionStream();
         Task HandleAuthSession(CMSG_AUTH_SESSION auth, UInt32 ServerSeed);
         Task OnSocketDisconnect();
         Task GetSessionKeyFromAuthAccount(string AccountName);
@@ -32,5 +33,7 @@ namespace Server
 
         Task HandleCharEnum();
         Task HandleCharCreate(CMSG_CHAR_CREATE create);
+
+        Task HandlePlayerLogin(CMSG_PLAYER_LOGIN pkt);
     }
 }

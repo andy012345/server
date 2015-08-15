@@ -96,6 +96,7 @@ namespace Shared
         public void Write(decimal value) { w.Write(value); }
         public void Write(double value) { w.Write(value); }
         public void Write(sbyte value) { w.Write(value);  }
+
         public void Write(bool value) { w.Write(value); }
         public void Write(char[] chars, int index, int count) { w.Write(chars, index, count); }
         public void Write(byte[] buffer, int index, int count) { w.Write(buffer, index, count);  }
@@ -120,6 +121,19 @@ namespace Shared
             byte[] bytes = Encoding.UTF8.GetBytes(s);
             Write(bytes);
             Write((byte)0); //null terminator
+        }
+
+        public void Write(PacketOut p)
+        {
+            Write(p.strm.ToArray());
+        }
+
+        public void Write(ObjectGUID guid) { Write(guid.ToUInt64()); }
+
+        public void Write(PackedGUID guid)
+        {
+            Write(guid.mask);
+            Write(guid.guidbytes);
         }
     }
 }

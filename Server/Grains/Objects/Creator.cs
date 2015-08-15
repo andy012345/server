@@ -12,8 +12,13 @@ namespace Server
 {
     public class ObjectCreatorState : GrainState
     {
-        public UInt64 MaxPlayerGuid = 0;
-        public UInt64 MaxObjectGuid = 0;
+        UInt64 _MaxPlayerGuid = 1;
+        UInt64 _MaxObjectGuid = 1;
+        UInt32 _MaxInstanceGuid = 1;
+
+        public UInt64 MaxPlayerGUID { get { return _MaxPlayerGuid; } set { _MaxPlayerGuid = value; } }
+        public UInt64 MaxObjectGUID { get { return _MaxObjectGuid; } set { _MaxObjectGuid = value; } }
+        public UInt32 MaxInstanceGUID { get { return _MaxInstanceGuid; } set { _MaxInstanceGuid = value; } }
     }
 
     [Reentrant]
@@ -29,21 +34,55 @@ namespace Server
             }
         }
 
+        public Task<UInt32> GenerateInstanceID()
+        {
+            var ret = State.MaxInstanceGUID;
+            State.MaxInstanceGUID += 1;
+            return Task.FromResult(ret);
+        }
+
+        public async Task<IMap> CreateInstance(UInt32 MapID, UInt32 RealmID)
+        {
+            var datastore = GrainFactory.GetGrain<IDataStoreManager>(0);
+
+            var mapentry = await datastore.GetMapEntry(MapID);
+
+            if (mapentry == null)
+                return null;
+
+            UInt64 mapkey = (UInt64)MapID;
+            UInt32 instanceid = 0;
+
+            if (mapentry.IsInstance())
+            {
+                instanceid = await GenerateInstanceID();
+                mapkey |= ((UInt64)instanceid << 32);
+            }
+            else
+                mapkey |= ((UInt64)RealmID << 32);
+
+            var map = GrainFactory.GetGrain<IMap>((long)mapkey);
+            map.Create(MapID, instanceid, RealmID);
+            return map;
+        }
+
         private Task<ObjectGUID> GeneratePlayerGUID()
         {
-            var guid = new ObjectGUID(State.MaxPlayerGuid | (UInt64)HighGuid.HIGHGUID_PLAYER);
-            State.MaxPlayerGuid += 1;
+            var guid = new ObjectGUID(State.MaxPlayerGUID | (UInt64)HighGuid.HIGHGUID_PLAYER);
+            State.MaxPlayerGUID += 1;
             return Task.FromResult(guid);
         }
 
-        public async Task<IPlayer> CreatePlayer(CMSG_CHAR_CREATE creationData)
+        public async Task<Tuple<LoginErrorCode, IPlayer>> CreatePlayer(PlayerCreateData info)
         {
+            LoginErrorCode err = LoginErrorCode.CHAR_CREATE_SUCCESS;
             var guid = await GeneratePlayerGUID();
             var plr = GrainFactory.GetGrain<IPlayer>(guid.ToInt64());
 
-            await plr.Create(creationData);
+            err = await plr.Create(info);
 
-            return plr;
+            var ret = new Tuple<LoginErrorCode, IPlayer>(err, err == LoginErrorCode.CHAR_CREATE_SUCCESS ? plr : null);
+            return ret;
         }
     }
 }

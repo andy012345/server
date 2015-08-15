@@ -87,11 +87,13 @@ namespace Server.Networking
 
             */
             sock = new Socket(addressFamily, sockType, protoType);
+            sock.NoDelay = true;
         }
 
         public ServerSocket(Socket s)
         {
             sock = s;
+            sock.NoDelay = true;
         }
         public void CreateSession()
         {

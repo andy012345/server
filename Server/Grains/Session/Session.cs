@@ -18,7 +18,7 @@ namespace Server
     public interface SessionData : IGrainState
     {
         byte[] SessionKey { get; set; }
-        IAccountGrain Account { get; set; } //can we reference interfaces to actors? the codegen seems fine, to test
+        IAccount Account { get; set; } //can we reference interfaces to actors? the codegen seems fine, to test
     }
 
     [Reentrant]
@@ -36,9 +36,9 @@ namespace Server
         Shared.BigInteger SessionKey;
         bool Authed = false;
         
-        IAccountGrain Account = null;
-        IAsyncStream<byte[]> packetStream = null;
-        IAsyncStream<SocketCommand> commandStream = null;
+        IAccount Account = null;
+
+        SessionStream _stream = null;
 
         SessionType SessionType = SessionType.Unknown;
         int RealmID = 0;
@@ -56,12 +56,13 @@ namespace Server
             if (streamProvider == null)
                 throw new Exception("Session failed to initialise stream: GetStreamProvider failed");
 
-            packetStream = streamProvider.GetStream<byte[]>(this.GetPrimaryKey(), "SessionPacketStream");
-            commandStream = streamProvider.GetStream<SocketCommand>(this.GetPrimaryKey(), "SessionCommandStream");
+            _stream = new SessionStream();
+            _stream.PacketStream = streamProvider.GetStream<byte[]>(this.GetPrimaryKey(), "SessionPacketStream");
+            _stream.CommandStream = streamProvider.GetStream<SocketCommand>(this.GetPrimaryKey(), "SessionCommandStream");
 
-            if (packetStream == null)
+            if (_stream.PacketStream == null)
                 throw new Exception("Session failed to initialise stream: GetStream failed");
-            if (commandStream == null)
+            if (_stream.CommandStream == null)
                 throw new Exception("Session failed to initialise stream: GetStream failed");
 
             DelayDeactivation(TimeSpan.FromDays(1)); //don't automatically gobble me up please!
@@ -70,6 +71,7 @@ namespace Server
         }
 
         public Task<BigInteger> GetSessionKey() { return Task.FromResult(SessionKey); }
+        public Task<SessionStream> GetSessionStream() { return Task.FromResult(_stream); }
 
         bool IsAuthedRealmSession() { if (Authed && SessionType == SessionType.RealmSession) return true; return false; }
         
@@ -83,12 +85,12 @@ namespace Server
         public async Task SendPacketAsync(PacketOut p)
         {
             p.Finalise();
-            await packetStream.OnNextAsync(p.strm.ToArray());
+            await _stream.PacketStream.OnNextAsync(p.strm.ToArray());
         }
         public Task SendPacket(PacketOut p)
         {
             p.Finalise();
-            packetStream.OnNextAsync(p.strm.ToArray());
+            _stream.PacketStream.OnNextAsync(p.strm.ToArray());
             return TaskDone.Done;
         }
 
@@ -98,8 +100,8 @@ namespace Server
         public Task Disconnect()
         {
             //and lets disconnect anyone on the other end!
-            if (commandStream != null)
-                commandStream.OnNextAsync(SocketCommand.DisconnectClient);
+            if (_stream.CommandStream != null)
+                _stream.CommandStream.OnNextAsync(SocketCommand.DisconnectClient);
 
             DelayDeactivation(TimeSpan.FromSeconds(1)); //let gc have this back
             //DeactivateOnIdle();
@@ -158,7 +160,7 @@ namespace Server
 
         public async Task GetSessionKeyFromAuthAccount(string AccountName)
         {
-            Account = GrainFactory.GetGrain<IAccountGrain>(AccountName.ToUpper());
+            Account = GrainFactory.GetGrain<IAccount>(AccountName.ToUpper());
 
             if (Account == null)
                 return;

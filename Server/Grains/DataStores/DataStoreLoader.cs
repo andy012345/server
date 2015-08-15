@@ -29,12 +29,14 @@ namespace Server
         CharStartOutfitStore _CharacterOutfitStore = new CharStartOutfitStore();
         ChrClassesStore _ChrClassesStore = new ChrClassesStore();
         ChrRacesStore _ChrRacesStore = new ChrRacesStore();
+        MapStore _MapStore = new MapStore();
 
         public async Task LoadDBC()
         {
             await _CharacterOutfitStore.Load("CharStartOutfit.dbc");
             await _ChrClassesStore.Load("ChrClasses.dbc");
             await _ChrRacesStore.Load("ChrRaces.dbc");
+            await _MapStore.Load("Map.dbc");
         }
     }
 }

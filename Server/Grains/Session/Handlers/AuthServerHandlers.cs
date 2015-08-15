@@ -19,7 +19,7 @@ namespace Server
     {
         public async Task OnLogonChallenge(AuthLogonChallenge challenge)
         {
-            Account = GrainFactory.GetGrain<IAccountGrain>(challenge.account);
+            Account = GrainFactory.GetGrain<IAccount>(challenge.account);
 
             if (!(await Account.IsValid()))
             {

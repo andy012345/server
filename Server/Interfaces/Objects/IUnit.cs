@@ -12,6 +12,9 @@ namespace Server
     {
         //  Task<string> VirtualCall();
         Task<string> UnitCall();
+
+        Task<int> GetDisplayID();
+        Task<int> GetNativeDisplayID();
     }
 
 }

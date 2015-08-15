@@ -35,7 +35,7 @@ namespace Server
             if (password == null) //should never be hit provided no-one touches the templates
                 return WebService.JSONMessage(new { error = "Password must be provided" });
 
-            IAccountGrain ac = Orleans.GrainClient.GrainFactory.GetGrain<IAccountGrain>(account);
+            IAccount ac = Orleans.GrainClient.GrainFactory.GetGrain<IAccount>(account);
 
             if (ac == null)
                 return WebService.JSONMessage(new { error = "Internal error: client returned null actor" });

@@ -46,11 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataStores\IDataStoreManager.cs" />
+    <Compile Include="Maps\IMap.cs" />
     <Compile Include="Objects\IPlayer.cs" />
     <Compile Include="Objects\IObject.cs" />
     <Compile Include="Objects\IUnit.cs" />
     <Compile Include="Realms\RealmManager.cs" />
-    <Compile Include="Objects\IObjectCreator.cs" />
+    <Compile Include="Objects\ICreator.cs" />
     <Compile Include="IAccount.cs" />
     <Compile Include="ISession.cs" />
     <Compile Include="Properties\orleans.codegen.cs" />

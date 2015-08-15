@@ -31,5 +31,12 @@ namespace Server
                 return;
             await Account.CreatePlayer(create);
         }
+
+        public async Task HandlePlayerLogin(CMSG_PLAYER_LOGIN pkt)
+        {
+            if (!IsAuthedRealmSession())
+                return;
+            await Account.PlayerLogin(pkt);
+        }
     }
 }

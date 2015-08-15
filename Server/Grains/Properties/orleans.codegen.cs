@@ -38,6 +38,16 @@ namespace Server
 
             public Boolean @Exists { get; set; }
 
+            public Single @PositionX { get; set; }
+
+            public Single @PositionY { get; set; }
+
+            public Single @PositionZ { get; set; }
+
+            public UInt32 @MapID { get; set; }
+
+            public UInt32 @InstanceID { get; set; }
+
             public ObjectType @ObjType { get; set; }
 
             public UpdateField[] @UpdateFields { get; set; }
@@ -49,6 +59,11 @@ namespace Server
                 object value;
                 if (values == null) { InitStateFields(); return; }
                 if (values.TryGetValue("Exists", out value)) @Exists = (Boolean) value;
+                if (values.TryGetValue("PositionX", out value)) @PositionX = (Single) value;
+                if (values.TryGetValue("PositionY", out value)) @PositionY = (Single) value;
+                if (values.TryGetValue("PositionZ", out value)) @PositionZ = (Single) value;
+                if (values.TryGetValue("MapID", out value)) @MapID = (UInt32) value;
+                if (values.TryGetValue("InstanceID", out value)) @InstanceID = (UInt32) value;
                 if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
                 if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
                 if (values.TryGetValue("unit_test", out value)) @unit_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
@@ -56,7 +71,7 @@ namespace Server
 
             public override System.String ToString()
             {
-                return System.String.Format("UnitImplState( Exists={0} ObjType={1} UpdateFields={2} unit_test={3} )", @Exists, @ObjType, @UpdateFields, @unit_test);
+                return System.String.Format("UnitImplState( Exists={0} PositionX={1} PositionY={2} PositionZ={3} MapID={4} InstanceID={5} ObjType={6} UpdateFields={7} unit_test={8} )", @Exists, @PositionX, @PositionY, @PositionZ, @MapID, @InstanceID, @ObjType, @UpdateFields, @unit_test);
             }
         
         public UnitImplState() : 
@@ -69,6 +84,11 @@ namespace Server
         {
             System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
             result["Exists"] = this.Exists;
+            result["PositionX"] = this.PositionX;
+            result["PositionY"] = this.PositionY;
+            result["PositionZ"] = this.PositionZ;
+            result["MapID"] = this.MapID;
+            result["InstanceID"] = this.InstanceID;
             result["ObjType"] = this.ObjType;
             result["UpdateFields"] = this.UpdateFields;
             result["unit_test"] = this.unit_test;
@@ -78,6 +98,11 @@ namespace Server
         private void InitStateFields()
         {
             this.Exists = default(Boolean);
+            this.PositionX = default(Single);
+            this.PositionY = default(Single);
+            this.PositionZ = default(Single);
+            this.MapID = default(UInt32);
+            this.InstanceID = default(UInt32);
             this.ObjType = default(ObjectType);
             this.UpdateFields = default(UpdateField[]);
             this.unit_test = default(Int32);
@@ -118,11 +143,31 @@ namespace Server
 
             public Boolean @Exists { get; set; }
 
+            public Single @PositionX { get; set; }
+
+            public Single @PositionY { get; set; }
+
+            public Single @PositionZ { get; set; }
+
+            public UInt32 @MapID { get; set; }
+
+            public UInt32 @InstanceID { get; set; }
+
             public ObjectType @ObjType { get; set; }
 
             public UpdateField[] @UpdateFields { get; set; }
 
-            public Int32 @player_test { get; set; }
+            public String @Name { get; set; }
+
+            public String @Account { get; set; }
+
+            public Int32 @Race { get; set; }
+
+            public Int32 @Class { get; set; }
+
+            public Int32 @Gender { get; set; }
+
+            public Int32 @RealmID { get; set; }
 
             public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
             {   
@@ -130,14 +175,24 @@ namespace Server
                 if (values == null) { InitStateFields(); return; }
                 if (values.TryGetValue("unit_test", out value)) @unit_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
                 if (values.TryGetValue("Exists", out value)) @Exists = (Boolean) value;
+                if (values.TryGetValue("PositionX", out value)) @PositionX = (Single) value;
+                if (values.TryGetValue("PositionY", out value)) @PositionY = (Single) value;
+                if (values.TryGetValue("PositionZ", out value)) @PositionZ = (Single) value;
+                if (values.TryGetValue("MapID", out value)) @MapID = (UInt32) value;
+                if (values.TryGetValue("InstanceID", out value)) @InstanceID = (UInt32) value;
                 if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
                 if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
-                if (values.TryGetValue("player_test", out value)) @player_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("Name", out value)) @Name = (String) value;
+                if (values.TryGetValue("Account", out value)) @Account = (String) value;
+                if (values.TryGetValue("Race", out value)) @Race = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("Class", out value)) @Class = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("Gender", out value)) @Gender = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("RealmID", out value)) @RealmID = value is Int64 ? (Int32)(Int64)value : (Int32)value;
             }
 
             public override System.String ToString()
             {
-                return System.String.Format("PlayerState( unit_test={0} Exists={1} ObjType={2} UpdateFields={3} player_test={4} )", @unit_test, @Exists, @ObjType, @UpdateFields, @player_test);
+                return System.String.Format("PlayerState( unit_test={0} Exists={1} PositionX={2} PositionY={3} PositionZ={4} MapID={5} InstanceID={6} ObjType={7} UpdateFields={8} Name={9} Account={10} Race={11} Class={12} Gender={13} RealmID={14} )", @unit_test, @Exists, @PositionX, @PositionY, @PositionZ, @MapID, @InstanceID, @ObjType, @UpdateFields, @Name, @Account, @Race, @Class, @Gender, @RealmID);
             }
         
         public PlayerState() : 
@@ -151,9 +206,19 @@ namespace Server
             System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
             result["unit_test"] = this.unit_test;
             result["Exists"] = this.Exists;
+            result["PositionX"] = this.PositionX;
+            result["PositionY"] = this.PositionY;
+            result["PositionZ"] = this.PositionZ;
+            result["MapID"] = this.MapID;
+            result["InstanceID"] = this.InstanceID;
             result["ObjType"] = this.ObjType;
             result["UpdateFields"] = this.UpdateFields;
-            result["player_test"] = this.player_test;
+            result["Name"] = this.Name;
+            result["Account"] = this.Account;
+            result["Race"] = this.Race;
+            result["Class"] = this.Class;
+            result["Gender"] = this.Gender;
+            result["RealmID"] = this.RealmID;
             return result;
         }
         
@@ -161,9 +226,19 @@ namespace Server
         {
             this.unit_test = default(Int32);
             this.Exists = default(Boolean);
+            this.PositionX = default(Single);
+            this.PositionY = default(Single);
+            this.PositionZ = default(Single);
+            this.MapID = default(UInt32);
+            this.InstanceID = default(UInt32);
             this.ObjType = default(ObjectType);
             this.UpdateFields = default(UpdateField[]);
-            this.player_test = default(Int32);
+            this.Name = default(String);
+            this.Account = default(String);
+            this.Race = default(Int32);
+            this.Class = default(Int32);
+            this.Gender = default(Int32);
+            this.RealmID = default(Int32);
         }
         
         [global::Orleans.CodeGeneration.CopierMethodAttribute()]
@@ -201,11 +276,31 @@ namespace Server
 
             public Boolean @Exists { get; set; }
 
+            public Single @PositionX { get; set; }
+
+            public Single @PositionY { get; set; }
+
+            public Single @PositionZ { get; set; }
+
+            public UInt32 @MapID { get; set; }
+
+            public UInt32 @InstanceID { get; set; }
+
             public ObjectType @ObjType { get; set; }
 
             public UpdateField[] @UpdateFields { get; set; }
 
-            public Int32 @player_test { get; set; }
+            public String @Name { get; set; }
+
+            public String @Account { get; set; }
+
+            public Int32 @Race { get; set; }
+
+            public Int32 @Class { get; set; }
+
+            public Int32 @Gender { get; set; }
+
+            public Int32 @RealmID { get; set; }
 
             public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
             {   
@@ -213,14 +308,24 @@ namespace Server
                 if (values == null) { InitStateFields(); return; }
                 if (values.TryGetValue("unit_test", out value)) @unit_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
                 if (values.TryGetValue("Exists", out value)) @Exists = (Boolean) value;
+                if (values.TryGetValue("PositionX", out value)) @PositionX = (Single) value;
+                if (values.TryGetValue("PositionY", out value)) @PositionY = (Single) value;
+                if (values.TryGetValue("PositionZ", out value)) @PositionZ = (Single) value;
+                if (values.TryGetValue("MapID", out value)) @MapID = (UInt32) value;
+                if (values.TryGetValue("InstanceID", out value)) @InstanceID = (UInt32) value;
                 if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
                 if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
-                if (values.TryGetValue("player_test", out value)) @player_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("Name", out value)) @Name = (String) value;
+                if (values.TryGetValue("Account", out value)) @Account = (String) value;
+                if (values.TryGetValue("Race", out value)) @Race = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("Class", out value)) @Class = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("Gender", out value)) @Gender = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("RealmID", out value)) @RealmID = value is Int64 ? (Int32)(Int64)value : (Int32)value;
             }
 
             public override System.String ToString()
             {
-                return System.String.Format("PlayerImplState( unit_test={0} Exists={1} ObjType={2} UpdateFields={3} player_test={4} )", @unit_test, @Exists, @ObjType, @UpdateFields, @player_test);
+                return System.String.Format("PlayerImplState( unit_test={0} Exists={1} PositionX={2} PositionY={3} PositionZ={4} MapID={5} InstanceID={6} ObjType={7} UpdateFields={8} Name={9} Account={10} Race={11} Class={12} Gender={13} RealmID={14} )", @unit_test, @Exists, @PositionX, @PositionY, @PositionZ, @MapID, @InstanceID, @ObjType, @UpdateFields, @Name, @Account, @Race, @Class, @Gender, @RealmID);
             }
         
         public PlayerImplState() : 
@@ -234,9 +339,19 @@ namespace Server
             System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
             result["unit_test"] = this.unit_test;
             result["Exists"] = this.Exists;
+            result["PositionX"] = this.PositionX;
+            result["PositionY"] = this.PositionY;
+            result["PositionZ"] = this.PositionZ;
+            result["MapID"] = this.MapID;
+            result["InstanceID"] = this.InstanceID;
             result["ObjType"] = this.ObjType;
             result["UpdateFields"] = this.UpdateFields;
-            result["player_test"] = this.player_test;
+            result["Name"] = this.Name;
+            result["Account"] = this.Account;
+            result["Race"] = this.Race;
+            result["Class"] = this.Class;
+            result["Gender"] = this.Gender;
+            result["RealmID"] = this.RealmID;
             return result;
         }
         
@@ -244,9 +359,19 @@ namespace Server
         {
             this.unit_test = default(Int32);
             this.Exists = default(Boolean);
+            this.PositionX = default(Single);
+            this.PositionY = default(Single);
+            this.PositionZ = default(Single);
+            this.MapID = default(UInt32);
+            this.InstanceID = default(UInt32);
             this.ObjType = default(ObjectType);
             this.UpdateFields = default(UpdateField[]);
-            this.player_test = default(Int32);
+            this.Name = default(String);
+            this.Account = default(String);
+            this.Race = default(Int32);
+            this.Class = default(Int32);
+            this.Gender = default(Int32);
+            this.RealmID = default(Int32);
         }
         
         [global::Orleans.CodeGeneration.CopierMethodAttribute()]
@@ -282,6 +407,16 @@ namespace Server
 
             public Boolean @Exists { get; set; }
 
+            public Single @PositionX { get; set; }
+
+            public Single @PositionY { get; set; }
+
+            public Single @PositionZ { get; set; }
+
+            public UInt32 @MapID { get; set; }
+
+            public UInt32 @InstanceID { get; set; }
+
             public ObjectType @ObjType { get; set; }
 
             public UpdateField[] @UpdateFields { get; set; }
@@ -291,13 +426,18 @@ namespace Server
                 object value;
                 if (values == null) { InitStateFields(); return; }
                 if (values.TryGetValue("Exists", out value)) @Exists = (Boolean) value;
+                if (values.TryGetValue("PositionX", out value)) @PositionX = (Single) value;
+                if (values.TryGetValue("PositionY", out value)) @PositionY = (Single) value;
+                if (values.TryGetValue("PositionZ", out value)) @PositionZ = (Single) value;
+                if (values.TryGetValue("MapID", out value)) @MapID = (UInt32) value;
+                if (values.TryGetValue("InstanceID", out value)) @InstanceID = (UInt32) value;
                 if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
                 if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
             }
 
             public override System.String ToString()
             {
-                return System.String.Format("ObjectImplState( Exists={0} ObjType={1} UpdateFields={2} )", @Exists, @ObjType, @UpdateFields);
+                return System.String.Format("ObjectImplState( Exists={0} PositionX={1} PositionY={2} PositionZ={3} MapID={4} InstanceID={5} ObjType={6} UpdateFields={7} )", @Exists, @PositionX, @PositionY, @PositionZ, @MapID, @InstanceID, @ObjType, @UpdateFields);
             }
         
         public ObjectImplState() : 
@@ -310,6 +450,11 @@ namespace Server
         {
             System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
             result["Exists"] = this.Exists;
+            result["PositionX"] = this.PositionX;
+            result["PositionY"] = this.PositionY;
+            result["PositionZ"] = this.PositionZ;
+            result["MapID"] = this.MapID;
+            result["InstanceID"] = this.InstanceID;
             result["ObjType"] = this.ObjType;
             result["UpdateFields"] = this.UpdateFields;
             return result;
@@ -318,6 +463,11 @@ namespace Server
         private void InitStateFields()
         {
             this.Exists = default(Boolean);
+            this.PositionX = default(Single);
+            this.PositionY = default(Single);
+            this.PositionZ = default(Single);
+            this.MapID = default(UInt32);
+            this.InstanceID = default(UInt32);
             this.ObjType = default(ObjectType);
             this.UpdateFields = default(UpdateField[]);
         }
@@ -418,14 +568,14 @@ namespace Server
 
             public Byte[] @SessionKey { get; set; }
 
-            public IAccountGrain @Account { get; set; }
+            public IAccount @Account { get; set; }
 
             public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
             {   
                 object value;
                 if (values == null) { InitStateFields(); return; }
                 if (values.TryGetValue("SessionKey", out value)) @SessionKey = (Byte[]) value;
-                if (values.TryGetValue("Account", out value)) @Account = (IAccountGrain) value;
+                if (values.TryGetValue("Account", out value)) @Account = (IAccount) value;
             }
 
             public override System.String ToString()
@@ -450,7 +600,7 @@ namespace Server
         private void InitStateFields()
         {
             this.SessionKey = default(Byte[]);
-            this.Account = default(IAccountGrain);
+            this.Account = default(IAccount);
         }
         
         [global::Orleans.CodeGeneration.CopierMethodAttribute()]

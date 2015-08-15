@@ -20,7 +20,7 @@ namespace Server
         AccountCreateDataAlreadyExists,
     }
 
-    public interface IAccountGrain : IGrainWithStringKey
+    public interface IAccount : IGrainWithStringKey
     {
         Task Destroy();
         Task<AccountAuthResponse> Authenticate(string password);
@@ -35,7 +35,6 @@ namespace Server
         Task<ISession> GetAuthSession();
         Task<ISession> GetRealmSession();
 
-
         Task SendPacketRealm(PacketOut p);
         Task SendPacketAuth(PacketOut p);
 
@@ -45,5 +44,6 @@ namespace Server
 
         Task SendCharEnum(int RealmID = 0);
         Task CreatePlayer(CMSG_CHAR_CREATE create);
+        Task PlayerLogin(CMSG_PLAYER_LOGIN pkt);
     }
 }

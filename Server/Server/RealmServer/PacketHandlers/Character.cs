@@ -27,9 +27,20 @@ namespace Server.RealmServer
         public static PacketProcessResult HandleCharCreate(PacketProcessor p)
         {
             CMSG_CHAR_CREATE create = new CMSG_CHAR_CREATE();
-            create.Read(p.currentPacket);            
+            create.Read(p.currentPacket);
 
             p.sock.session.HandleCharCreate(create);
+
+            return PacketProcessResult.Processed;
+        }
+
+        [PacketHandler(RealmOp.CMSG_PLAYER_LOGIN)]
+        public static PacketProcessResult HandlePlayerLogin(PacketProcessor p)
+        {
+            CMSG_PLAYER_LOGIN pkt = new CMSG_PLAYER_LOGIN();
+            pkt.Read(p.currentPacket);
+
+            p.sock.session.HandlePlayerLogin(pkt);
 
             return PacketProcessResult.Processed;
         }

@@ -14,6 +14,14 @@ namespace Server
     public interface ObjectData : IGrainState
     {
         bool Exists { get; set; }
+
+        float PositionX { get; set; }
+        float PositionY { get; set; }
+        float PositionZ { get; set; }
+
+        UInt32 MapID { get; set; }
+        UInt32 InstanceID { get; set; }
+
         ObjectType ObjType { get; set; }
         UpdateField[] UpdateFields { get; set; }
     }
@@ -25,19 +33,27 @@ namespace Server
     public class Object<T> : BaseObject<T>, IObjectImpl
         where T : class, ObjectData
     {
+        protected ObjectGUID oGUID = null;
+        protected PackedGUID pGUID = null;
+
+        public async override Task OnActivateAsync()
+        {
+            if (State.UpdateFields != null)
+                GUID = (UInt64)this.GetPrimaryKeyLong(); //create cached variables
+
+            await base.OnActivateAsync();
+        }
+
+        public Task<bool> IsValid() { return Task.FromResult(State.Exists); }
+        public bool _IsValid() { return State.Exists; }
 
         public virtual Task<string> VirtualCall() { return Task.FromResult("Virtual call from object"); }
         public Task<string> ObjectCall() { return Task.FromResult("Call from object"); }
 
         public async Task Save() { if (State.Exists) await WriteStateAsync(); }
 
-        public Task<ObjectGUID> GetGUID()
-        {
-            if (State.UpdateFields == null)
-                return Task.FromResult(new ObjectGUID(0));
-            var guid = _GetUInt64((int)EObjectFields.OBJECT_FIELD_GUID);
-            return Task.FromResult(new ObjectGUID(guid));
-        }
+        public Task<ObjectGUID> GetGUID() { return Task.FromResult(oGUID); }
+        public Task<PackedGUID> GetPackedGUID() { return Task.FromResult(pGUID); }
 
         public Task CreateUpdateFields(int sz)
         {
@@ -69,6 +85,7 @@ namespace Server
 
         public byte _GetByte(int field, int index) { return State.UpdateFields[field].GetByte(index); }
         public UInt32 _GetUInt32(int field) { return State.UpdateFields[field].GetUInt32(); }
+        public Int32 _GetInt32(int field) { return State.UpdateFields[field].GetInt32(); }
         public UInt64 _GetUInt64(int field)
         {
             var low = _GetUInt32(field);
@@ -105,6 +122,30 @@ namespace Server
         public Task SetGUID(int field, ObjectGUID val) { _SetGUID(field, val); return TaskDone.Done; }
 
         #endregion
+
+        #region Updatefield Getters and Setters
+
+        public int Type
+        {
+            get { return _GetInt32((int)EObjectFields.OBJECT_FIELD_TYPE); }
+            set { _SetInt32((int)EObjectFields.OBJECT_FIELD_TYPE, value); }
+        }
+
+        public UInt64 GUID
+        {
+            get { return _GetUInt64((int)EObjectFields.OBJECT_FIELD_GUID); }
+            set { _SetUInt64((int)EObjectFields.OBJECT_FIELD_GUID, value); oGUID = new ObjectGUID(value); pGUID = new PackedGUID(value); }
+        }
+
+       #endregion
+
+        public async Task SetMap(IMap map)
+        {
+            State.MapID = await map.GetMapID();
+            State.InstanceID = await map.GetInstanceID();
+        }
+
+        public virtual Task<bool> IsCellActivator() { return Task.FromResult(false); }
     }
 
     [Reentrant]

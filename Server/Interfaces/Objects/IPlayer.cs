@@ -21,7 +21,11 @@ namespace Server
     {
        // Task<string> VirtualCall();
         Task<string> PlayerCall();
-        Task Create(CMSG_CHAR_CREATE creationData);
+        Task<LoginErrorCode> Create(PlayerCreateData info);
+        Task<PacketOut> BuildEnum();
+        Task Kick();
+        Task<string> GetAccount();
+        Task OnLogin();
     }
 
 }

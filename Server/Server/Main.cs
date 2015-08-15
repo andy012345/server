@@ -34,7 +34,7 @@ namespace Server
 
 
                 //woo test code
-                IAccountGrain test = factory.GetGrain<IAccountGrain>("TESTACCOUNT");
+                IAccount test = factory.GetGrain<IAccount>("TESTACCOUNT");
 
                 test.CreateAccount("test").Wait();
 

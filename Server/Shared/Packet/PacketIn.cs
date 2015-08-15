@@ -57,6 +57,12 @@ namespace Shared
 
         public byte[] GetBuffer() { return _strm.GetBuffer(); }
 
+        public ObjectGUID ReadGUID()
+        {
+            UInt64 guid = ReadUInt64();
+            return new ObjectGUID(guid);
+        }
+
         public string ReadFourCC()
         {
             byte[] tmp = ReadBytes(4);

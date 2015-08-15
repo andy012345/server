@@ -9,8 +9,10 @@ namespace Server
 {
     public interface IObjectCreator : IGrainWithIntegerKey
     {
+        Task<UInt32> GenerateInstanceID();
         Task<ObjectGUID> GenerateGUID(ObjectType objectType);
 
-        Task<IPlayer> CreatePlayer(CMSG_CHAR_CREATE creationData);
+        Task<Tuple<LoginErrorCode, IPlayer>> CreatePlayer(PlayerCreateData info);
+        Task<IMap> CreateInstance(UInt32 MapID, UInt32 RealmID);
     }
 }

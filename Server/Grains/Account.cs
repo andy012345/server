@@ -35,8 +35,13 @@ namespace Server
         public string PasswordPlain { get; set; }
 
         //Account Data, I think this is for the UI config or something. Whatever.
-        public AccountData Data { get; set; }
-        public List<PlayerCharacterListEntry> CharacterList { get; set; }
+        AccountData _Data = new AccountData();
+        List<PlayerCharacterListEntry> _CharacterList = new List<PlayerCharacterListEntry>();
+        public AccountData Data { get { return _Data; } set { _Data = value; } }
+        public List<PlayerCharacterListEntry> CharacterList { get { return _CharacterList; } set { _CharacterList = value; } }
+
+        ObjectGUID _activePlayer = new ObjectGUID(0);
+        public ObjectGUID ActivePlayer { get { return _activePlayer; } set { _activePlayer = value; } }
     }
 
     public enum AccountFlags
@@ -47,11 +52,13 @@ namespace Server
 
     [Reentrant]
     [StorageProvider(ProviderName = "Default")]
-    public class AccountGrain : Grain<AccountState>, IAccountGrain
+    public class AccountGrain : Grain<AccountState>, IAccount
     {
         List<ISession> ActiveSessions = new List<ISession>();
         ISession AuthSession;
         ISession RealmSession;
+        SessionStream AuthSessionStream = null;
+        SessionStream RealmSessionStream = null;
         int RealmSessionRealmID = 0;
 
         public override async Task OnActivateAsync()
@@ -61,7 +68,7 @@ namespace Server
             if (State.Password == null || State.Password.Length == 0)
                 State.Flags |= AccountFlags.AccountNotValid;
 
-            if (State.Data != null)
+            if (State.Data == null)
                 State.Data = new AccountData();
         }
 
@@ -153,14 +160,21 @@ namespace Server
                                 await RemoveSession(RealmSession, true);
                         }
                         AuthSession = s;
+                        if (AuthSession != null)
+                            AuthSessionStream = await AuthSession.GetSessionStream();
                     } break;
                 case SessionType.RealmSession:
                     {
                         if (RealmSession != null && s != RealmSession)
                             await RemoveSession(RealmSession, true);
                         RealmSession = s;
-                        RealmSessionRealmID = await RealmSession.GetRealmID();
-                    } break;
+                        if (RealmSession != null)
+                        {
+                            RealmSessionStream = await RealmSession.GetSessionStream();
+                            RealmSessionRealmID = await RealmSession.GetRealmID();
+                        }
+                    }
+                    break;
             }
 
             ActiveSessions.Add(s);
@@ -174,11 +188,13 @@ namespace Server
                 case SessionType.AuthSession:
                     {
                         AuthSession = null;
+                        AuthSessionStream = null;
                     }
                     break;
                 case SessionType.RealmSession:
                     {
                         RealmSession = null;
+                        RealmSessionStream = null;
                     }
                     break;
             }
@@ -194,15 +210,17 @@ namespace Server
 
         public async Task SendPacketRealm(PacketOut p)
         {
-            if (RealmSession == null)
+            if (RealmSessionStream == null)
                 return;
-            await RealmSession.SendPacket(p);
+            p.Finalise();
+            await RealmSessionStream.PacketStream.OnNextAsync(p.strm.ToArray());
         }
         public async Task SendPacketAuth(PacketOut p)
         {
-            if (AuthSession == null)
+            if (AuthSessionStream == null)
                 return;
-            await AuthSession.SendPacket(p);
+            p.Finalise();
+            await AuthSessionStream.PacketStream.OnNextAsync(p.strm.ToArray());
         }
 
         public Task UpdateAccountData(UInt32 id, UInt32 time, UInt32 size, byte[] data)
@@ -269,11 +287,17 @@ namespace Server
 
             PacketOut p = new PacketOut(RealmOp.SMSG_CHAR_ENUM);
 
-            p.Write(chars == null? (byte)0 : (byte)chars.Length); //todo :)
-
-            foreach (var c in chars)
+            if (chars == null)
+                p.Write((byte)0); //nothing to see here
+            else
             {
-
+                p.Write((byte)chars.Length);
+                foreach (var c in chars)
+                {
+                    var plr = GrainFactory.GetGrain<IPlayer>(c.Player.ToInt64());
+                    var bytes = await plr.BuildEnum();
+                    p.Write(bytes);
+                }
             }
 
             await SendPacketRealm(p);
@@ -332,13 +356,24 @@ namespace Server
             var creator = GrainFactory.GetGrain<IObjectCreator>(0);
 
             //OK LETS CREATE
+            PlayerCreateData info = new PlayerCreateData();
+            info.CreateData = create;
+            info.RealmID = RealmSessionRealmID;
+            info.AccountName = this.GetPrimaryKeyString();
 
-            var player = await creator.CreatePlayer(create);
-            await plrnameindex.SetPlayer(player);
+            var create_response = await creator.CreatePlayer(info);
+
+            if (create_response.Item1 != LoginErrorCode.CHAR_CREATE_SUCCESS)
+            {
+                await SendCharCreateReply(create_response.Item1);
+                return;
+
+            }
+            await plrnameindex.SetPlayer(create_response.Item2);
 
             await SendCharCreateReply(LoginErrorCode.CHAR_CREATE_SUCCESS);
 
-            await CreateCharacterListEntryForPlayer(player);
+            await CreateCharacterListEntryForPlayer(info, create_response.Item2);
         }
 
         public async Task SendCharCreateReply(LoginErrorCode code)
@@ -348,16 +383,17 @@ namespace Server
             await SendPacketRealm(p);
         }
 
-        public async Task CreateCharacterListEntryForPlayer(IPlayer plr)
+        public async Task CreateCharacterListEntryForPlayer(PlayerCreateData info, IPlayer plr)
         {
             if (State.CharacterList == null)
                 State.CharacterList = new List<PlayerCharacterListEntry>();
 
-            var chars = GetCharacters(RealmSessionRealmID);
+            var chars = GetCharacters(info.RealmID);
             
 
             PlayerCharacterListEntry entry = new PlayerCharacterListEntry();
             entry.Player = await plr.GetGUID();
+            entry.RealmID = info.RealmID;
 
             foreach (var c in chars)
                 entry.CharacterSlot = c.CharacterSlot + 1;
@@ -365,6 +401,24 @@ namespace Server
             State.CharacterList.Add(entry);
 
             Save();            
+        }
+
+        public async Task KickActivePlayer()
+        {
+            if (State.ActivePlayer == 0)
+                return; //no active player :(
+            // todo: remove old player
+            var old_player = GrainFactory.GetGrain<IPlayer>(State.ActivePlayer.ToInt64());
+            if (await old_player.IsValid())
+                await old_player.Kick();
+
+            State.ActivePlayer = 0;
+        }
+
+        public async Task PlayerLogin(CMSG_PLAYER_LOGIN pkt)
+        {
+            if (State.ActivePlayer != 0)
+                await KickActivePlayer();
         }
     }
 }

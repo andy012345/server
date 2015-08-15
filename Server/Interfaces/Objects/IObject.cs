@@ -15,7 +15,10 @@ namespace Server
         Task<string> ObjectCall();
         Task Save();
 
+        Task<bool> IsValid();
+
         Task<ObjectGUID> GetGUID();
+        Task<PackedGUID> GetPackedGUID();
 
 
         //Update FIelds
@@ -28,6 +31,10 @@ namespace Server
         Task SetFloat(int field, float val);
         Task SetUInt64(int field, UInt64 val);
         Task SetGUID(int field, ObjectGUID val);
+
+        //Maps
+        Task SetMap(IMap map);
+        Task<bool> IsCellActivator();
     }
 
     public interface IBaseObjectImpl : IGrainWithIntegerKey

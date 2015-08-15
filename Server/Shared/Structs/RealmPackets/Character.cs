@@ -33,4 +33,15 @@ namespace Shared
             Outfit = p.ReadByte();
         }
     }
+
+    public struct CMSG_PLAYER_LOGIN
+    {
+        public ObjectGUID GUID;
+
+        public void Read(PacketIn p)
+        {
+            GUID = p.ReadGUID();
+        }
+
+    }
 }
