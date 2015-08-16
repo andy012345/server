@@ -44,6 +44,8 @@ namespace Server
 
             public Single @PositionZ { get; set; }
 
+            public Single @Orientation { get; set; }
+
             public UInt32 @MapID { get; set; }
 
             public UInt32 @InstanceID { get; set; }
@@ -51,6 +53,8 @@ namespace Server
             public ObjectType @ObjType { get; set; }
 
             public UpdateField[] @UpdateFields { get; set; }
+
+            public ObjectUpdateFlags @UpdateFlags { get; set; }
 
             public Int32 @unit_test { get; set; }
 
@@ -62,16 +66,18 @@ namespace Server
                 if (values.TryGetValue("PositionX", out value)) @PositionX = (Single) value;
                 if (values.TryGetValue("PositionY", out value)) @PositionY = (Single) value;
                 if (values.TryGetValue("PositionZ", out value)) @PositionZ = (Single) value;
+                if (values.TryGetValue("Orientation", out value)) @Orientation = (Single) value;
                 if (values.TryGetValue("MapID", out value)) @MapID = (UInt32) value;
                 if (values.TryGetValue("InstanceID", out value)) @InstanceID = (UInt32) value;
                 if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
                 if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
+                if (values.TryGetValue("UpdateFlags", out value)) @UpdateFlags = (ObjectUpdateFlags) value;
                 if (values.TryGetValue("unit_test", out value)) @unit_test = value is Int64 ? (Int32)(Int64)value : (Int32)value;
             }
 
             public override System.String ToString()
             {
-                return System.String.Format("UnitImplState( Exists={0} PositionX={1} PositionY={2} PositionZ={3} MapID={4} InstanceID={5} ObjType={6} UpdateFields={7} unit_test={8} )", @Exists, @PositionX, @PositionY, @PositionZ, @MapID, @InstanceID, @ObjType, @UpdateFields, @unit_test);
+                return System.String.Format("UnitImplState( Exists={0} PositionX={1} PositionY={2} PositionZ={3} Orientation={4} MapID={5} InstanceID={6} ObjType={7} UpdateFields={8} UpdateFlags={9} unit_test={10} )", @Exists, @PositionX, @PositionY, @PositionZ, @Orientation, @MapID, @InstanceID, @ObjType, @UpdateFields, @UpdateFlags, @unit_test);
             }
         
         public UnitImplState() : 
@@ -87,10 +93,12 @@ namespace Server
             result["PositionX"] = this.PositionX;
             result["PositionY"] = this.PositionY;
             result["PositionZ"] = this.PositionZ;
+            result["Orientation"] = this.Orientation;
             result["MapID"] = this.MapID;
             result["InstanceID"] = this.InstanceID;
             result["ObjType"] = this.ObjType;
             result["UpdateFields"] = this.UpdateFields;
+            result["UpdateFlags"] = this.UpdateFlags;
             result["unit_test"] = this.unit_test;
             return result;
         }
@@ -101,10 +109,12 @@ namespace Server
             this.PositionX = default(Single);
             this.PositionY = default(Single);
             this.PositionZ = default(Single);
+            this.Orientation = default(Single);
             this.MapID = default(UInt32);
             this.InstanceID = default(UInt32);
             this.ObjType = default(ObjectType);
             this.UpdateFields = default(UpdateField[]);
+            this.UpdateFlags = default(ObjectUpdateFlags);
             this.unit_test = default(Int32);
         }
         
@@ -149,6 +159,8 @@ namespace Server
 
             public Single @PositionZ { get; set; }
 
+            public Single @Orientation { get; set; }
+
             public UInt32 @MapID { get; set; }
 
             public UInt32 @InstanceID { get; set; }
@@ -156,6 +168,8 @@ namespace Server
             public ObjectType @ObjType { get; set; }
 
             public UpdateField[] @UpdateFields { get; set; }
+
+            public ObjectUpdateFlags @UpdateFlags { get; set; }
 
             public String @Name { get; set; }
 
@@ -167,7 +181,17 @@ namespace Server
 
             public Int32 @Gender { get; set; }
 
-            public Int32 @RealmID { get; set; }
+            public UInt32 @RealmID { get; set; }
+
+            public Single @BindX { get; set; }
+
+            public Single @BindY { get; set; }
+
+            public Single @BindZ { get; set; }
+
+            public UInt32 @BindMap { get; set; }
+
+            public UInt32 @BindArea { get; set; }
 
             public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
             {   
@@ -178,21 +202,28 @@ namespace Server
                 if (values.TryGetValue("PositionX", out value)) @PositionX = (Single) value;
                 if (values.TryGetValue("PositionY", out value)) @PositionY = (Single) value;
                 if (values.TryGetValue("PositionZ", out value)) @PositionZ = (Single) value;
+                if (values.TryGetValue("Orientation", out value)) @Orientation = (Single) value;
                 if (values.TryGetValue("MapID", out value)) @MapID = (UInt32) value;
                 if (values.TryGetValue("InstanceID", out value)) @InstanceID = (UInt32) value;
                 if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
                 if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
+                if (values.TryGetValue("UpdateFlags", out value)) @UpdateFlags = (ObjectUpdateFlags) value;
                 if (values.TryGetValue("Name", out value)) @Name = (String) value;
                 if (values.TryGetValue("Account", out value)) @Account = (String) value;
                 if (values.TryGetValue("Race", out value)) @Race = value is Int64 ? (Int32)(Int64)value : (Int32)value;
                 if (values.TryGetValue("Class", out value)) @Class = value is Int64 ? (Int32)(Int64)value : (Int32)value;
                 if (values.TryGetValue("Gender", out value)) @Gender = value is Int64 ? (Int32)(Int64)value : (Int32)value;
-                if (values.TryGetValue("RealmID", out value)) @RealmID = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("RealmID", out value)) @RealmID = (UInt32) value;
+                if (values.TryGetValue("BindX", out value)) @BindX = (Single) value;
+                if (values.TryGetValue("BindY", out value)) @BindY = (Single) value;
+                if (values.TryGetValue("BindZ", out value)) @BindZ = (Single) value;
+                if (values.TryGetValue("BindMap", out value)) @BindMap = (UInt32) value;
+                if (values.TryGetValue("BindArea", out value)) @BindArea = (UInt32) value;
             }
 
             public override System.String ToString()
             {
-                return System.String.Format("PlayerState( unit_test={0} Exists={1} PositionX={2} PositionY={3} PositionZ={4} MapID={5} InstanceID={6} ObjType={7} UpdateFields={8} Name={9} Account={10} Race={11} Class={12} Gender={13} RealmID={14} )", @unit_test, @Exists, @PositionX, @PositionY, @PositionZ, @MapID, @InstanceID, @ObjType, @UpdateFields, @Name, @Account, @Race, @Class, @Gender, @RealmID);
+                return System.String.Format("PlayerState( unit_test={0} Exists={1} PositionX={2} PositionY={3} PositionZ={4} Orientation={5} MapID={6} InstanceID={7} ObjType={8} UpdateFields={9} UpdateFlags={10} Name={11} Account={12} Race={13} Class={14} Gender={15} RealmID={16} BindX={17} BindY={18} BindZ={19} BindMap={20} BindArea={21} )", @unit_test, @Exists, @PositionX, @PositionY, @PositionZ, @Orientation, @MapID, @InstanceID, @ObjType, @UpdateFields, @UpdateFlags, @Name, @Account, @Race, @Class, @Gender, @RealmID, @BindX, @BindY, @BindZ, @BindMap, @BindArea);
             }
         
         public PlayerState() : 
@@ -209,16 +240,23 @@ namespace Server
             result["PositionX"] = this.PositionX;
             result["PositionY"] = this.PositionY;
             result["PositionZ"] = this.PositionZ;
+            result["Orientation"] = this.Orientation;
             result["MapID"] = this.MapID;
             result["InstanceID"] = this.InstanceID;
             result["ObjType"] = this.ObjType;
             result["UpdateFields"] = this.UpdateFields;
+            result["UpdateFlags"] = this.UpdateFlags;
             result["Name"] = this.Name;
             result["Account"] = this.Account;
             result["Race"] = this.Race;
             result["Class"] = this.Class;
             result["Gender"] = this.Gender;
             result["RealmID"] = this.RealmID;
+            result["BindX"] = this.BindX;
+            result["BindY"] = this.BindY;
+            result["BindZ"] = this.BindZ;
+            result["BindMap"] = this.BindMap;
+            result["BindArea"] = this.BindArea;
             return result;
         }
         
@@ -229,16 +267,23 @@ namespace Server
             this.PositionX = default(Single);
             this.PositionY = default(Single);
             this.PositionZ = default(Single);
+            this.Orientation = default(Single);
             this.MapID = default(UInt32);
             this.InstanceID = default(UInt32);
             this.ObjType = default(ObjectType);
             this.UpdateFields = default(UpdateField[]);
+            this.UpdateFlags = default(ObjectUpdateFlags);
             this.Name = default(String);
             this.Account = default(String);
             this.Race = default(Int32);
             this.Class = default(Int32);
             this.Gender = default(Int32);
-            this.RealmID = default(Int32);
+            this.RealmID = default(UInt32);
+            this.BindX = default(Single);
+            this.BindY = default(Single);
+            this.BindZ = default(Single);
+            this.BindMap = default(UInt32);
+            this.BindArea = default(UInt32);
         }
         
         [global::Orleans.CodeGeneration.CopierMethodAttribute()]
@@ -282,6 +327,8 @@ namespace Server
 
             public Single @PositionZ { get; set; }
 
+            public Single @Orientation { get; set; }
+
             public UInt32 @MapID { get; set; }
 
             public UInt32 @InstanceID { get; set; }
@@ -289,6 +336,8 @@ namespace Server
             public ObjectType @ObjType { get; set; }
 
             public UpdateField[] @UpdateFields { get; set; }
+
+            public ObjectUpdateFlags @UpdateFlags { get; set; }
 
             public String @Name { get; set; }
 
@@ -300,7 +349,17 @@ namespace Server
 
             public Int32 @Gender { get; set; }
 
-            public Int32 @RealmID { get; set; }
+            public UInt32 @RealmID { get; set; }
+
+            public Single @BindX { get; set; }
+
+            public Single @BindY { get; set; }
+
+            public Single @BindZ { get; set; }
+
+            public UInt32 @BindMap { get; set; }
+
+            public UInt32 @BindArea { get; set; }
 
             public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
             {   
@@ -311,21 +370,28 @@ namespace Server
                 if (values.TryGetValue("PositionX", out value)) @PositionX = (Single) value;
                 if (values.TryGetValue("PositionY", out value)) @PositionY = (Single) value;
                 if (values.TryGetValue("PositionZ", out value)) @PositionZ = (Single) value;
+                if (values.TryGetValue("Orientation", out value)) @Orientation = (Single) value;
                 if (values.TryGetValue("MapID", out value)) @MapID = (UInt32) value;
                 if (values.TryGetValue("InstanceID", out value)) @InstanceID = (UInt32) value;
                 if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
                 if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
+                if (values.TryGetValue("UpdateFlags", out value)) @UpdateFlags = (ObjectUpdateFlags) value;
                 if (values.TryGetValue("Name", out value)) @Name = (String) value;
                 if (values.TryGetValue("Account", out value)) @Account = (String) value;
                 if (values.TryGetValue("Race", out value)) @Race = value is Int64 ? (Int32)(Int64)value : (Int32)value;
                 if (values.TryGetValue("Class", out value)) @Class = value is Int64 ? (Int32)(Int64)value : (Int32)value;
                 if (values.TryGetValue("Gender", out value)) @Gender = value is Int64 ? (Int32)(Int64)value : (Int32)value;
-                if (values.TryGetValue("RealmID", out value)) @RealmID = value is Int64 ? (Int32)(Int64)value : (Int32)value;
+                if (values.TryGetValue("RealmID", out value)) @RealmID = (UInt32) value;
+                if (values.TryGetValue("BindX", out value)) @BindX = (Single) value;
+                if (values.TryGetValue("BindY", out value)) @BindY = (Single) value;
+                if (values.TryGetValue("BindZ", out value)) @BindZ = (Single) value;
+                if (values.TryGetValue("BindMap", out value)) @BindMap = (UInt32) value;
+                if (values.TryGetValue("BindArea", out value)) @BindArea = (UInt32) value;
             }
 
             public override System.String ToString()
             {
-                return System.String.Format("PlayerImplState( unit_test={0} Exists={1} PositionX={2} PositionY={3} PositionZ={4} MapID={5} InstanceID={6} ObjType={7} UpdateFields={8} Name={9} Account={10} Race={11} Class={12} Gender={13} RealmID={14} )", @unit_test, @Exists, @PositionX, @PositionY, @PositionZ, @MapID, @InstanceID, @ObjType, @UpdateFields, @Name, @Account, @Race, @Class, @Gender, @RealmID);
+                return System.String.Format("PlayerImplState( unit_test={0} Exists={1} PositionX={2} PositionY={3} PositionZ={4} Orientation={5} MapID={6} InstanceID={7} ObjType={8} UpdateFields={9} UpdateFlags={10} Name={11} Account={12} Race={13} Class={14} Gender={15} RealmID={16} BindX={17} BindY={18} BindZ={19} BindMap={20} BindArea={21} )", @unit_test, @Exists, @PositionX, @PositionY, @PositionZ, @Orientation, @MapID, @InstanceID, @ObjType, @UpdateFields, @UpdateFlags, @Name, @Account, @Race, @Class, @Gender, @RealmID, @BindX, @BindY, @BindZ, @BindMap, @BindArea);
             }
         
         public PlayerImplState() : 
@@ -342,16 +408,23 @@ namespace Server
             result["PositionX"] = this.PositionX;
             result["PositionY"] = this.PositionY;
             result["PositionZ"] = this.PositionZ;
+            result["Orientation"] = this.Orientation;
             result["MapID"] = this.MapID;
             result["InstanceID"] = this.InstanceID;
             result["ObjType"] = this.ObjType;
             result["UpdateFields"] = this.UpdateFields;
+            result["UpdateFlags"] = this.UpdateFlags;
             result["Name"] = this.Name;
             result["Account"] = this.Account;
             result["Race"] = this.Race;
             result["Class"] = this.Class;
             result["Gender"] = this.Gender;
             result["RealmID"] = this.RealmID;
+            result["BindX"] = this.BindX;
+            result["BindY"] = this.BindY;
+            result["BindZ"] = this.BindZ;
+            result["BindMap"] = this.BindMap;
+            result["BindArea"] = this.BindArea;
             return result;
         }
         
@@ -362,16 +435,23 @@ namespace Server
             this.PositionX = default(Single);
             this.PositionY = default(Single);
             this.PositionZ = default(Single);
+            this.Orientation = default(Single);
             this.MapID = default(UInt32);
             this.InstanceID = default(UInt32);
             this.ObjType = default(ObjectType);
             this.UpdateFields = default(UpdateField[]);
+            this.UpdateFlags = default(ObjectUpdateFlags);
             this.Name = default(String);
             this.Account = default(String);
             this.Race = default(Int32);
             this.Class = default(Int32);
             this.Gender = default(Int32);
-            this.RealmID = default(Int32);
+            this.RealmID = default(UInt32);
+            this.BindX = default(Single);
+            this.BindY = default(Single);
+            this.BindZ = default(Single);
+            this.BindMap = default(UInt32);
+            this.BindArea = default(UInt32);
         }
         
         [global::Orleans.CodeGeneration.CopierMethodAttribute()]
@@ -413,6 +493,8 @@ namespace Server
 
             public Single @PositionZ { get; set; }
 
+            public Single @Orientation { get; set; }
+
             public UInt32 @MapID { get; set; }
 
             public UInt32 @InstanceID { get; set; }
@@ -420,6 +502,8 @@ namespace Server
             public ObjectType @ObjType { get; set; }
 
             public UpdateField[] @UpdateFields { get; set; }
+
+            public ObjectUpdateFlags @UpdateFlags { get; set; }
 
             public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
             {   
@@ -429,15 +513,17 @@ namespace Server
                 if (values.TryGetValue("PositionX", out value)) @PositionX = (Single) value;
                 if (values.TryGetValue("PositionY", out value)) @PositionY = (Single) value;
                 if (values.TryGetValue("PositionZ", out value)) @PositionZ = (Single) value;
+                if (values.TryGetValue("Orientation", out value)) @Orientation = (Single) value;
                 if (values.TryGetValue("MapID", out value)) @MapID = (UInt32) value;
                 if (values.TryGetValue("InstanceID", out value)) @InstanceID = (UInt32) value;
                 if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
                 if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
+                if (values.TryGetValue("UpdateFlags", out value)) @UpdateFlags = (ObjectUpdateFlags) value;
             }
 
             public override System.String ToString()
             {
-                return System.String.Format("ObjectImplState( Exists={0} PositionX={1} PositionY={2} PositionZ={3} MapID={4} InstanceID={5} ObjType={6} UpdateFields={7} )", @Exists, @PositionX, @PositionY, @PositionZ, @MapID, @InstanceID, @ObjType, @UpdateFields);
+                return System.String.Format("ObjectImplState( Exists={0} PositionX={1} PositionY={2} PositionZ={3} Orientation={4} MapID={5} InstanceID={6} ObjType={7} UpdateFields={8} UpdateFlags={9} )", @Exists, @PositionX, @PositionY, @PositionZ, @Orientation, @MapID, @InstanceID, @ObjType, @UpdateFields, @UpdateFlags);
             }
         
         public ObjectImplState() : 
@@ -453,10 +539,12 @@ namespace Server
             result["PositionX"] = this.PositionX;
             result["PositionY"] = this.PositionY;
             result["PositionZ"] = this.PositionZ;
+            result["Orientation"] = this.Orientation;
             result["MapID"] = this.MapID;
             result["InstanceID"] = this.InstanceID;
             result["ObjType"] = this.ObjType;
             result["UpdateFields"] = this.UpdateFields;
+            result["UpdateFlags"] = this.UpdateFlags;
             return result;
         }
         
@@ -466,10 +554,12 @@ namespace Server
             this.PositionX = default(Single);
             this.PositionY = default(Single);
             this.PositionZ = default(Single);
+            this.Orientation = default(Single);
             this.MapID = default(UInt32);
             this.InstanceID = default(UInt32);
             this.ObjType = default(ObjectType);
             this.UpdateFields = default(UpdateField[]);
+            this.UpdateFlags = default(ObjectUpdateFlags);
         }
         
         [global::Orleans.CodeGeneration.CopierMethodAttribute()]
@@ -490,69 +580,6 @@ namespace Server
         public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
         {
             ObjectImplState result = new ObjectImplState();
-            result.DeserializeFrom(stream);
-            return result;
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Orleans-CodeGenerator", "1.0.9.0")]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute()]
-    [SerializableAttribute()]
-    [global::Orleans.CodeGeneration.GrainStateAttribute("Server.RealmManager")]
-    public class RealmManagerState : global::Orleans.GrainState, RealManagerState
-    {
-        
-
-            public Dictionary<Int32,Realm> @RealmMap { get; set; }
-
-            public override void SetAll(System.Collections.Generic.IDictionary<string,object> values)
-            {   
-                object value;
-                if (values == null) { InitStateFields(); return; }
-                if (values.TryGetValue("RealmMap", out value)) @RealmMap = (Dictionary<Int32,Realm>) value;
-            }
-
-            public override System.String ToString()
-            {
-                return System.String.Format("RealmManagerState( RealmMap={0} )", @RealmMap);
-            }
-        
-        public RealmManagerState() : 
-                base("Server.RealmManager")
-        {
-            this.InitStateFields();
-        }
-        
-        public override System.Collections.Generic.IDictionary<string, object> AsDictionary()
-        {
-            System.Collections.Generic.Dictionary<string, object> result = new System.Collections.Generic.Dictionary<string, object>();
-            result["RealmMap"] = this.RealmMap;
-            return result;
-        }
-        
-        private void InitStateFields()
-        {
-            this.RealmMap = new Dictionary<Int32,Realm>();
-        }
-        
-        [global::Orleans.CodeGeneration.CopierMethodAttribute()]
-        public static object _Copier(object original)
-        {
-            RealmManagerState input = ((RealmManagerState)(original));
-            return input.DeepCopy();
-        }
-        
-        [global::Orleans.CodeGeneration.SerializerMethodAttribute()]
-        public static void _Serializer(object original, global::Orleans.Serialization.BinaryTokenStreamWriter stream, System.Type expected)
-        {
-            RealmManagerState input = ((RealmManagerState)(original));
-            input.SerializeTo(stream);
-        }
-        
-        [global::Orleans.CodeGeneration.DeserializerMethodAttribute()]
-        public static object _Deserializer(System.Type expected, global::Orleans.Serialization.BinaryTokenStreamReader stream)
-        {
-            RealmManagerState result = new RealmManagerState();
             result.DeserializeFrom(stream);
             return result;
         }

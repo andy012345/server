@@ -353,7 +353,7 @@ namespace Server
                 return;
             }
 
-            var creator = GrainFactory.GetGrain<IObjectCreator>(0);
+            var creator = GrainFactory.GetGrain<ICreator>(0);
 
             //OK LETS CREATE
             PlayerCreateData info = new PlayerCreateData();
@@ -419,6 +419,16 @@ namespace Server
         {
             if (State.ActivePlayer != 0)
                 await KickActivePlayer();
+
+            var player = GrainFactory.GetGrain<IPlayer>(pkt.GUID.ToInt64());
+            var valid = await player.IsValid();
+            var player_account = await player.GetAccount();
+
+            //just a quick sanity check for edited packets
+            if (!valid || player_account != this.GetPrimaryKeyString())
+                return;
+
+            await player.Login();
         }
     }
 }

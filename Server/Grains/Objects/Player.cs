@@ -9,14 +9,48 @@ using Shared;
 
 namespace Server
 {
-    public interface PlayerData : UnitData, IGrainState
+
+    public enum ObjectUpdateType
+    {
+        UPDATETYPE_VALUES = 0,
+        UPDATETYPE_MOVEMENT = 1,
+        UPDATETYPE_CREATE_OBJECT = 2,
+        UPDATETYPE_CREATE_OBJECT2 = 3,
+        UPDATETYPE_OUT_OF_RANGE_OBJECTS = 4,
+        UPDATETYPE_NEAR_OBJECTS = 5
+    }
+
+    [Flags]
+    public enum ObjectUpdateFlags
+    {
+        UPDATEFLAG_NONE = 0x0000,
+        UPDATEFLAG_SELF = 0x0001,
+        UPDATEFLAG_TRANSPORT = 0x0002,
+        UPDATEFLAG_HAS_TARGET = 0x0004,
+        UPDATEFLAG_UNKNOWN = 0x0008,
+        UPDATEFLAG_LOWGUID = 0x0010,
+        UPDATEFLAG_LIVING = 0x0020,
+        UPDATEFLAG_STATIONARY_POSITION = 0x0040,
+        UPDATEFLAG_VEHICLE = 0x0080,
+        UPDATEFLAG_POSITION = 0x0100,
+        UPDATEFLAG_ROTATION = 0x0200
+    }
+
+public interface PlayerData : UnitData, IGrainState
     {
         string Name { get; set; }
         string Account { get; set; }
         int Race { get; set; }
         int Class { get; set; }
         int Gender { get; set; }
-        int RealmID { get; set; }
+        UInt32 RealmID { get; set; }
+
+        //Binds!
+        float BindX { get; set; }
+        float BindY { get; set; }
+        float BindZ { get; set; }
+        UInt32 BindMap { get; set; }
+        UInt32 BindArea { get; set; }
     }
 
     public class PlayerByNameIndexState : GrainState
@@ -29,11 +63,6 @@ namespace Server
     [StorageProvider(ProviderName = "Default")]
     public class PlayerByNameIndex : Grain<PlayerByNameIndexState>, IPlayerByNameIndex
     {
-        public override Task OnActivateAsync()
-        {
-            return base.OnActivateAsync();
-        }
-
         public Task<ObjectGUID> GetPlayerGUID() { return Task.FromResult(State.GUID); }
         public Task<IPlayer> GetPlayer() { return Task.FromResult(GrainFactory.GetGrain<IPlayer>(State.GUID.ToInt64())); }
         public async Task Save() { await WriteStateAsync(); }
@@ -55,13 +84,19 @@ namespace Server
         IAccount _Account = null;
         SessionStream _Stream = null;
 
+        UInt32 TimeSyncCounter = 0;
+
         public override Task OnActivateAsync()
         {
+            if (_IsValid())
+                Type = (int)TypeID.TYPEID_PLAYER;
             if (State.Account != null)
                 _Account = GrainFactory.GetGrain<IAccount>(State.Account);
             return base.OnActivateAsync();
         }
- 
+
+        public override IObjectImpl ToRef() { return this.AsReference<IPlayer>(); }
+
         public override Task<string> VirtualCall() { return Task.FromResult("Virtual call from player"); }
         public Task<string> PlayerCall() { return Task.FromResult("Call from player"); }
 
@@ -76,6 +111,8 @@ namespace Server
             return TaskDone.Done;
         }
 
+        public override bool _IsPlayer() { return true; }
+
         public Task<string> GetAccount() { return Task.FromResult(State.Account); }
         public async Task OnLogin()
         {
@@ -88,6 +125,7 @@ namespace Server
         {
             if (_Stream == null)
                 return;
+            p.Finalise();
             await _Stream.PacketStream.OnNextAsync(p.strm.ToArray());
         }
 
@@ -102,14 +140,14 @@ namespace Server
             State.Race = info.CreateData.Race;
             State.Class = info.CreateData.Class;
             State.Gender = info.CreateData.Gender;
-            State.RealmID = info.RealmID;
+            State.RealmID = (UInt32)info.RealmID;
             Gender = info.CreateData.Gender;
             Skin = info.CreateData.Skin;
             Face = info.CreateData.Face;
             HairStyle = info.CreateData.HairStyle;
             HairColor = info.CreateData.HairColor;
             FacialHair = info.CreateData.FacialHair;
-            Type = (int)TypeMask.TYPEMASK_PLAYER;
+            Type = (int)TypeID.TYPEID_PLAYER;
 
             var datastore = GrainFactory.GetGrain<IDataStoreManager>(0);
             var chrclass = await datastore.GetChrClasses(info.CreateData.Class);
@@ -126,11 +164,25 @@ namespace Server
             State.PositionX = creationinfo.position_x;
             State.PositionY = creationinfo.position_y;
             State.PositionZ = creationinfo.position_z;
+            State.Orientation = creationinfo.orientation;
+            State.MapID = creationinfo.map;
+
+            State.BindX = State.PositionX;
+            State.BindY = State.PositionY;
+            State.BindZ = State.PositionZ;
+            State.BindMap = State.MapID;
+            State.BindArea = 0;
 
             State.Exists = true; //WE EXIST, YAY
+            
+            _SetUInt32((int)EUnitFields.UNIT_FIELD_FLAGS_2, 2048); //regen power
+            _SetUInt32((int)EUnitFields.PLAYER_FIELD_WATCHED_FACTION_INDEX, 0xFFFFFFFF);
+            _SetUInt32((int)EUnitFields.UNIT_FIELD_LEVEL, 1);
+            _SetUInt32((int)EUnitFields.PLAYER_FIELD_COINAGE, 1);
+            _SetUInt32((int)EUnitFields.UNIT_FIELD_HEALTH, 100);
+            _SetUInt32((int)EUnitFields.UNIT_FIELD_MAXHEALTH, 100);
 
             await Save();
-
             return LoginErrorCode.CHAR_CREATE_SUCCESS;
         }
 
@@ -246,5 +298,161 @@ namespace Server
         #endregion
 
         public override Task<bool> IsCellActivator() { return Task.FromResult(true); }
+
+        public async Task Login()
+        {
+            await OnLogin();
+
+            PacketOut p = new PacketOut(RealmOp.SMSG_LOGIN_VERIFY_WORLD);
+            p.Write(State.MapID);
+            p.Write(State.PositionX);
+            p.Write(State.PositionY);
+            p.Write(State.PositionZ);
+            p.Write(State.Orientation);
+            await SendPacket(p);
+
+            await _Account.SendAccountDataTimes(0xEA);
+
+            p.Reset(RealmOp.SMSG_FEATURE_SYSTEM_STATUS);
+            p.Write((byte)2);
+            p.Write((byte)0);
+            await SendPacket(p);
+
+            p.Reset(RealmOp.SMSG_MOTD);
+            p.Write((UInt32)0);
+            await SendPacket(p);
+
+            p.Reset(RealmOp.SMSG_LEARNED_DANCE_MOVES);
+            p.Write((UInt32)0);
+            p.Write((UInt32)0);
+            await SendPacket(p);
+
+            p.Reset(RealmOp.SMSG_CONTACT_LIST);
+            p.Write((UInt32)7); //update all
+            p.Write((UInt32)0); //nothing yet
+            await SendPacket(p);
+
+            await SendBindPointUpdate();
+
+            p.Reset(RealmOp.SMSG_TALENTS_INFO);
+            p.Write((byte)0);
+            p.Write((UInt32)0);
+            p.Write((byte)0);
+            p.Write((byte)0);
+            await SendPacket(p);
+
+            p.Reset(RealmOp.SMSG_INSTANCE_DIFFICULTY);
+            p.Write((UInt32)0);
+            p.Write((UInt32)0);
+            await SendPacket(p);
+
+            p.Reset(RealmOp.SMSG_INITIAL_SPELLS);
+            p.Write((byte)0);
+            p.Write((UInt16)0);
+            await SendPacket(p);
+
+            p.Reset(RealmOp.SMSG_SEND_UNLEARN_SPELLS);
+            p.Write((UInt32)0);
+            await SendPacket(p);
+
+            await SendActionButtons();
+
+
+            p.Reset(RealmOp.SMSG_INITIALIZE_FACTIONS);
+            p.Write((UInt32)0);
+            await SendPacket(p);
+
+            p.Reset(RealmOp.SMSG_LOGIN_SETTIMESPEED);
+            p.WriteWTime(DateTime.Now);
+            p.Write((float)0.01666667f);
+            p.Write((UInt32)0);
+            await SendPacket(p);
+
+       
+            p.Reset(RealmOp.SMSG_SEND_UNLEARN_SPELLS);
+            p.Write((UInt32)0);
+            await SendPacket(p);
+
+            p.Reset(RealmOp.SMSG_SET_FORCED_REACTIONS);
+            p.Write((UInt32)0);
+            await SendPacket(p);
+
+            //add us to our map
+            var realm_manager = GrainFactory.GetGrain<IRealmManager>(0);
+            var map = await realm_manager.GetMap(State.MapID, State.InstanceID, State.RealmID);
+
+            await map.AddObject(ToRef());
+        }
+
+        public async Task SendBindPointUpdate()
+        {
+            PacketOut p = new PacketOut(RealmOp.SMSG_BINDPOINTUPDATE);
+            p.Write(State.BindX);
+            p.Write(State.BindY);
+            p.Write(State.BindZ);
+            p.Write(State.BindMap);
+            p.Write(State.BindArea);
+            await SendPacket(p);
+        }
+
+        public async Task BuildInitialUpdate()
+        {
+            var update = await BuildCreateUpdateFor(ToRef() as IPlayer);
+
+            PacketOut pkt = new PacketOut(RealmOp.SMSG_UPDATE_OBJECT);
+            pkt.Write((UInt32)1);
+            pkt.Write(update);
+            await SendPacket(pkt);
+
+            await SendTimeSyncReq();
+
+            await SendLoginEffect();
+
+            await SendAuraUpdateAll();
+        }
+
+        public async Task SendActionButtons()
+        {
+            PacketOut pkt = new PacketOut(RealmOp.SMSG_ACTION_BUTTONS);
+
+            pkt.Write((byte)1);
+
+            for (var i = 0; i < 144; ++i)
+                pkt.Write((UInt32)0);
+
+            await SendPacket(pkt);
+        }
+
+        public async Task SendTimeSyncReq()
+        {
+            PacketOut pkt = new PacketOut(RealmOp.SMSG_TIME_SYNC_REQ);
+            pkt.Write(TimeSyncCounter);
+            TimeSyncCounter += 1;
+            await SendPacket(pkt);
+        }
+
+        public async Task SendLoginEffect()
+        {
+            PacketOut p = new PacketOut(RealmOp.SMSG_SPELL_GO);
+            p.Write(pGUID); //caster
+            p.Write(pGUID); //target?
+            p.Write((byte)1); //counter
+            p.Write((UInt32)836); //LOGINEFFECT
+            p.Write((UInt32)256); //flags
+            p.Write(Time.GetMSTime());
+            p.Write((byte)1); //hit 1 person
+            p.Write(oGUID); //hit me
+            p.Write((byte)0); //missed 0 people
+            p.Write((UInt32)2); //targetmask unit
+            p.Write(pGUID); //targetted unit was me
+            await SendPacket(p);
+        }
+
+        public async Task SendAuraUpdateAll()
+        {
+            PacketOut p = new PacketOut(RealmOp.SMSG_AURA_UPDATE_ALL);
+            p.Write(pGUID);
+            await SendPacket(p);
+        }
     }
 }

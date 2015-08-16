@@ -39,7 +39,7 @@ namespace Shared
 
         public void SetOffline() { LastPing = DateTime.UtcNow.AddMinutes(-10); }
     }
-
+    
     public class Realm
     {
         public RealmSettings RealmSettings = null;
@@ -54,4 +54,5 @@ namespace Shared
         public bool IsOnline() { return RealmStatus.IsOnline(); }
         public void SetOffline() { RealmStatus.SetOffline(); }
     }
+
 }

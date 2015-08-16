@@ -21,6 +21,14 @@ namespace Server
         public override Task<string> VirtualCall() { return Task.FromResult("Virtual call from unit"); }
         public Task<string> UnitCall() { return Task.FromResult("Call from unit"); }
 
+        public override Task OnActivateAsync()
+        {
+            State.UpdateFlags = ObjectUpdateFlags.UPDATEFLAG_LIVING | ObjectUpdateFlags.UPDATEFLAG_STATIONARY_POSITION;
+
+            return base.OnActivateAsync();
+        }
+
+
         #region Unitfield Getters and Setters
         public int DisplayID
         {
@@ -37,6 +45,7 @@ namespace Server
         public Task<int> GetDisplayID() { return Task.FromResult(DisplayID); }
         public Task<int> GetNativeDisplayID() { return Task.FromResult(NativeDisplayID); }
 
+        public override bool _IsUnit() { return true; }
 
         #endregion
     }

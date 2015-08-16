@@ -23,7 +23,7 @@ namespace Server
 
     [Reentrant]
     [StorageProvider(ProviderName = "Default")]
-    class ObjectCreator : Grain<ObjectCreatorState>, IObjectCreator
+    class ObjectCreator : Grain<ObjectCreatorState>, ICreator
     {
         public async Task<ObjectGUID> GenerateGUID(ObjectType objectType)
         {
@@ -39,31 +39,6 @@ namespace Server
             var ret = State.MaxInstanceGUID;
             State.MaxInstanceGUID += 1;
             return Task.FromResult(ret);
-        }
-
-        public async Task<IMap> CreateInstance(UInt32 MapID, UInt32 RealmID)
-        {
-            var datastore = GrainFactory.GetGrain<IDataStoreManager>(0);
-
-            var mapentry = await datastore.GetMapEntry(MapID);
-
-            if (mapentry == null)
-                return null;
-
-            UInt64 mapkey = (UInt64)MapID;
-            UInt32 instanceid = 0;
-
-            if (mapentry.IsInstance())
-            {
-                instanceid = await GenerateInstanceID();
-                mapkey |= ((UInt64)instanceid << 32);
-            }
-            else
-                mapkey |= ((UInt64)RealmID << 32);
-
-            var map = GrainFactory.GetGrain<IMap>((long)mapkey);
-            map.Create(MapID, instanceid, RealmID);
-            return map;
         }
 
         private Task<ObjectGUID> GeneratePlayerGUID()

@@ -95,32 +95,31 @@ namespace Orleans.Storage.MySQLDB
             else
                 query = string.Format("select * from `{0}` where `guid` = \"{1}\" AND `type` = \"{2}\";", table, MySqlHelper.EscapeString(keyAsString), MySqlHelper.EscapeString(grainType));
 
-            MySqlCommand cmd = new MySqlCommand(query, DatabaseConnection);
-            Log.Verbose(query);
-            var reader = await cmd.ExecuteReaderAsync();
-
-            if (await reader.ReadAsync())
+            using (var cmd = new MySqlCommand(query, DatabaseConnection))
             {
-                Dictionary<string, object> dict = new Dictionary<string, object>();
-
-                for (int i = 0; i < reader.FieldCount; ++i)
-                    dict.Add(reader.GetName(i), reader.GetValue(i));
-
-                if (dict.ContainsKey("data"))
+                using (var reader = await cmd.ExecuteReaderAsync())
                 {
-                    try
+                    if (await reader.ReadAsync())
                     {
-                        var data = (IGrainState)Newtonsoft.Json.JsonConvert.DeserializeObject(dict["data"].ToString(), grainState.GetType());
-                        grainState.SetAll(data.AsDictionary());
-                    }
-                    catch { grainState.SetAll(null); /* corruption? */ }
-                }
-                else
-                    grainState.SetAll(null);
-            }
+                        Dictionary<string, object> dict = new Dictionary<string, object>();
 
-            reader.Dispose();
-            cmd.Dispose();
+                        for (int i = 0; i < reader.FieldCount; ++i)
+                            dict.Add(reader.GetName(i), reader.GetValue(i));
+
+                        if (dict.ContainsKey("data"))
+                        {
+                            try
+                            {
+                                var data = (IGrainState)Newtonsoft.Json.JsonConvert.DeserializeObject(dict["data"].ToString(), grainState.GetType());
+                                grainState.SetAll(data.AsDictionary());
+                            }
+                            catch { grainState.SetAll(null); /* corruption? */ }
+                        }
+                        else
+                            grainState.SetAll(null);
+                    }
+                }
+            }
         }
 
         private string GetTableName(IGrainState grainState)

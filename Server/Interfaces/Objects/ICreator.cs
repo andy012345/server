@@ -7,12 +7,11 @@ using Shared;
 
 namespace Server
 {
-    public interface IObjectCreator : IGrainWithIntegerKey
+    public interface ICreator : IGrainWithIntegerKey
     {
         Task<UInt32> GenerateInstanceID();
         Task<ObjectGUID> GenerateGUID(ObjectType objectType);
 
         Task<Tuple<LoginErrorCode, IPlayer>> CreatePlayer(PlayerCreateData info);
-        Task<IMap> CreateInstance(UInt32 MapID, UInt32 RealmID);
     }
 }

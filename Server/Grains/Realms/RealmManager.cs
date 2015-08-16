@@ -13,9 +13,51 @@ using System.Linq;
 
 namespace Server
 {
-    public interface RealManagerState : IGrainState
+    public class RealmMapKey
     {
-        Dictionary<int, Realm> RealmMap { get; set; }
+        public UInt64 _key = 0;
+
+        public RealmMapKey(UInt32 MapID, UInt32 RealmID)
+        {
+            _key = (UInt64)MapID;
+            _key |= ((UInt64)RealmID) << 32;
+        }
+
+        public override int GetHashCode()
+        {
+            return _key.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            var asrealmkey = obj as RealmMapKey;
+            if (asrealmkey != null)
+                return _key.Equals(asrealmkey._key);
+            return _key.Equals(obj);
+        }
+    }
+
+    public class EqualityComparer : IEqualityComparer<RealmMapKey>
+    {
+        public bool Equals(RealmMapKey x, RealmMapKey y)
+        {
+            return x.Equals(y);
+        }
+
+        public int GetHashCode(RealmMapKey x)
+        {
+            return x.GetHashCode();
+        }
+
+    }
+
+
+    public class RealManagerState : GrainState
+    {
+        public Dictionary<int, Realm> RealmMap { get; set; }
+
+        Dictionary<UInt64, List<UInt32>> _RealmInstances = new Dictionary<UInt64, List<UInt32>>();
+        public Dictionary<UInt64, List<UInt32>> RealmInstaces { get { return _RealmInstances; } set { if (value != null) _RealmInstances = value; } }
     }
 
     [Reentrant]
@@ -75,6 +117,88 @@ namespace Server
 
             realm.PingStatus();
             await WriteStateAsync();
+        }
+
+        public async Task<IMap> GetMap(UInt32 MapID, UInt32 InstanceID, UInt32 RealmID)
+        {
+            if (InstanceID != 0)
+            {
+                //just try and return the instance
+                var map = GrainFactory.GetGrain<IMap>(InstanceID);
+                if (await map.IsValid())
+                    return map;
+            }
+
+            var realm = await GetRealm((int)RealmID);
+
+            if (realm == null)
+                return null;
+
+            var datastore = GrainFactory.GetGrain<IDataStoreManager>(0);
+            var mapentry = await datastore.GetMapEntry(MapID);
+
+            if (mapentry == null)
+                return null;
+
+            //This API is for world maps only
+            if (!mapentry.IsInstance())
+                return await GetMap(MapID, RealmID);
+            return null; //todo spawn instances
+        }
+
+        public async Task<IMap> GetMap(UInt32 MapID, UInt32 RealmID)
+        {
+            var realm = await GetRealm((int)RealmID);
+
+            if (realm == null)
+                return null;
+
+            var datastore = GrainFactory.GetGrain<IDataStoreManager>(0);
+            var mapentry = await datastore.GetMapEntry(MapID);
+
+            if (mapentry == null)
+                return null;
+
+            //This API is for world maps only
+            if (mapentry.IsInstance())
+                return null;
+
+            var key = new RealmMapKey(MapID, RealmID);
+
+            IMap map = null;
+
+            if (State.RealmInstaces.ContainsKey(key._key))
+            {
+                //todo: load balance? whatever do in future
+                map = GrainFactory.GetGrain<IMap>((Int64)State.RealmInstaces[key._key].First());
+                if (!(await map.IsValid())) //if not valid, dont use
+                    map = null;
+            }
+
+            //if map is null, create and assign
+            if (map == null)
+                map = await CreateMap(MapID, RealmID);
+
+            return map;
+        }
+
+        public Task AddMap(UInt32 MapID, UInt32 InstanceID, UInt32 RealmID)
+        {
+            var key = new RealmMapKey(MapID, RealmID);
+            if (!State.RealmInstaces.ContainsKey(key._key))
+                State.RealmInstaces.Add(key._key, new List<UInt32>());
+            State.RealmInstaces[key._key].Add(InstanceID);
+            return TaskDone.Done;
+        }
+
+        public async Task<IMap> CreateMap(UInt32 MapID, UInt32 RealmID)
+        {
+            var creator = GrainFactory.GetGrain<ICreator>(0);
+            var instanceid = await creator.GenerateInstanceID();
+            var map = GrainFactory.GetGrain<IMap>((Int64)instanceid);
+            await map.Create(MapID, instanceid, RealmID);
+            await AddMap(MapID, instanceid, RealmID);
+            return map;
         }
     }
 }

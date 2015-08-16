@@ -77,12 +77,15 @@
     <Compile Include="Structs\PlayerCreateInfo.cs" />
     <Compile Include="Structs\RealmManager.cs" />
     <Compile Include="Structs\AuthServerStructs.cs" />
+    <Compile Include="Structs\RealmPackets\Ping.cs" />
     <Compile Include="Structs\RealmPackets\Character.cs" />
     <Compile Include="Structs\RealmPackets\AuthSession.cs" />
     <Compile Include="Structs\SessionStream.cs" />
+    <Compile Include="Structs\UpdateFieldVisibilityFlags.cs" />
     <Compile Include="Structs\UpdateField.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Crypto\ZLib.cs" />
+    <Compile Include="UpdateMask.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

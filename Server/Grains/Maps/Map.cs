@@ -13,7 +13,7 @@ namespace Server
     public class MapState : GrainState
     {
         public UInt32 MapID { get; set; }
-        public UInt32 InstanceID { get; set; } //for instanced maps
+        public UInt32 InstanceID { get; set; } //our index accessor
         public UInt32 RealmID { get; set; } //for non instanced maps
         public UInt32 ExpireTime { get; set; }
         public bool Exists { get; set; }
@@ -23,26 +23,8 @@ namespace Server
     [StorageProvider(ProviderName = "Default")]
     public class Map : Grain<MapState>, IMap
     {
-        Dictionary<ObjectGUID, IObject> objectMap = new Dictionary<ObjectGUID, IObject>();
-        List<IObject> activeObjects = new List<IObject>();
-
-        public override async Task OnActivateAsync()
-        {
-            if (!_IsValid())
-            {
-                //Non instanced maps can create themselves
-                var mapid = (UInt32)(this.GetPrimaryKeyLong() & 0xFFFFFFFF);
-                var realmid = (UInt32)((this.GetPrimaryKeyLong() >> 32) & 0xFFFFFFFF);
-
-                var datastore = GrainFactory.GetGrain<IDataStoreManager>(0);
-                var mapentry = await datastore.GetMapEntry(mapid);
-
-                //just create world maps as people go into them if they dont exist
-                if (mapentry != null && !mapentry.IsInstance())
-                    await Create(mapid, 0, realmid);
-            }
-            await base.OnActivateAsync();
-        }
+        Dictionary<ObjectGUID, IObjectImpl> objectMap = new Dictionary<ObjectGUID, IObjectImpl>();
+        List<IObjectImpl> activeObjects = new List<IObjectImpl>();
 
         public async Task Create(UInt32 MapID, UInt32 InstanceID, UInt32 RealmID)
         {
@@ -58,16 +40,17 @@ namespace Server
         }
 
         public bool _IsValid() { return State.Exists; }
+        public Task<bool> IsValid() { return Task.FromResult(_IsValid()); }
         public async Task Save() { if (_IsValid()) return; await WriteStateAsync(); }
 
-        public IObject GetObjectByGUID(ObjectGUID guid)
+        public IObjectImpl GetObjectByGUID(ObjectGUID guid)
         {
-            IObject ret = null;
+            IObjectImpl ret = null;
             objectMap.TryGetValue(guid, out ret);
             return ret;
         }
 
-        public IObject GetObjectByGUID(UInt64 guid)
+        public IObjectImpl GetObjectByGUID(UInt64 guid)
         {
             return GetObjectByGUID(new ObjectGUID(guid));
         }
@@ -75,7 +58,7 @@ namespace Server
         public Task<UInt32> GetMapID() { return Task.FromResult(State.MapID); }
         public Task<UInt32> GetInstanceID() { return Task.FromResult(State.InstanceID); }
 
-        async Task<bool> AddObject(IObject obj)
+        public async Task<bool> AddObject(IObjectImpl obj)
         {
             var guid = await obj.GetGUID();
             objectMap.Add(guid, obj);
@@ -93,5 +76,6 @@ namespace Server
 
             return true;
         }
+
     }
 }

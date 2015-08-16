@@ -71,8 +71,17 @@ namespace Shared
                 //Int16 szhs = IPAddress.HostToNetworkOrder((Int16)(strm.Length - 2));
                 WriteBE((UInt16)(strm.Length - 2)); //don't include the opcode in the size
                 strm.Position = strm.Length;
+
+                strm.Position = 2;
+                var op = strm.ReadByte() | (strm.ReadByte() << 8);
+                strm.Position = strm.Length;
+                RealmOp lol = (RealmOp)op;
+                Task.Factory.StartNew(() => { Console.WriteLine("Sending Packet {0} Len {1}", lol.ToString(), strm.Length); });
             }
         }
+
+        public void Reset() { _strm.Position = 0; _strm.SetLength(0); }
+        public void Reset(RealmOp op) { _strm.Position = 0; _strm.SetLength(0); Write((UInt16)0); Write((UInt16)op); }
 
         public void WriteBE(ushort val)
         {
@@ -121,6 +130,20 @@ namespace Shared
             byte[] bytes = Encoding.UTF8.GetBytes(s);
             Write(bytes);
             Write((byte)0); //null terminator
+        }
+
+        public void WriteWTime(DateTime n)
+        {
+            uint dayOfWeek = ((uint)n.DayOfWeek == 0 ? 6 : ((uint)n.DayOfWeek) - 1);
+
+            uint gameTime = ((uint)n.Minute & 0x3F);
+            gameTime |= (((uint)n.Hour << 6) & 0x7C0);
+            gameTime |= ((dayOfWeek << 11) & 0x3800);
+            gameTime |= (((uint)(n.Day - 1) << 14) & 0xFC000);
+            gameTime |= (((uint)(n.Month - 1) << 20) & 0xF00000);
+            gameTime |= (((uint)(n.Year - 2000) << 24) & 0x1F000000);
+
+            Write(gameTime);
         }
 
         public void Write(PacketOut p)

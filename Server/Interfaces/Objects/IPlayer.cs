@@ -26,6 +26,11 @@ namespace Server
         Task Kick();
         Task<string> GetAccount();
         Task OnLogin();
+        Task Login();
+
+        Task SendPacket(PacketOut pkt);
+
+        Task BuildInitialUpdate();
     }
 
 }
