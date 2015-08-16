@@ -23,6 +23,20 @@ namespace Server
         TYPEID_CORPSE = 7
     }
 
+    [Flags]
+    public enum TypeMask
+    {
+        TYPEMASK_OBJECT = 0x0001,
+        TYPEMASK_ITEM = 0x0002,
+        TYPEMASK_CONTAINER = 0x0006,                       // TYPEMASK_ITEM | 0x0004
+        TYPEMASK_UNIT = 0x0008,                       // creature
+        TYPEMASK_PLAYER = 0x0010,
+        TYPEMASK_GAMEOBJECT = 0x0020,
+        TYPEMASK_DYNAMICOBJECT = 0x0040,
+        TYPEMASK_CORPSE = 0x0080,
+        TYPEMASK_SEER = TYPEMASK_PLAYER | TYPEMASK_UNIT | TYPEMASK_DYNAMICOBJECT
+    }
+
     public interface ObjectData : IGrainState
     {
         bool Exists { get; set; }
@@ -34,6 +48,8 @@ namespace Server
 
         UInt32 MapID { get; set; }
         UInt32 InstanceID { get; set; }
+
+        TypeID MyType { get; set; }
 
         ObjectType ObjType { get; set; }
         UpdateField[] UpdateFields { get; set; }
@@ -89,7 +105,12 @@ namespace Server
         {
             switch (type)
             {
-                case ObjectType.Player: CreateUpdateFields((int)EUnitFields.PLAYER_END); break;
+                case ObjectType.Player:
+                    {
+                        CreateUpdateFields((int)EUnitFields.PLAYER_END);
+                        Type = (UInt32)(TypeMask.TYPEMASK_PLAYER | TypeMask.TYPEMASK_UNIT | TypeMask.TYPEMASK_OBJECT);
+                    }
+                    break;
                 case ObjectType.Creature: CreateUpdateFields((int)EUnitFields.UNIT_END); break;
 
                 default: throw new Exception("Cannot to create Update Fields by unknown object type");
@@ -142,10 +163,10 @@ namespace Server
 
         #region Updatefield Getters and Setters
 
-        public int Type
+        public UInt32 Type
         {
-            get { return _GetInt32((int)EObjectFields.OBJECT_FIELD_TYPE); }
-            set { _SetInt32((int)EObjectFields.OBJECT_FIELD_TYPE, value); }
+            get { return _GetUInt32((int)EObjectFields.OBJECT_FIELD_TYPE); }
+            set { _SetUInt32((int)EObjectFields.OBJECT_FIELD_TYPE, value); }
         }
 
         public UInt64 GUID
@@ -189,7 +210,7 @@ namespace Server
             PacketOut p = new PacketOut();
             p.Write((byte)updateType);
             p.Write(pGUID);
-            p.Write((byte)Type);
+            p.Write((byte)State.MyType);
             _BuildMovementUpdate(updateType, updateFlags, ref p);
             _BuildValuesUpdate(updateType, updateFlags, ref p, plr);
             return Task.FromResult(p);
@@ -261,7 +282,7 @@ namespace Server
             if ((flags & ObjectUpdateFlags.UPDATEFLAG_LOWGUID) != 0)
             {
                 //lowguid of some items 2F or 8 for players
-                TypeID myType = (TypeID)Type;
+                TypeID myType = State.MyType;
 
                 switch (myType)
                 {
@@ -321,13 +342,13 @@ namespace Server
 
             var fieldFlags = GetFlagVisibility();
 
-            /*for (var i = 0; i < State.UpdateFields.Length; ++i)
+            for (var i = 0; i < State.UpdateFields.Length; ++i)
             {
-               // if ((fieldFlags[i] & visibilityFlags) == 0)
+                //if ((fieldFlags[i] & visibilityFlags) == 0)
                 //    continue;
                 tmp.Write(State.UpdateFields[i].data);
                 mask.SetBit(i);
-            }*/
+            }
 
             pkt.Write((byte)mask.MaxBlockCount);
             for (var i = 0; i < mask.MaxBlockCount; ++i)
@@ -338,7 +359,7 @@ namespace Server
 
         UpdatefieldFlags[] GetFlagVisibility()
         {
-            TypeID myType = (TypeID)Type;
+            TypeID myType = State.MyType;
 
             switch (myType)
             {

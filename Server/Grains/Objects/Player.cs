@@ -86,13 +86,22 @@ public interface PlayerData : UnitData, IGrainState
 
         UInt32 TimeSyncCounter = 0;
 
-        public override Task OnActivateAsync()
+        public async override Task OnActivateAsync()
+        {
+            await OnConstruct();
+            await base.OnActivateAsync();
+        }
+
+        public Task OnConstruct()
         {
             if (_IsValid())
-                Type = (int)TypeID.TYPEID_PLAYER;
+            {
+                State.MyType = TypeID.TYPEID_PLAYER;
+                Type = (UInt32)(TypeMask.TYPEMASK_PLAYER | TypeMask.TYPEMASK_UNIT | TypeMask.TYPEMASK_OBJECT);
+            }
             if (State.Account != null)
                 _Account = GrainFactory.GetGrain<IAccount>(State.Account);
-            return base.OnActivateAsync();
+            return TaskDone.Done;
         }
 
         public override IObjectImpl ToRef() { return this.AsReference<IPlayer>(); }
@@ -142,6 +151,8 @@ public interface PlayerData : UnitData, IGrainState
             State.Gender = info.CreateData.Gender;
             State.RealmID = (UInt32)info.RealmID;
             Gender = info.CreateData.Gender;
+            Class = (byte)State.Class;
+            Race = (byte)State.Race;
             Skin = info.CreateData.Skin;
             Face = info.CreateData.Face;
             HairStyle = info.CreateData.HairStyle;
@@ -157,9 +168,19 @@ public interface PlayerData : UnitData, IGrainState
             if (chrclass == null || chrrace == null || creationinfo == null)
                 return LoginErrorCode.CHAR_CREATE_ERROR;
 
-            //just set male model for now
-            DisplayID = (int)chrrace.ModelMale;
-            NativeDisplayID = (int)chrrace.ModelMale;
+            Faction = (int)chrrace.Faction;
+            PowerType = (byte)chrclass.powerType;
+
+            if (Gender == 0) //male
+            {
+                DisplayID = (int)chrrace.ModelMale;
+                NativeDisplayID = (int)chrrace.ModelMale;
+            }
+            else
+            {
+                DisplayID = (int)chrrace.ModelFemale;
+                NativeDisplayID = (int)chrrace.ModelFemale;
+            }
 
             State.PositionX = creationinfo.position_x;
             State.PositionY = creationinfo.position_y;
@@ -182,6 +203,7 @@ public interface PlayerData : UnitData, IGrainState
             _SetUInt32((int)EUnitFields.UNIT_FIELD_HEALTH, 100);
             _SetUInt32((int)EUnitFields.UNIT_FIELD_MAXHEALTH, 100);
 
+            await OnConstruct();
             await Save();
             return LoginErrorCode.CHAR_CREATE_SUCCESS;
         }
@@ -291,8 +313,23 @@ public interface PlayerData : UnitData, IGrainState
         }
         public byte Gender
         {
-            get { return _GetByte((int)EUnitFields.PLAYER_BYTES_3, 0); }
-            set { _SetByte((int)EUnitFields.PLAYER_BYTES_3, 0, value); }
+            get { return _GetByte((int)EUnitFields.UNIT_FIELD_BYTES_0, 2); }
+            set { _SetByte((int)EUnitFields.UNIT_FIELD_BYTES_0, 2, value); }
+        }
+        public byte Race
+        {
+            get { return _GetByte((int)EUnitFields.UNIT_FIELD_BYTES_0, 0); }
+            set { _SetByte((int)EUnitFields.UNIT_FIELD_BYTES_0, 0, value); }
+        }
+        public byte Class
+        {
+            get { return _GetByte((int)EUnitFields.UNIT_FIELD_BYTES_0, 1); }
+            set { _SetByte((int)EUnitFields.UNIT_FIELD_BYTES_0, 1, value); }
+        }
+        public byte PowerType
+        {
+            get { return _GetByte((int)EUnitFields.UNIT_FIELD_BYTES_0, 3); }
+            set { _SetByte((int)EUnitFields.UNIT_FIELD_BYTES_0, 3, value); }
         }
 
         #endregion
@@ -303,7 +340,15 @@ public interface PlayerData : UnitData, IGrainState
         {
             await OnLogin();
 
-            PacketOut p = new PacketOut(RealmOp.SMSG_LOGIN_VERIFY_WORLD);
+            PacketOut p = new PacketOut(RealmOp.MSG_SET_DUNGEON_DIFFICULTY);
+
+            p.Reset(RealmOp.MSG_SET_DUNGEON_DIFFICULTY);
+            p.Write((UInt32)0); //difficulty
+            p.Write((UInt32)1); //val
+            p.Write((UInt32)0); //isingroup
+            await SendPacket(p);
+
+            p.Reset(RealmOp.SMSG_LOGIN_VERIFY_WORLD);
             p.Write(State.MapID);
             p.Write(State.PositionX);
             p.Write(State.PositionY);

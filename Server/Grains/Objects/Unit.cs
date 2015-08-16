@@ -42,6 +42,12 @@ namespace Server
             set { _SetInt32((int)EUnitFields.UNIT_FIELD_NATIVEDISPLAYID, value); }
         }
 
+        public int Faction
+        {
+            get { return _GetInt32((int)EUnitFields.UNIT_FIELD_FACTIONTEMPLATE); }
+            set { _SetInt32((int)EUnitFields.UNIT_FIELD_FACTIONTEMPLATE, value); }
+        }
+
         public Task<int> GetDisplayID() { return Task.FromResult(DisplayID); }
         public Task<int> GetNativeDisplayID() { return Task.FromResult(NativeDisplayID); }
 

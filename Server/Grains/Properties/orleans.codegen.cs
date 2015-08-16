@@ -50,6 +50,8 @@ namespace Server
 
             public UInt32 @InstanceID { get; set; }
 
+            public TypeID @MyType { get; set; }
+
             public ObjectType @ObjType { get; set; }
 
             public UpdateField[] @UpdateFields { get; set; }
@@ -69,6 +71,7 @@ namespace Server
                 if (values.TryGetValue("Orientation", out value)) @Orientation = (Single) value;
                 if (values.TryGetValue("MapID", out value)) @MapID = (UInt32) value;
                 if (values.TryGetValue("InstanceID", out value)) @InstanceID = (UInt32) value;
+                if (values.TryGetValue("MyType", out value)) @MyType = (TypeID) value;
                 if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
                 if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
                 if (values.TryGetValue("UpdateFlags", out value)) @UpdateFlags = (ObjectUpdateFlags) value;
@@ -77,7 +80,7 @@ namespace Server
 
             public override System.String ToString()
             {
-                return System.String.Format("UnitImplState( Exists={0} PositionX={1} PositionY={2} PositionZ={3} Orientation={4} MapID={5} InstanceID={6} ObjType={7} UpdateFields={8} UpdateFlags={9} unit_test={10} )", @Exists, @PositionX, @PositionY, @PositionZ, @Orientation, @MapID, @InstanceID, @ObjType, @UpdateFields, @UpdateFlags, @unit_test);
+                return System.String.Format("UnitImplState( Exists={0} PositionX={1} PositionY={2} PositionZ={3} Orientation={4} MapID={5} InstanceID={6} MyType={7} ObjType={8} UpdateFields={9} UpdateFlags={10} unit_test={11} )", @Exists, @PositionX, @PositionY, @PositionZ, @Orientation, @MapID, @InstanceID, @MyType, @ObjType, @UpdateFields, @UpdateFlags, @unit_test);
             }
         
         public UnitImplState() : 
@@ -96,6 +99,7 @@ namespace Server
             result["Orientation"] = this.Orientation;
             result["MapID"] = this.MapID;
             result["InstanceID"] = this.InstanceID;
+            result["MyType"] = this.MyType;
             result["ObjType"] = this.ObjType;
             result["UpdateFields"] = this.UpdateFields;
             result["UpdateFlags"] = this.UpdateFlags;
@@ -112,6 +116,7 @@ namespace Server
             this.Orientation = default(Single);
             this.MapID = default(UInt32);
             this.InstanceID = default(UInt32);
+            this.MyType = default(TypeID);
             this.ObjType = default(ObjectType);
             this.UpdateFields = default(UpdateField[]);
             this.UpdateFlags = default(ObjectUpdateFlags);
@@ -165,6 +170,8 @@ namespace Server
 
             public UInt32 @InstanceID { get; set; }
 
+            public TypeID @MyType { get; set; }
+
             public ObjectType @ObjType { get; set; }
 
             public UpdateField[] @UpdateFields { get; set; }
@@ -205,6 +212,7 @@ namespace Server
                 if (values.TryGetValue("Orientation", out value)) @Orientation = (Single) value;
                 if (values.TryGetValue("MapID", out value)) @MapID = (UInt32) value;
                 if (values.TryGetValue("InstanceID", out value)) @InstanceID = (UInt32) value;
+                if (values.TryGetValue("MyType", out value)) @MyType = (TypeID) value;
                 if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
                 if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
                 if (values.TryGetValue("UpdateFlags", out value)) @UpdateFlags = (ObjectUpdateFlags) value;
@@ -223,7 +231,7 @@ namespace Server
 
             public override System.String ToString()
             {
-                return System.String.Format("PlayerState( unit_test={0} Exists={1} PositionX={2} PositionY={3} PositionZ={4} Orientation={5} MapID={6} InstanceID={7} ObjType={8} UpdateFields={9} UpdateFlags={10} Name={11} Account={12} Race={13} Class={14} Gender={15} RealmID={16} BindX={17} BindY={18} BindZ={19} BindMap={20} BindArea={21} )", @unit_test, @Exists, @PositionX, @PositionY, @PositionZ, @Orientation, @MapID, @InstanceID, @ObjType, @UpdateFields, @UpdateFlags, @Name, @Account, @Race, @Class, @Gender, @RealmID, @BindX, @BindY, @BindZ, @BindMap, @BindArea);
+                return System.String.Format("PlayerState( unit_test={0} Exists={1} PositionX={2} PositionY={3} PositionZ={4} Orientation={5} MapID={6} InstanceID={7} MyType={8} ObjType={9} UpdateFields={10} UpdateFlags={11} Name={12} Account={13} Race={14} Class={15} Gender={16} RealmID={17} BindX={18} BindY={19} BindZ={20} BindMap={21} BindArea={22} )", @unit_test, @Exists, @PositionX, @PositionY, @PositionZ, @Orientation, @MapID, @InstanceID, @MyType, @ObjType, @UpdateFields, @UpdateFlags, @Name, @Account, @Race, @Class, @Gender, @RealmID, @BindX, @BindY, @BindZ, @BindMap, @BindArea);
             }
         
         public PlayerState() : 
@@ -243,6 +251,7 @@ namespace Server
             result["Orientation"] = this.Orientation;
             result["MapID"] = this.MapID;
             result["InstanceID"] = this.InstanceID;
+            result["MyType"] = this.MyType;
             result["ObjType"] = this.ObjType;
             result["UpdateFields"] = this.UpdateFields;
             result["UpdateFlags"] = this.UpdateFlags;
@@ -270,6 +279,7 @@ namespace Server
             this.Orientation = default(Single);
             this.MapID = default(UInt32);
             this.InstanceID = default(UInt32);
+            this.MyType = default(TypeID);
             this.ObjType = default(ObjectType);
             this.UpdateFields = default(UpdateField[]);
             this.UpdateFlags = default(ObjectUpdateFlags);
@@ -333,6 +343,8 @@ namespace Server
 
             public UInt32 @InstanceID { get; set; }
 
+            public TypeID @MyType { get; set; }
+
             public ObjectType @ObjType { get; set; }
 
             public UpdateField[] @UpdateFields { get; set; }
@@ -373,6 +385,7 @@ namespace Server
                 if (values.TryGetValue("Orientation", out value)) @Orientation = (Single) value;
                 if (values.TryGetValue("MapID", out value)) @MapID = (UInt32) value;
                 if (values.TryGetValue("InstanceID", out value)) @InstanceID = (UInt32) value;
+                if (values.TryGetValue("MyType", out value)) @MyType = (TypeID) value;
                 if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
                 if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
                 if (values.TryGetValue("UpdateFlags", out value)) @UpdateFlags = (ObjectUpdateFlags) value;
@@ -391,7 +404,7 @@ namespace Server
 
             public override System.String ToString()
             {
-                return System.String.Format("PlayerImplState( unit_test={0} Exists={1} PositionX={2} PositionY={3} PositionZ={4} Orientation={5} MapID={6} InstanceID={7} ObjType={8} UpdateFields={9} UpdateFlags={10} Name={11} Account={12} Race={13} Class={14} Gender={15} RealmID={16} BindX={17} BindY={18} BindZ={19} BindMap={20} BindArea={21} )", @unit_test, @Exists, @PositionX, @PositionY, @PositionZ, @Orientation, @MapID, @InstanceID, @ObjType, @UpdateFields, @UpdateFlags, @Name, @Account, @Race, @Class, @Gender, @RealmID, @BindX, @BindY, @BindZ, @BindMap, @BindArea);
+                return System.String.Format("PlayerImplState( unit_test={0} Exists={1} PositionX={2} PositionY={3} PositionZ={4} Orientation={5} MapID={6} InstanceID={7} MyType={8} ObjType={9} UpdateFields={10} UpdateFlags={11} Name={12} Account={13} Race={14} Class={15} Gender={16} RealmID={17} BindX={18} BindY={19} BindZ={20} BindMap={21} BindArea={22} )", @unit_test, @Exists, @PositionX, @PositionY, @PositionZ, @Orientation, @MapID, @InstanceID, @MyType, @ObjType, @UpdateFields, @UpdateFlags, @Name, @Account, @Race, @Class, @Gender, @RealmID, @BindX, @BindY, @BindZ, @BindMap, @BindArea);
             }
         
         public PlayerImplState() : 
@@ -411,6 +424,7 @@ namespace Server
             result["Orientation"] = this.Orientation;
             result["MapID"] = this.MapID;
             result["InstanceID"] = this.InstanceID;
+            result["MyType"] = this.MyType;
             result["ObjType"] = this.ObjType;
             result["UpdateFields"] = this.UpdateFields;
             result["UpdateFlags"] = this.UpdateFlags;
@@ -438,6 +452,7 @@ namespace Server
             this.Orientation = default(Single);
             this.MapID = default(UInt32);
             this.InstanceID = default(UInt32);
+            this.MyType = default(TypeID);
             this.ObjType = default(ObjectType);
             this.UpdateFields = default(UpdateField[]);
             this.UpdateFlags = default(ObjectUpdateFlags);
@@ -499,6 +514,8 @@ namespace Server
 
             public UInt32 @InstanceID { get; set; }
 
+            public TypeID @MyType { get; set; }
+
             public ObjectType @ObjType { get; set; }
 
             public UpdateField[] @UpdateFields { get; set; }
@@ -516,6 +533,7 @@ namespace Server
                 if (values.TryGetValue("Orientation", out value)) @Orientation = (Single) value;
                 if (values.TryGetValue("MapID", out value)) @MapID = (UInt32) value;
                 if (values.TryGetValue("InstanceID", out value)) @InstanceID = (UInt32) value;
+                if (values.TryGetValue("MyType", out value)) @MyType = (TypeID) value;
                 if (values.TryGetValue("ObjType", out value)) @ObjType = (ObjectType) value;
                 if (values.TryGetValue("UpdateFields", out value)) @UpdateFields = (UpdateField[]) value;
                 if (values.TryGetValue("UpdateFlags", out value)) @UpdateFlags = (ObjectUpdateFlags) value;
@@ -523,7 +541,7 @@ namespace Server
 
             public override System.String ToString()
             {
-                return System.String.Format("ObjectImplState( Exists={0} PositionX={1} PositionY={2} PositionZ={3} Orientation={4} MapID={5} InstanceID={6} ObjType={7} UpdateFields={8} UpdateFlags={9} )", @Exists, @PositionX, @PositionY, @PositionZ, @Orientation, @MapID, @InstanceID, @ObjType, @UpdateFields, @UpdateFlags);
+                return System.String.Format("ObjectImplState( Exists={0} PositionX={1} PositionY={2} PositionZ={3} Orientation={4} MapID={5} InstanceID={6} MyType={7} ObjType={8} UpdateFields={9} UpdateFlags={10} )", @Exists, @PositionX, @PositionY, @PositionZ, @Orientation, @MapID, @InstanceID, @MyType, @ObjType, @UpdateFields, @UpdateFlags);
             }
         
         public ObjectImplState() : 
@@ -542,6 +560,7 @@ namespace Server
             result["Orientation"] = this.Orientation;
             result["MapID"] = this.MapID;
             result["InstanceID"] = this.InstanceID;
+            result["MyType"] = this.MyType;
             result["ObjType"] = this.ObjType;
             result["UpdateFields"] = this.UpdateFields;
             result["UpdateFlags"] = this.UpdateFlags;
@@ -557,6 +576,7 @@ namespace Server
             this.Orientation = default(Single);
             this.MapID = default(UInt32);
             this.InstanceID = default(UInt32);
+            this.MyType = default(TypeID);
             this.ObjType = default(ObjectType);
             this.UpdateFields = default(UpdateField[]);
             this.UpdateFlags = default(ObjectUpdateFlags);
