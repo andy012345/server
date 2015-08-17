@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBC\DBCStructs\Spell.cs" />
     <Compile Include="DBC\DBCStructs\Map.cs" />
     <Compile Include="Helpers\Array.cs" />
     <Compile Include="Crypto\BigInteger.cs" />

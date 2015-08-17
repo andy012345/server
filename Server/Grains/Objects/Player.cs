@@ -332,6 +332,12 @@ public interface PlayerData : UnitData, IGrainState
             set { _SetByte((int)EUnitFields.UNIT_FIELD_BYTES_0, 3, value); }
         }
 
+        public UInt32 BaseHealth
+        {
+            get { return _GetUInt32((int)EUnitFields.UNIT_FIELD_BASE_HEALTH); }
+            set { _SetUInt32((int)EUnitFields.UNIT_FIELD_BASE_HEALTH, value); }
+        }
+
         #endregion
 
         public override Task<bool> IsCellActivator() { return Task.FromResult(true); }
@@ -498,6 +504,11 @@ public interface PlayerData : UnitData, IGrainState
             PacketOut p = new PacketOut(RealmOp.SMSG_AURA_UPDATE_ALL);
             p.Write(pGUID);
             await SendPacket(p);
+        }
+
+        public void CalulateMaxHealth()
+        {
+            //
         }
     }
 }
